@@ -1,0 +1,225 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+apply plugin: 'gwt'
+apply plugin: 'war'
+apply plugin: 'eclipse'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+group = 'vajracode.calocal'
+version = '1.0'
+
+buildscript {
+	repositories {
+		jcenter()
+	}
+	dependencies {
+		classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
+	}
+}
+
+ext {
+	gwtVersion = '2.7.0'
+	pwtVersion = '1.2.0-SNAPSHOT'
+	springVersion = '4.2.3.RELEASE'
+	springSecurityVersion = '4.0.3.RELEASE'
+	hiberVersion = '5.0.2.Final'
+	springSocialVersion = '1.1.4.RELEASE'
+	jacksonVersion = '2.6.3'
+	
+	oAuthRedirectUrl = ""	
+	pathToSymbolMaps = ""	
+}
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+	maven{ url 'https://oss.sonatype.org/content/repositories/snapshots/'}
+	maven{ url 'http://fugru.com/archiva/repository/snapshots/'}
+}
+
+dependencies {
+    compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
+    testCompile group: 'junit', name: 'junit', version: '4.+'
+}
+
+test {
+    systemProperties 'property': 'value'
+}
+
+compileJava{    
+    options.incremental = true
+    options.encoding = 'UTF-8'
+}
+
+
+dependencies {	
+	//providedCompile 'org.slf4j:slf4j-api:1.6.1'
+	//compile 'org.slf4j:jcl-over-slf4j:1.6.1'
+	//providedCompile 'org.slf4j:slf4j-log4j12:1.6.1'
+	providedCompile 'log4j:log4j:1.2.17'
+
+	providedCompile "javax.validation:validation-api:1.0.0.GA"
+
+	providedCompile "com.google.gwt:gwt-servlet:$gwtVersion"
+	providedCompile ("com.google.gwt:gwt-user:$gwtVersion") {
+	    transitive = false;
+	}
+	providedCompile ("com.google.gwt:gwt-dev:$gwtVersion") {
+	    transitive = false;
+	}			  
+
+	compile "fr.putnami.pwt:pwt:$pwtVersion"
+	compile ("fr.putnami.pwt:pwt-spring:$pwtVersion") {
+		 exclude group: "org.codehaus.jackson"
+		 exclude group: "commons-fileupload"
+		 exclude group: "commons-io"
+	}
+	compile "fr.putnami.pwt:pwt-rest:$pwtVersion"
+	
+	providedCompile "com.googlecode.mvp4g:mvp4g:1.5.0"
+	providedCompile "com.google.gwt.inject:gin:2.1.2"	
+	providedCompile "com.github.gwtmaterialdesign:gwt-material:1.3.3"	
+	
+	providedCompile "javax.ws.rs:jsr311-api:1.1.1"
+	providedCompile "org.glassfish.jersey.ext:jersey-spring3:2.22.2"
+	
+	
+	providedCompile "org.springframework:spring-orm:$springVersion"
+	providedCompile "org.springframework:spring-web:$springVersion"
+	providedCompile "org.springframework:spring-context-support:$springVersion"
+	
+	providedCompile "org.springframework.security:spring-security-core:$springSecurityVersion"
+	providedCompile "org.springframework.security:spring-security-config:$springSecurityVersion"    
+	
+	providedCompile "org.springframework.social:spring-social-core:$springSocialVersion"
+	providedCompile "org.springframework.social:spring-social-web:$springSocialVersion"
+	providedCompile "org.springframework.social:spring-social-config:$springSocialVersion"
+	providedCompile "org.springframework.social:spring-social-security:$springSocialVersion"
+	//providedCompile "org.springframework.social:spring-social-facebook:2.0.2.RELEASE"
+	providedCompile ("org.springframework.social:spring-social-vkontakte:1.1.0.BUILD-20150810.103921-19") {
+		 exclude group: "com.fasterxml.jackson.core"
+	}	
+	//http://fugru.com/archiva/repository/snapshots/org/springframework/social/spring-social-vkontakte/1.1.0.BUILD-SNAPSHOT/
+	
+	//spring-social dependencies
+	providedCompile "org.springframework.security:spring-security-crypto:$springSecurityVersion"
+	providedCompile "org.apache.httpcomponents:httpclient:4.5"
+	providedCompile "com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion"
+	providedCompile "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"	
+	providedCompile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"		
+	
+	providedCompile "org.hibernate:hibernate-entitymanager:$hiberVersion"
+	providedCompile "org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final"	
+	
+	compile ("org.apache.commons:commons-lang3:3.4"){
+	    transitive = false;
+	}
+	
+	
+	providedCompile "org.apache.tomcat:tomcat-catalina:8.0.28"
+	
+}
+
+gwt {
+	gwtVersion = project.gwtVersion;
+	maxHeapSize = "1G";
+//	draftCompileGwt.enabled = true
+	
+//	gwtDev {
+//		jvmArgs('-Xdebug',  '-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000')
+//	}
+	
+	modules = ['vajracode.calocal.Calocal']	
+
+	sourceSets {
+        main {
+            java {
+                srcDir 'src'
+            }
+        }
+    }
+     
+    logLevel = 'TRACE' //INFO	
+
+	superDev {
+		noPrecompile=true
+	}
+	
+	compiler {
+        //enableClosureCompiler = true; //incopatible with compileReport  
+        disableCastChecking = true; // activates -XdisableCastChecking 
+        //compileReport = true;       
+    }
+}
+
+
+if (gwt.eclipse.addGwtContainer) {
+	eclipse.classpath.file{
+		whenMerged{ classpath ->
+			def projectRefs = classpath.entries.findAll{entry -> entry.kind =='con' && entry.path.equals('com.google.gwt.eclipse.core.GWT_CONTAINER')}
+			classpath.entries.removeAll(projectRefs)
+			classpath.entries.addAll(projectRefs)
+		}
+	}
+}
+
+eclipse {
+	classpath {
+		downloadSources=true
+	}
+}
+
+war.archiveName "ROOT.war"
+
+task draftConfig() {			
+	
+}
+task draftConfigLocal(dependsOn: draftConfig) {}
+draftConfigLocal.doFirst {
+	project.oAuthRedirectUrl = "http://localhost:8080/"
+}
+task releaseConfig() {
+	project.oAuthRedirectUrl = "https://derzhika.ru/"
+}
+releaseConfig.doLast {
+	cleanReleaseConfig
+	cleanProcessResources
+}
+
+task lDeployGwt(type: GradleBuild) {		
+	tasks = ['cleanDraftConfig', 'cleanDraftWar', 'cleanProcessResources', 'enableDraftCompileGwt', 'draftConfigLocal', 'copyToLocalAs']
+} 
+task ldg(dependsOn: lDeployGwt){}
+
+task disableDraftCompileGwt{}
+disableDraftCompileGwt.doFirst {
+	draftCompileGwt.enabled = false;
+	println "draftCompileGwt DISABLED";
+}
+
+task enableDraftCompileGwt{}
+enableDraftCompileGwt.doFirst {
+	draftCompileGwt.enabled = true
+	gwt.compiler.style = 'PRETTY'
+}
+
+task enableCompileGwt{}
+enableCompileGwt.doFirst {
+	compileGwt.enabled = true
+	gwt.compiler.style = 'OBF'
+}
+
+task disableCompileGwt{}
+disableCompileGwt.doFirst {
+	compileGwt.enabled = false
+}
+
+task copyToLocalAs(type: Copy) {		
+	from draftWar
+	into 'd:\\tomcat\\webapps_vajracode\\'
+	rename { String fileName ->
+	    'ROOT.war'
+	}        
+}

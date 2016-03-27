@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:task="http://www.springframework.org/schema/task" 
+	xmlns:context="http://www.springframework.org/schema/context"	
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+	">
+
+	<context:component-scan base-package="vajracode">
+	</context:component-scan>	
+	<context:annotation-config />
+	<tx:annotation-driven />
+		
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="persistenceUnitName" value="CalocalPersistenceUnit" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<!-- <property name="database" value="HSQL" /> -->
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+	
+	<bean id="baseMessageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="/WEB-INF/classes/vajracode/derzhika/server/messages" />
+		<!--  it has to be the 'full path' from the WEB-INF directory. -->
+		<property name="defaultEncoding" value="UTF-8"/>
+		<property name="fileEncodings" value="UTF-8" />
+		<property name="cacheSeconds" value="-1"/>
+	</bean>
+	
+	<jee:jndi-lookup id="dataSource" jndi-name="DB_Calocal" resource-ref="true" />
+		
+	<!-- 
+	<bean id="fbConnectionFactory" class="org.springframework.social.facebook.connect.FacebookConnectionFactory">
+    	<constructor-arg index="0" value="1044670092224732"/>
+    	<constructor-arg index="1" value="23ac8a5f2c8584720a04df1c3040fc32"/>
+	</bean>
+	
+	<bean id="vkConnectionFactory" class="org.springframework.social.vkontakte.connect.VKontakteConnectionFactory">
+    	<constructor-arg index="0" value="5000888"/>
+    	<constructor-arg index="1" value="QDt2gPEdrtBjjk70cAxH"/>
+	</bean>
+
+	<bean id="ucr" class="org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository">
+		<constructor-arg index="0" ref="dataSource" />
+		<constructor-arg index="1" ref="defaultConnectionFactoryLocator" />
+		<constructor-arg index="2">
+			<bean class="org.springframework.security.crypto.encrypt.HexEncodingTextEncryptor" >
+				<constructor-arg index="0">
+					<bean class="org.springframework.security.crypto.encrypt.AesBytesEncryptor" >
+						<constructor-arg index="0" value="amri69fme5ls8vg3"/>
+    					<constructor-arg index="1" value="78f4c94214b2f3e7"/>
+					</bean>
+				</constructor-arg>				
+			</bean>
+		</constructor-arg>
+	</bean>
+	 -->
+	
+	<!-- <context:property-placeholder location="classpath:config.properties"/>  -->	
+</beans>

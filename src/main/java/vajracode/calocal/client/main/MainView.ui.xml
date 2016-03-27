@@ -1,0 +1,21 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"	
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:m="urn:import:gwt.material.design.client.ui"
+	xmlns:d="urn:import:vajracode.calocal.client.elements"
+	ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
+    ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
+    ui:generateLocales="default"
+	>    
+
+	<ui:with field='msgs' type='vajracode.calocal.client.i18n.I18nConstants' />
+	<ui:with field='res' type='vajracode.calocal.client.resources.Resources' />
+	
+	<ui:style>	
+	</ui:style>		
+		
+	<d:CenteredColFlexPanel>
+		<m:MaterialTitle ui:field="title" title="Main screen"/>			
+    </d:CenteredColFlexPanel>    
+    
+</ui:UiBinder>

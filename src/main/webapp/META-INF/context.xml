@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context reloadable="true" unloadDelay="10000" clearReferencesStopTimerThreads="true" 
+	clearReferencesStopThreads="true" antiResourceLocking="false">	
+                
+    <ResourceLink global="DB_Calocal" name="DB_Calocal" type="javax.sql.DataSource"/>
+
+</Context>

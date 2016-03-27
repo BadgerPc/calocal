@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
+	<appender name="console" class="vajracode.derzhika.server.log.CustomConsoleAppender">		
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5p %c - %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.StringMatchFilter">
+			<param name="StringToMatch" value="CommandDefinition" />
+			<param name="AcceptOnMatch" value="false" />
+		</filter>
+		<filter class="vajracode.derzhika.server.log.DerzhikaExceptionFilter" />
+	</appender>
+	<appender name="err_log" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="${catalina.base}/logs/derzhika.log" />
+		<!-- <param name="MaxFileSize" value="10MB" /> -->
+		<param name="DatePattern" value="'.'yyyy-MM-dd-HH" />
+		<param name="Threshold" value="WARN" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5p %c{1} - %m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.StringMatchFilter">
+			<param name="StringToMatch" value="Broken pipe" />
+			<param name="AcceptOnMatch" value="false" />
+		</filter>
+		<filter class="vajracode.derzhika.server.log.DerzhikaExceptionFilter" />
+	</appender>		
+	<!-- <logger name="vajracode">
+  		<level value="DEBUG"/> 
+  		<appender-ref ref="console" />  		
+	</logger> -->
+	<root>
+		<priority value="WARN" />
+		<appender-ref ref="console" />
+		<appender-ref ref="err_log" />
+	</root>
+	<!-- OFF, FATAL, ERROR, WARN, INFO DEBUG and ALL -->
+</log4j:configuration>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to="Calocal">
+	
+	<inherits name="com.google.gwt.user.User"/>
+	<inherits name="com.google.gwt.inject.Inject"/>
+	<inherits name="com.google.gwt.logging.Logging"/>
+	
+	<inherits name="fr.putnami.pwt.core.service.Service"/>
+	<inherits name="fr.putnami.pwt.core.mvp.Mvp"/>
+	<inherits name="fr.putnami.pwt.core.inject.Inject"/>
+	<inherits name="fr.putnami.pwt.plugin.rest.RestService"/>
+	
+	<inherits name='com.mvp4g.Mvp4gModule'/>
+	
+	<inherits name="gwt.material.design.GwtMaterialDesign" />
+
+	<entry-point class="vajracode.calocal.client.CalocalEntryPoint"/>
+
+	<source path="client"/>
+	<source path="shared"/>
+	<public path="pub"/>
+	
+	<set-property name="compiler.useSourceMaps" value="true" />
+	
+	<set-property name="gwt.logging.logLevel" value="INFO"/>
+	<set-property name="gwt.logging.enabled" value="TRUE"/>	
+	
+	<set-property name="gwt.logging.simpleRemoteHandler" value="DISABLED" />
+	<set-property name="gwt.logging.consoleHandler" value="DISABLED" />
+	<set-property name="gwt.logging.systemHandler" value="DISABLED" />
+	<set-property name="gwt.logging.developmentModeHandler" value="DISABLED" />
+	
+	<!-- <stylesheet src="override.css" /> -->
+ 		
+</module>
