@@ -1,8 +1,9 @@
 package vajracode.calocal.shared.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class UserData {
+public class UserData implements Serializable {
 
 	private Long id;
 	private String name;	
@@ -10,7 +11,6 @@ public class UserData {
 	private Role role;
 
 	public UserData() {
-
 	}
 
 	public Long getId() {

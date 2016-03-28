@@ -5,9 +5,9 @@ import org.springframework.stereotype.Service;
 
 import vajracode.calocal.server.dao.UserDao;
 import vajracode.calocal.server.dto.UserDTO;
+import vajracode.calocal.server.exceptions.NoAccessException;
+import vajracode.calocal.server.exceptions.NoItemException;
 import vajracode.calocal.server.security.PrincipalAccessor;
-import vajracode.calocal.shared.exceptions.NoAccessException;
-import vajracode.calocal.shared.exceptions.NoItemException;
 import vajracode.calocal.shared.model.Role;
 import vajracode.calocal.shared.model.UserData;
 import vajracode.calocal.shared.model.UserListData;

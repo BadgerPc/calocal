@@ -27,7 +27,7 @@ public class CustomLogger implements Mvp4gLogger {
 				return getLogFormatter();
 			}
 		});
-		log = Logger.getLogger("vajracode.derzhika.client.framework.CustomLogger");		
+		log = Logger.getLogger("vajracode.calocal.client.framework.CustomLogger");		
 	}
 	
     public void log( String message, int depth ) {

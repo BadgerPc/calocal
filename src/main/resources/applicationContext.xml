@@ -33,7 +33,7 @@
 	</bean>
 	
 	<bean id="baseMessageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-		<property name="basename" value="/WEB-INF/classes/vajracode/derzhika/server/messages" />
+		<property name="basename" value="/WEB-INF/classes/vajracode/calocal/server/messages" />
 		<!--  it has to be the 'full path' from the WEB-INF directory. -->
 		<property name="defaultEncoding" value="UTF-8"/>
 		<property name="fileEncodings" value="UTF-8" />

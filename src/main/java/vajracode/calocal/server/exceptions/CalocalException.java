@@ -1,4 +1,4 @@
-package vajracode.calocal.shared.exceptions;
+package vajracode.calocal.server.exceptions;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 

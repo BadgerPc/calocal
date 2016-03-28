@@ -4,8 +4,6 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.inject.Inject;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.UmbrellaException;
 import com.google.gwt.logging.client.SimpleRemoteLogHandler;
@@ -16,17 +14,14 @@ import fr.putnami.pwt.core.error.client.ErrorDisplayer.Severity;
 import fr.putnami.pwt.core.error.client.ErrorHandler;
 import fr.putnami.pwt.core.error.client.ErrorManager;
 import fr.putnami.pwt.core.service.shared.exception.CommandException;
-import gwt.material.design.client.ui.MaterialToast;
 import vajracode.calocal.client.elements.Header;
 import vajracode.calocal.client.framework.CalocalEventBus;
 import vajracode.calocal.client.i18n.I18nConstants;
 import vajracode.calocal.client.modals.WaitModal;
-import vajracode.calocal.shared.exceptions.*;
 
 public class MainErrorHandler implements ErrorHandler {
 
-	@Inject I18nConstants msgs;
-	
+	private I18nConstants msgs = GWT.create(I18nConstants.class);	
 	private Logger logger;
 	private CalocalEventBus eventBus;
 	
@@ -55,7 +50,7 @@ public class MainErrorHandler implements ErrorHandler {
 			message = ce.getCauseMessage();			
 		}
 		GWT.log(e + ", " + cause + ", " + message);
-		if (cause != null) {
+		/*if (cause != null) {
 			if (cause.equals(NotAuthException.class.getCanonicalName())) {				
 				eventBus.signOut();
 				eventBus.authError(message);				
@@ -73,7 +68,7 @@ public class MainErrorHandler implements ErrorHandler {
 				MaterialToast.alert(message);
 				return true;
 			}
-		} 
+		} */
 		
 		e = unwrap(e);		
 		if (isNetworkException(e)){				

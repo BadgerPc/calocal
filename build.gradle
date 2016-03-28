@@ -22,9 +22,9 @@ buildscript {
 ext {
 	gwtVersion = '2.7.0'
 	pwtVersion = '1.2.0-SNAPSHOT'
-	springVersion = '4.2.3.RELEASE'
-	springSecurityVersion = '4.0.3.RELEASE'
-	hiberVersion = '5.0.2.Final'
+	springVersion = '4.2.5.RELEASE'
+	springSecurityVersion = '4.0.4.RELEASE'
+	hiberVersion = '4.3.11.Final'
 	springSocialVersion = '1.1.4.RELEASE'
 	jacksonVersion = '2.6.3'
 	
@@ -63,20 +63,23 @@ dependencies {
 	providedCompile "javax.validation:validation-api:1.0.0.GA"
 
 	providedCompile "com.google.gwt:gwt-servlet:$gwtVersion"
-	providedCompile ("com.google.gwt:gwt-user:$gwtVersion") {
+	providedCompile "com.google.gwt:gwt-user:$gwtVersion"
+	/*{
 	    transitive = false;
-	}
-	providedCompile ("com.google.gwt:gwt-dev:$gwtVersion") {
+	}*/
+	providedCompile "com.google.gwt:gwt-dev:$gwtVersion" 
+	/*{
 	    transitive = false;
-	}			  
+	}*/			  
 
-	compile "fr.putnami.pwt:pwt:$pwtVersion"
-	compile ("fr.putnami.pwt:pwt-spring:$pwtVersion") {
+	providedCompile "fr.putnami.pwt:pwt:$pwtVersion"
+	/*compile ("fr.putnami.pwt:pwt-spring:$pwtVersion") {
 		 exclude group: "org.codehaus.jackson"
 		 exclude group: "commons-fileupload"
 		 exclude group: "commons-io"
-	}
-	compile "fr.putnami.pwt:pwt-rest:$pwtVersion"
+	}*/
+	
+	providedCompile "org.fusesource.restygwt:restygwt:2.0.3"
 	
 	providedCompile "com.googlecode.mvp4g:mvp4g:1.5.0"
 	providedCompile "com.google.gwt.inject:gin:2.1.2"	
@@ -91,7 +94,8 @@ dependencies {
 	providedCompile "org.springframework:spring-context-support:$springVersion"
 	
 	providedCompile "org.springframework.security:spring-security-core:$springSecurityVersion"
-	providedCompile "org.springframework.security:spring-security-config:$springSecurityVersion"    
+	providedCompile "org.springframework.security:spring-security-config:$springSecurityVersion"
+	providedCompile "org.springframework.security:spring-security-web:$springSecurityVersion"    
 	
 	providedCompile "org.springframework.social:spring-social-core:$springSocialVersion"
 	providedCompile "org.springframework.social:spring-social-web:$springSocialVersion"
@@ -192,6 +196,10 @@ task lDeployGwt(type: GradleBuild) {
 	tasks = ['cleanDraftConfig', 'cleanDraftWar', 'cleanProcessResources', 'enableDraftCompileGwt', 'draftConfigLocal', 'copyToLocalAs']
 } 
 task ldg(dependsOn: lDeployGwt){}
+task lDeployNoGwt(type: GradleBuild) {		
+	tasks = ['cleanDraftConfig', 'cleanDraftWar', 'cleanProcessResources', 'disableDraftCompileGwt', 'draftConfigLocal', 'copyToLocalAs']
+} 
+task ldng(dependsOn: lDeployNoGwt){}
 
 task disableDraftCompileGwt{}
 disableDraftCompileGwt.doFirst {
@@ -222,4 +230,14 @@ task copyToLocalAs(type: Copy) {
 	rename { String fileName ->
 	    'ROOT.war'
 	}        
+}
+
+task syncSuperDevLibs(type: Sync) {
+    from configurations.compile
+    into "d:\\git\\toptal\\calocal\\super\\libs\\"
+    /*exclude { details -> details.file.name.startsWith('gwt-dev') ||
+                         details.file.name.startsWith('gwt-user') ||
+                         details.file.name.startsWith('tomcat') ||
+                         details.file.name.startsWith('asm') ||
+                         details.file.name.startsWith('gwt-servlet')}*/
 }

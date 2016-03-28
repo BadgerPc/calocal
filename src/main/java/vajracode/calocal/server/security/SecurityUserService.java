@@ -1,5 +1,6 @@
 package vajracode.calocal.server.security;
 
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,11 +15,11 @@ import vajracode.calocal.server.dto.UserDTO;
 public class SecurityUserService implements UserDetailsService {
     
 	@Autowired
-	private UserDao userDao;
+	private BeanFactory beanFactory;
 
 	@Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserDTO user = userDao.getUserByName(username);
+        UserDTO user = beanFactory.getBean(UserDao.class).getUserByName(username);
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }

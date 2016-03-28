@@ -1,11 +1,10 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
 	xmlns:g="urn:import:com.google.gwt.user.client.ui"
-	xmlns:m="urn:import:gwt.material.design.client.ui"
-	xmlns:dm="urn:import:vajracode.derzhika.client.menu">    
+	xmlns:m="urn:import:gwt.material.design.client.ui">    
 
-	<ui:with field='msgs' type='vajracode.derzhika.client.i18n.I18nConstants' />
-	<ui:with field='res' type='vajracode.derzhika.client.resources.Resources' />
+	<ui:with field='msgs' type='vajracode.calocal.client.i18n.I18nConstants' />
+	<ui:with field='res' type='vajracode.calocal.client.resources.Resources' />
 	
 	<ui:style>
 	.root {
@@ -19,13 +18,9 @@
 	}
 	</ui:style>
 	
-	<g:HTMLPanel width="100%" ui:field="root" addStyleNames="{style.root}">	
-		<dm:Menu ui:field="menu" />
-		<!-- <m:MaterialRow addStyleNames="valign-wrapper {res.css.flexVertical}">  -->			
+	<g:HTMLPanel width="100%" ui:field="root" addStyleNames="{style.root}">		
 		<center>
 			<m:MaterialPanel ui:field="main" addStyleNames="{style.main}" />
-		</center>
-			<!-- <m:MaterialColumn grid="m2 l4" addStyleNames="hide-on-small-only" ui:field="right"> </m:MaterialColumn>  -->
-		<!-- </m:MaterialRow> -->
+		</center>			
     </g:HTMLPanel>
 </ui:UiBinder>

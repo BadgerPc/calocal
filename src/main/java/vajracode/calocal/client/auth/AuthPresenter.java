@@ -7,6 +7,7 @@ import fr.putnami.pwt.core.service.client.annotation.AsyncHandler;
 import vajracode.calocal.client.framework.CommonPresenter;
 import vajracode.calocal.client.utils.NativeUtils;
 import vajracode.calocal.shared.FieldVerifier;
+import vajracode.calocal.shared.model.RegistrationData;
 import vajracode.calocal.shared.service.AuthService;
 
 
@@ -44,7 +45,7 @@ public class AuthPresenter extends CommonPresenter<AuthView> {
 		FieldVerifier.checkName(suLogin = login);
 		FieldVerifier.checkPass(suPass = pass);
 		FieldVerifier.checkPassEqual(pass, passConfirm);
-		service.register(login, pass, passConfirm);
+		service.register(new RegistrationData(login, pass));
 	}
 	
 	@AsyncHandler

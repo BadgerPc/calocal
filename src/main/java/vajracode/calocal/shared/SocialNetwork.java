@@ -2,7 +2,7 @@ package vajracode.calocal.shared;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
 
-import vajracode.calocal.shared.exceptions.UnknownSocialNetworkException;
+import vajracode.calocal.server.exceptions.UnknownSocialNetworkException;
 
 public enum SocialNetwork implements IsSerializable {
 	VK {

@@ -1,10 +1,11 @@
 package vajracode.calocal.shared.model;
 
-import org.fusesource.restygwt.client.Json;
-
+import java.io.Serializable;
 import java.util.List;
 
-public class UserListData {
+import org.fusesource.restygwt.client.Json;
+
+public class UserListData implements Serializable {
 
 	private int page;
 

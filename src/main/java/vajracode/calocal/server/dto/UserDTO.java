@@ -4,15 +4,12 @@ import java.util.Date;
 
 import javax.persistence.*;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
 import vajracode.calocal.shared.model.Role;
 import vajracode.calocal.shared.model.UserData;
 
 @Entity
 @Table(name = "user")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+//@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 //@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@jid")
 //@JsonIgnoreProperties({"userCardData", "user"})
 public class UserDTO extends DTO {

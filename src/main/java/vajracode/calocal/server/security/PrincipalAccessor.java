@@ -4,7 +4,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import vajracode.calocal.shared.exceptions.NotAuthException;
+import vajracode.calocal.server.exceptions.NotAuthException;
 import vajracode.calocal.shared.model.UserData;
 
 @Component

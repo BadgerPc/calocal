@@ -1,9 +1,7 @@
 package vajracode.calocal.server.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.*;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -22,10 +20,11 @@ import vajracode.calocal.shared.constants.ResourcePaths;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
-@ComponentScan(value = "vajracode.calocal.**.security")
+@ComponentScan(value = "vajracode.calocal.server.security")
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
+    @Lazy
     private SecurityUserService userService;
     @Autowired
     private HttpAuthenticationEntryPoint authenticationEntryPoint;

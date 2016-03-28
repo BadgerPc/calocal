@@ -1,4 +1,4 @@
-package vajracode.calocal.shared.exceptions;
+package vajracode.calocal.server.exceptions;
 
 public class ErrorMessageException extends CalocalException {
 

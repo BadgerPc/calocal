@@ -1,5 +1,7 @@
 package vajracode.calocal.client;
 
+import org.fusesource.restygwt.client.Defaults;
+
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.mvp4g.client.Mvp4gModule;
@@ -15,7 +17,7 @@ import vajracode.calocal.client.resources.Resources;
 public class CalocalEntryPoint implements EntryPoint, Module {	
 	
 	public void onModuleLoad() {
-		//Defaults.setServiceRoot("http://derzhika.ru/");
+		Defaults.setServiceRoot("/api");
 		
 		final ErrorHandler eh = new MainErrorHandler();
 		ErrorManager.get().registerErrorHandler(eh);

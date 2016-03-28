@@ -1,7 +1,6 @@
 package vajracode.calocal.shared;
 
 import vajracode.calocal.shared.constants.HTMLConstants;
-import vajracode.calocal.shared.exceptions.FieldException;
 
 
 public class FieldVerifier {	
@@ -38,7 +37,7 @@ public class FieldVerifier {
 
 	private static String ensureNotEmpty(String string, String error) {
 		if (string.length() == 0)
-			throw new FieldException(error);
+			throw new RuntimeException(error);
 		return string;
 	}
 
@@ -66,12 +65,12 @@ public class FieldVerifier {
 
 	public static void checkName(String string) {
 		if (string.length() < 3 || string.length() > 20 || hasNonLetters(string))
-			throw new FieldException("Login has incorrect length or symbols");
+			throw new RuntimeException("Login has incorrect length or symbols"); //TODO FieldException
 	}
 	
 	public static void checkPass(String string) {
 		if (string.length() < 3 || string.length() > 255 || hasNonLetters(string))
-			throw new FieldException("Password has incorrect length or symbols");
+			throw new RuntimeException("Password has incorrect length or symbols");
 	}
 
 	private static boolean hasNonLetters(String string) {		
@@ -80,7 +79,7 @@ public class FieldVerifier {
 
 	public static void checkPassEqual(String pass, String passConfirm) {
 		if (!pass.equals(passConfirm))
-			throw new FieldException("Passwords do not match");
+			throw new RuntimeException("Passwords do not match");
 	}
 
 }
