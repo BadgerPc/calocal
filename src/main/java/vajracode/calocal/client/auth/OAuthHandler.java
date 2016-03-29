@@ -63,8 +63,12 @@ public class OAuthHandler extends BaseEventHandler<CalocalEventBus> implements I
 	}
 	
 	public void onSignOut() {
-		service.logout();
-		userManager.signOut();		
+		if (userManager.getUserData() == null) {
+			eventBus.auth();
+		} else {
+			service.logout();
+			userManager.signOut();
+		}
 	}
 	
 	@AsyncHandler

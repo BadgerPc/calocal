@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 
 import vajracode.calocal.server.dao.UserDao;
 import vajracode.calocal.server.dto.UserDTO;
-import vajracode.calocal.server.exceptions.NoAccessException;
-import vajracode.calocal.server.exceptions.NoItemException;
+import vajracode.calocal.server.exceptions.ForbiddenException;
+import vajracode.calocal.server.exceptions.NotFoundException;
 import vajracode.calocal.server.security.PrincipalAccessor;
 import vajracode.calocal.shared.model.Role;
 import vajracode.calocal.shared.model.UserData;
@@ -33,10 +33,10 @@ public class UserServiceImpl implements UserService {
 		if (id == 0 || id == u.getId())
 			return u;
 		if (u.getRole() != Role.ADMIN) 
-			throw new NoAccessException();
+			throw new ForbiddenException();
 		UserDTO dto = userDao.getById(id);
 		if (dto == null)
-			throw new NoItemException();
+			throw new NotFoundException();
 		return dto.getUserData();
 	}
 

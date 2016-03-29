@@ -51,5 +51,9 @@ public class AuthView extends CommonView<AuthPresenter> {
 	public void onSignUpButton(ClickEvent event) {		
 		getPresenter().signUp(suLogin.getText(), suPass.getText(), passConfirm.getText());
 	}
+
+	public void resetPass() {
+		siPass.setText("");		
+	}
 	
 }

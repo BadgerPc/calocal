@@ -19,8 +19,23 @@ public interface I18nConstants extends Constants{
 	@DefaultStringValue("Unknown error")
 	String unknownError();
 
-	@DefaultStringValue("Sign in please")
+	@DefaultStringValue("Welcome to Calories Calculator")
 	String pleaseSignIn();
+	
+	@DefaultStringValue("Sign in to proceed please")
+	String needBeAuth();
+	
+	@DefaultStringValue("Not found")
+	String notFound();
+	
+	@DefaultStringValue("Wrong field value")
+	String badRequest();
+	
+	@DefaultStringValue("Such entity exists already")
+	String conflict();
+	
+	@DefaultStringValue("Wrong username/password")
+	String badCredentials();
 	
 	@DefaultStringValue("Проблемы авторизации, попробуйте ещё раз.")
 	String userDenied();
@@ -474,6 +489,13 @@ public interface I18nConstants extends Constants{
 
 	@DefaultStringValue("Связаться")
 	String connect();
+
+
+	
+
+	
+
+	
 
 	
 }

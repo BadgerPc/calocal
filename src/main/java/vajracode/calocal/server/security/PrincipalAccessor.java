@@ -4,7 +4,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import vajracode.calocal.server.exceptions.NotAuthException;
+import vajracode.calocal.server.exceptions.UnauthorizedException;
 import vajracode.calocal.shared.model.UserData;
 
 @Component
@@ -24,7 +24,7 @@ public class PrincipalAccessor {
             }
         }
         if (user == null)
-        	throw new NotAuthException();
+        	throw new UnauthorizedException();
         return user;
     }
     

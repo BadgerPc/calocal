@@ -31,7 +31,7 @@
 	
 	<m:MaterialPanel ui:field="contentPanel">
 		<g:HTMLPanel ui:field="tabsContainer" addStyleNames="{res.css.flexHorizontal}">
-			<m:UnorderedList ui:field="tabPanel" addStyleNames="tabs z-depth-1" />			
+			<m:UnorderedList ui:field="tabPanel" addStyleNames="tabs" />			
 		</g:HTMLPanel>
 	</m:MaterialPanel>
 	

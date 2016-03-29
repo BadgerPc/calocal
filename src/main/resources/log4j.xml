@@ -23,10 +23,12 @@
 			<param name="AcceptOnMatch" value="false" />
 		</filter>
 	</appender>		
-	<!-- <logger name="com.sun.jersey">
-  		<level value="DEBUG"/> 
-  		<appender-ref ref="console" />  		
-	</logger> -->
+	<logger name="org.springframework.security">
+  		<level value="DEBUG"/>   		
+	</logger>
+	<logger name="vajracode">
+  		<level value="DEBUG"/>   		  	
+	</logger>
 	<root>
 		<priority value="WARN" />
 		<appender-ref ref="console" />

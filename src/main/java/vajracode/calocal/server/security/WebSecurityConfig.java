@@ -1,5 +1,6 @@
 package vajracode.calocal.server.security;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,18 +15,21 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import vajracode.calocal.server.dao.UserDao;
 import vajracode.calocal.shared.constants.LoginFields;
 import vajracode.calocal.shared.constants.ResourcePaths;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
-@ComponentScan(value = "vajracode.calocal.server.security")
+@ComponentScan("vajracode.calocal.server")
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    @Lazy
-    private SecurityUserService userService;
+	private final Logger log = Logger.getLogger(getClass());
+	
+	@Autowired
+	@Lazy
+	private UserDao userDao; 
     @Autowired
     private HttpAuthenticationEntryPoint authenticationEntryPoint;
     @Autowired
@@ -45,20 +49,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public UserDetailsService userDetailsServiceBean() throws Exception {
         return super.userDetailsServiceBean();
-    }
-
+    }   
+    
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(userService);
+        authenticationProvider.setUserDetailsService(securityUserService());
         authenticationProvider.setPasswordEncoder(new ShaPasswordEncoder());
-
         return authenticationProvider;
     }
 
-    @Override
+    @Bean
+    public UserDetailsService securityUserService() {
+		return new SecurityUserService(userDao);
+	}
+
+	@Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
+        log.debug("DaoAuthenticationProvider added");
     }
 
     @Override
@@ -74,7 +83,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	                .antMatchers("/Calocal/*").permitAll()
 	                .antMatchers("/favicon.ico").permitAll()
 	                .antMatchers("/index.html").permitAll()
-	                .antMatchers(ResourcePaths.LOGIN).permitAll()
+	                .antMatchers(ResourcePaths.API_LOGIN).permitAll()
 	                .anyRequest().authenticated()
                 .and()
 	                .authenticationProvider(authenticationProvider())
@@ -83,14 +92,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
 	                .formLogin()
 	                .permitAll()
-	                .loginProcessingUrl(ResourcePaths.LOGIN)
+	                .loginProcessingUrl(ResourcePaths.API_LOGIN)
 	                .usernameParameter(LoginFields.USERNAME)
 	                .passwordParameter(LoginFields.PASSWORD)
 	                .successHandler(authSuccessHandler)
 	                .failureHandler(authFailureHandler)
                 .and()
                 	.logout().permitAll()
-                	.logoutRequestMatcher(new AntPathRequestMatcher(ResourcePaths.LOGIN, "DELETE"))
+                	.logoutRequestMatcher(new AntPathRequestMatcher(ResourcePaths.API_LOGIN, "DELETE"))
                 	.logoutSuccessHandler(logoutSuccessHandler)
                 .and()
 	                .sessionManagement()

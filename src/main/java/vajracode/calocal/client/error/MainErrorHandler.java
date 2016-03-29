@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.UmbrellaException;
+import com.google.gwt.http.client.Response;
 import com.google.gwt.logging.client.SimpleRemoteLogHandler;
 import com.google.gwt.user.client.rpc.IncompatibleRemoteServiceException;
 import com.google.gwt.user.client.rpc.StatusCodeException;
@@ -13,11 +14,13 @@ import com.google.gwt.user.client.rpc.StatusCodeException;
 import fr.putnami.pwt.core.error.client.ErrorDisplayer.Severity;
 import fr.putnami.pwt.core.error.client.ErrorHandler;
 import fr.putnami.pwt.core.error.client.ErrorManager;
-import fr.putnami.pwt.core.service.shared.exception.CommandException;
+import gwt.material.design.client.ui.MaterialToast;
 import vajracode.calocal.client.elements.Header;
 import vajracode.calocal.client.framework.CalocalEventBus;
 import vajracode.calocal.client.i18n.I18nConstants;
 import vajracode.calocal.client.modals.WaitModal;
+import vajracode.calocal.client.utils.RestUtils;
+import vajracode.calocal.shared.exceptions.FieldException;
 
 public class MainErrorHandler implements ErrorHandler {
 
@@ -41,41 +44,48 @@ public class MainErrorHandler implements ErrorHandler {
 			eventBus.setBody(new Header(msgs.updateApplication()));
 			GWT.log(e.getMessage());
 			return true;
-		}
+		}				
 		
-		String cause = null, message = null;
-		if (e instanceof CommandException){
-			CommandException ce = (CommandException)e; 
-			cause = ce.getCauseClassName();
-			message = ce.getCauseMessage();			
-		}
-		GWT.log(e + ", " + cause + ", " + message);
-		/*if (cause != null) {
-			if (cause.equals(NotAuthException.class.getCanonicalName())) {				
-				eventBus.signOut();
-				eventBus.authError(message);				
-				return true;
-			}
-			if (cause.equals(NoAccessException.class.getCanonicalName())) {
+//		String cause = null, message = null;
+//		if (e instanceof CommandException){
+//			CommandException ce = (CommandException)e; 
+//			cause = ce.getCauseClassName();
+//			message = ce.getCauseMessage();			
+//		}
+		GWT.log(e.toString());	
+			
+		switch(RestUtils.getStatuCode(e)) {
+			case Response.SC_UNAUTHORIZED:
+				eventBus.authError(msgs.needBeAuth());
+				return true;				
+			case Response.SC_FORBIDDEN:			
 				MaterialToast.alert(msgs.noAccess());
+				return true;			
+			case Response.SC_NOT_FOUND:			
+				MaterialToast.alert(msgs.notFound());
 				return true;
-			}		
-			if (cause.equals(FieldException.class.getCanonicalName())) {
-				MaterialToast.alert(message);
+			case Response.SC_BAD_REQUEST:			
+				MaterialToast.alert(msgs.badRequest());
 				return true;
-			}
-			if (cause.equals(ErrorMessageException.class.getCanonicalName())) {
-				MaterialToast.alert(message);
-				return true;
-			}
-		} */
+			case Response.SC_CONFLICT:			
+				MaterialToast.alert(msgs.conflict());
+				return true;			
+			case Response.SC_INTERNAL_SERVER_ERROR:			
+				MaterialToast.alert(msgs.unknownError());
+				return true;			
+		} 
 		
-		e = unwrap(e);		
+		e = unwrap(e);
+		
+		if (e instanceof FieldException) {
+			MaterialToast.alert(e.getMessage());
+			return true;
+		}
+		
 		if (isNetworkException(e)){				
 			ErrorManager.get().getErrorDisplayer().display(msgs.networkError(), e, Severity.DANGER);
 		} else {
-			if (!"EXCEPTION_INVOKATION".equals(message))				
-				logger.log(Level.SEVERE, "Client side exception", e);
+			logger.log(Level.SEVERE, "Client side exception", e);
 			ErrorManager.get().getErrorDisplayer().display(e, Severity.DANGER);
 		}
 		

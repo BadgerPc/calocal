@@ -21,18 +21,18 @@
 			<d:tab><g:Label><ui:msg>Sign Up</ui:msg></g:Label></d:tab>			
 			<d:content>
 				<m:MaterialPanel>
-					<m:MaterialTextBox placeholder="Login" ui:field="siLogin"/>
+					<m:MaterialTextBox placeholder="Login" ui:field="siLogin" />
 					<m:MaterialTextBox placeholder="Password" type="password" ui:field="siPass"/>
 					<d:Button ui:field="signIn"><ui:msg>Sign In</ui:msg></d:Button>
-					<d:Button ui:field="fb"><ui:msg>Sign in via Facebook</ui:msg></d:Button>
-					<d:Button ui:field="vk"><ui:msg>Sign in via VKontakte</ui:msg></d:Button>
+					<d:Button ui:field="fb"><ui:msg>Sign in with Facebook</ui:msg></d:Button>
+					<d:Button ui:field="vk"><ui:msg>Sign in with VKontakte</ui:msg></d:Button>
 				</m:MaterialPanel>
 			</d:content>
 			<d:content>
 				<m:MaterialPanel>
-					<m:MaterialTextBox placeholder="Login" ui:field="suLogin"/>
-					<m:MaterialTextBox placeholder="Password" type="password" ui:field="suPass"/>
-					<m:MaterialTextBox placeholder="Confirm password" type="password" ui:field="passConfirm"/>
+					<m:MaterialTextBox placeholder="Login" ui:field="suLogin" />
+					<m:MaterialTextBox placeholder="Password" type="password" ui:field="suPass" />
+					<m:MaterialTextBox placeholder="Confirm password" type="password" ui:field="passConfirm" />
 					<d:Button ui:field="signUp"><ui:msg>Sign Up</ui:msg></d:Button>
 				</m:MaterialPanel>
 			</d:content>

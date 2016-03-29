@@ -1,9 +1,12 @@
 package vajracode.calocal.client.root;
 
+import javax.inject.Singleton;
+
 import com.google.gwt.core.client.GWT;
 
 import vajracode.calocal.shared.model.UserData;
 
+@Singleton
 public class UserManager {
 
 	private UserData user;
@@ -15,6 +18,10 @@ public class UserManager {
 
 	public void signOut() {
 		user = null;
+	}
+
+	public UserData getUserData() {
+		return user;
 	}
 
 }
