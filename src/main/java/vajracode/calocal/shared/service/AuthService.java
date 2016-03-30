@@ -24,6 +24,6 @@ public interface AuthService extends DirectRestService {
     UserData getCurrentUser();
 
     @PUT   
-	void register(RegistrationData data);
+	UserData register(RegistrationData data);
 
 }

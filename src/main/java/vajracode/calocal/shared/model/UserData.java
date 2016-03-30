@@ -5,7 +5,8 @@ import java.util.Date;
 
 public class UserData implements Serializable {
 
-	private Long id;
+	private long id;
+	private int dailyCalories;
 	private String name;	
 	private Date created;	
 	private Role role;
@@ -13,11 +14,11 @@ public class UserData implements Serializable {
 	public UserData() {
 	}
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -45,5 +46,12 @@ public class UserData implements Serializable {
 		this.role = role;
 	}
 
+	public int getDailyCalories() {
+		return dailyCalories;
+	}
+
+	public void setDailyCalories(int dailyCalories) {
+		this.dailyCalories = dailyCalories;
+	}
 
 }

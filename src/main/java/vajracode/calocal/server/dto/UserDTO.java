@@ -9,13 +9,11 @@ import vajracode.calocal.shared.model.UserData;
 
 @Entity
 @Table(name = "user")
-//@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@jid")
-//@JsonIgnoreProperties({"userCardData", "user"})
 public class UserDTO extends DTO {
 
 	private String name, password;	
 	private Date created;
+	private int dailyCalories;
 	
 	@Enumerated(EnumType.ORDINAL)
 	private Role role;
@@ -58,7 +56,16 @@ public class UserDTO extends DTO {
 		ret.setName(name);
 		ret.setCreated(created);
 		ret.setRole(role);
+		ret.setDailyCalories(dailyCalories);
 		return ret;
+	}
+
+	public int getDailyCalories() {
+		return dailyCalories;
+	}
+
+	public void setDailyCalories(int dailyCalories) {
+		this.dailyCalories = dailyCalories;
 	}
 		
 	

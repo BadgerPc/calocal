@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import vajracode.calocal.server.manager.UserManager;
 import vajracode.calocal.server.security.PrincipalAccessor;
 import vajracode.calocal.shared.FieldVerifier;
 import vajracode.calocal.shared.model.RegistrationData;
@@ -48,10 +49,10 @@ public class AuthServiceImpl implements AuthService {
 	}
 
 	@Override
-	public void register(RegistrationData data) {
+	public UserData register(RegistrationData data) {
 		FieldVerifier.checkName(data.getLogin());
 		FieldVerifier.checkPass(data.getPass());	
-		userManager.createUser(data.getLogin(), data.getPass());
+		return userManager.createUser(data.getLogin(), data.getPass());
 	}
 		
 

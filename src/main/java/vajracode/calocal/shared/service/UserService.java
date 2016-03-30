@@ -6,29 +6,30 @@ import org.fusesource.restygwt.client.DirectRestService;
 import org.fusesource.restygwt.client.Options;
 
 import vajracode.calocal.shared.constants.ResourcePaths;
-import vajracode.calocal.shared.model.Role;
 import vajracode.calocal.shared.model.UserData;
-import vajracode.calocal.shared.model.UserListData;
+import vajracode.calocal.shared.model.UserDataList;
 
 @Path(ResourcePaths.USER)
 public interface UserService extends DirectRestService {
 
-	@GET
-	UserListData listUsers(@QueryParam("page") int page);
-
-	@Path("/{id}")
-	@GET
-	UserData getUser(@PathParam("id") long id);
-
 	@POST
-	UserData createUser(@QueryParam("name") String name, @QueryParam("role") Role role);
+	UserData create(UserData user);
+	
+	@GET
+	UserDataList list(@QueryParam("offset") @DefaultValue("0") long offset, 
+		@QueryParam("limit") @DefaultValue("100") int limit);
 
+	@GET
 	@Path("/{id}")
+	UserData get(@PathParam("id") long id);
+	
 	@PUT
-	UserData updateUser(@PathParam("id") long id, @QueryParam("name") String name, @QueryParam("role") Role role);
-
 	@Path("/{id}")
+	UserData update(@PathParam("id") long id, UserData user);
+	
 	@DELETE
+	@Path("/{id}")
 	@Options(expect = {204})
-	void deleteUser(@PathParam("id") long id);
+	void delete(@PathParam("id") long id);
+
 }

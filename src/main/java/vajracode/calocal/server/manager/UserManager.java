@@ -1,4 +1,4 @@
-package vajracode.calocal.server.service;
+package vajracode.calocal.server.manager;
 
 import java.util.Date;
 
@@ -11,6 +11,7 @@ import vajracode.calocal.server.dto.UserDTO;
 import vajracode.calocal.server.exceptions.ConflictException;
 import vajracode.calocal.server.security.PasswordEncoder;
 import vajracode.calocal.shared.model.Role;
+import vajracode.calocal.shared.model.UserData;
 
 @Component
 public class UserManager {
@@ -22,7 +23,7 @@ public class UserManager {
 	private PasswordEncoder passwordEncoder;
 	
 	@Transactional
-	public void createUser(String login, String pass) {
+	public UserData createUser(String login, String pass) {
 		UserDTO u = userDao.getUserByName(login);
 		if (u != null)
 			throw new ConflictException();
@@ -31,7 +32,9 @@ public class UserManager {
 		u.setName(login);
 		u.setPassword(passwordEncoder.encodePassword(pass));
 		u.setRole(Role.USER);
+		u.setDailyCalories(1000);
 		userDao.persist(u);
+		return u.getUserData();
 	}
 
 }

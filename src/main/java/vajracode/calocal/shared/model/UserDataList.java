@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.fusesource.restygwt.client.Json;
 
-public class UserListData implements Serializable {
+public class UserDataList implements Serializable {
 
 	private int page;
 
@@ -18,7 +18,7 @@ public class UserListData implements Serializable {
 
 	private List<UserData> data;
 
-	public UserListData() {
+	public UserDataList() {
 	}
 
 	public int getPage() {
