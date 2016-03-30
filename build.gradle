@@ -25,8 +25,9 @@ ext {
 	springVersion = '4.2.5.RELEASE'
 	springSecurityVersion = '4.0.4.RELEASE'
 	hiberVersion = '4.3.11.Final'
-	springSocialVersion = '1.1.4.RELEASE'
-	jacksonVersion = '2.6.3'
+	springSocialVersion = '1.1.4.RELEASE'	
+	jerseyVersion = '2.22.2'
+	jacksonVersion = '2.5.4' // corresponds to jersey 2.22.2
 	
 	oAuthRedirectUrl = ""	
 	pathToSymbolMaps = ""	
@@ -86,8 +87,12 @@ dependencies {
 	providedCompile "com.github.gwtmaterialdesign:gwt-material:1.3.3"	
 	
 	providedCompile "javax.ws.rs:jsr311-api:1.1.1"
-	providedCompile "org.glassfish.jersey.ext:jersey-spring3:2.22.2"
+	providedCompile "org.glassfish.jersey.ext:jersey-spring3:$jerseyVersion"
+	providedCompile "org.glassfish.jersey.media:jersey-media-json-jackson:$jerseyVersion"
 	
+	providedCompile "com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion"
+	providedCompile "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"	
+	providedCompile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"		
 	
 	providedCompile "org.springframework:spring-orm:$springVersion"
 	providedCompile "org.springframework:spring-web:$springVersion"
@@ -109,10 +114,7 @@ dependencies {
 	
 	//spring-social dependencies
 	providedCompile "org.springframework.security:spring-security-crypto:$springSecurityVersion"
-	providedCompile "org.apache.httpcomponents:httpclient:4.5"
-	providedCompile "com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion"
-	providedCompile "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"	
-	providedCompile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"		
+	providedCompile "org.apache.httpcomponents:httpclient:4.5"	
 	
 	providedCompile "org.hibernate:hibernate-entitymanager:$hiberVersion"
 	providedCompile "org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final"	

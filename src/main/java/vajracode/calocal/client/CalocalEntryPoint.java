@@ -18,6 +18,7 @@ public class CalocalEntryPoint implements EntryPoint, Module {
 	
 	public void onModuleLoad() {
 		Defaults.setServiceRoot("/api");
+		Defaults.setDateFormat(null);
 		
 		final ErrorHandler eh = new MainErrorHandler();
 		ErrorManager.get().registerErrorHandler(eh);

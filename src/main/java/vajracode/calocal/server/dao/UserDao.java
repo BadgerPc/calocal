@@ -11,7 +11,7 @@ public class UserDao extends Dao<UserDTO> {
 	@Transactional(readOnly = true)
 	public UserDTO getUserByName(String name) {
 		return getSingleResultOrNull(
-			em.createQuery("from UserDTO where name = ?", UserDTO.class)
+			em.createQuery("from UserDTO where name = ?1", UserDTO.class)
 			.setParameter(1, name));			
 	}
 	

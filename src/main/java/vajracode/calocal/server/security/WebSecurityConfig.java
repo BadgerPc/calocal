@@ -6,7 +6,6 @@ import org.springframework.context.annotation.*;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -55,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(securityUserService());
-        authenticationProvider.setPasswordEncoder(new ShaPasswordEncoder());
+        authenticationProvider.setPasswordEncoder(new PasswordEncoder());
         return authenticationProvider;
     }
 
@@ -82,6 +81,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	                .antMatchers("/").permitAll()
 	                .antMatchers("/Calocal/*").permitAll()
 	                .antMatchers("/favicon.ico").permitAll()
+	                .antMatchers("/logo.png").permitAll()
 	                .antMatchers("/index.html").permitAll()
 	                .antMatchers(ResourcePaths.API_LOGIN).permitAll()
 	                .anyRequest().authenticated()

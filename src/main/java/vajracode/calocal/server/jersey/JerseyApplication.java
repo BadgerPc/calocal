@@ -19,7 +19,8 @@ public class JerseyApplication extends ResourceConfig {
 		//register(JacksonFeature.class);
         register(AuthServiceImpl.class);
         register(UserServiceImpl.class);        
-        //register(CustomExceptionMapper.class);
+        register(FieldExceptionMapper.class);
+        register(UncaughtThrowableExceptionMapper.class);
 	}
 	 
 }

@@ -8,11 +8,6 @@ import javax.ws.rs.ext.Provider;
 import vajracode.calocal.shared.exceptions.ErrorData;
 import vajracode.calocal.shared.exceptions.FieldException;
 
-/**
- * Exception mapper to convert {@link IllegalArgumentException} into a textual response.
- *
- * @author Marko Asplund (marko.asplund at yahoo.com)
- */
 @Provider
 public class FieldExceptionMapper implements ExceptionMapper<FieldException> {
 

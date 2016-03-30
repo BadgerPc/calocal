@@ -11,7 +11,6 @@ import fr.putnami.pwt.core.service.client.annotation.AsyncHandler;
 import gwt.material.design.client.ui.MaterialToast;
 import vajracode.calocal.client.framework.CommonPresenter;
 import vajracode.calocal.client.i18n.I18nConstants;
-import vajracode.calocal.client.root.UserManager;
 import vajracode.calocal.client.utils.NativeUtils;
 import vajracode.calocal.client.utils.RestUtils;
 import vajracode.calocal.shared.FieldVerifier;

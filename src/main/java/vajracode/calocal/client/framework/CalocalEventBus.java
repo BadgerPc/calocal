@@ -62,6 +62,9 @@ public interface CalocalEventBus extends EventBusWithLookup {
 	
 
 	@Event(handlers = MainPresenter.class)
-	void main();	
+	void main();
+
+	@Event(handlers = RootPresenter.class)
+	void updateUser();	
 
 }

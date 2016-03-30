@@ -11,7 +11,6 @@ import fr.putnami.pwt.core.inject.client.annotation.InjectService;
 import fr.putnami.pwt.core.service.client.annotation.AsyncHandler;
 import vajracode.calocal.client.framework.CalocalEventBus;
 import vajracode.calocal.client.i18n.I18nConstants;
-import vajracode.calocal.client.root.UserManager;
 import vajracode.calocal.client.utils.NativeUtils;
 import vajracode.calocal.shared.model.UserData;
 import vajracode.calocal.shared.service.AuthService;

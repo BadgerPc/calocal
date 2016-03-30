@@ -13,9 +13,13 @@
 	
 	<ui:style>	
 	</ui:style>		
-		
-	<d:CenteredColFlexPanel>
-		<m:MaterialTitle ui:field="title" title="Main screen"/>			
-    </d:CenteredColFlexPanel>    
+	
+	<m:MaterialRow addStyleNames="card">
+		<m:MaterialColumn grid="s8 m8 l8">
+		</m:MaterialColumn>
+		<m:MaterialColumn grid="s4 m4 l4">
+		</m:MaterialColumn>
+	</m:MaterialRow>	
+	    
     
 </ui:UiBinder>

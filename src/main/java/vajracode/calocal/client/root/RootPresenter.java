@@ -66,5 +66,9 @@ public class RootPresenter extends CommonPresenter<RootView> {
 	public boolean isLandingPresent() {
 		return landingPresent;
 	}
+	
+	public void onUpdateUser() {
+		view.updateUser();
+	}
 
 }

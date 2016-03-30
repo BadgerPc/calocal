@@ -23,9 +23,9 @@
 			<param name="AcceptOnMatch" value="false" />
 		</filter>
 	</appender>		
-	<logger name="org.springframework.security">
+	<!-- <logger name="org.springframework.security">
   		<level value="DEBUG"/>   		
-	</logger>
+	</logger> -->
 	<logger name="vajracode">
   		<level value="DEBUG"/>   		  	
 	</logger>

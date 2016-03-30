@@ -10,9 +10,9 @@ import vajracode.calocal.shared.constants.ResourcePaths;
 import vajracode.calocal.shared.model.RegistrationData;
 import vajracode.calocal.shared.model.UserData;
 
-@Path(ResourcePaths.LOGIN)
+@Path(ResourcePaths.MEAL)
 @Consumes(MediaType.APPLICATION_JSON)
-public interface AuthService extends DirectRestService {
+public interface MealService extends DirectRestService {
     @POST    
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     void login(@FormParam(LoginFields.USERNAME) String username, @FormParam(LoginFields.PASSWORD) String password);

@@ -12,31 +12,40 @@
 	<ui:with field='res' type='vajracode.calocal.client.resources.Resources' />
 	
 	<ui:style>	
+	.card {
+		padding: 32px;
+	}
 	</ui:style>		
 		
-	<d:CenteredColFlexPanel>
+	<m:MaterialRow>
+	<d:CenteredColFlexPanel width="100%">
 		<m:MaterialTitle ui:field="title" title="{msgs.pleaseSignIn}"/>
+		<g:HTMLPanel addStyleNames="col l6 m8 s10">
 		<d:Tabs>
 			<d:tab><g:Label><ui:msg>Sign In</ui:msg></g:Label></d:tab>
 			<d:tab><g:Label><ui:msg>Sign Up</ui:msg></g:Label></d:tab>			
 			<d:content>
-				<m:MaterialPanel>
+				<m:MaterialPanel addStyleNames="card {style.card}">
 					<m:MaterialTextBox placeholder="Login" ui:field="siLogin" />
 					<m:MaterialTextBox placeholder="Password" type="password" ui:field="siPass"/>
-					<d:Button ui:field="signIn"><ui:msg>Sign In</ui:msg></d:Button>
-					<d:Button ui:field="fb"><ui:msg>Sign in with Facebook</ui:msg></d:Button>
-					<d:Button ui:field="vk"><ui:msg>Sign in with VKontakte</ui:msg></d:Button>
+					<d:CenteredColFlexPanel>
+						<d:Button ui:field="signIn"><ui:msg>Sign In</ui:msg></d:Button>
+						<d:Button ui:field="fb"><ui:msg>Sign in with Facebook</ui:msg></d:Button>
+						<d:Button ui:field="vk"><ui:msg>Sign in with VKontakte</ui:msg></d:Button>
+					</d:CenteredColFlexPanel>
 				</m:MaterialPanel>
 			</d:content>
 			<d:content>
-				<m:MaterialPanel>
+				<m:MaterialPanel addStyleNames="card {style.card}">
 					<m:MaterialTextBox placeholder="Login" ui:field="suLogin" />
 					<m:MaterialTextBox placeholder="Password" type="password" ui:field="suPass" />
 					<m:MaterialTextBox placeholder="Confirm password" type="password" ui:field="passConfirm" />
 					<d:Button ui:field="signUp"><ui:msg>Sign Up</ui:msg></d:Button>
 				</m:MaterialPanel>
 			</d:content>
-		</d:Tabs>		
-    </d:CenteredColFlexPanel>    
+		</d:Tabs>
+		</g:HTMLPanel>		
+    </d:CenteredColFlexPanel>
+    </m:MaterialRow>    
     
 </ui:UiBinder>
