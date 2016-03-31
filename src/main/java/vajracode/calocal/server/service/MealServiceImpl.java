@@ -24,7 +24,7 @@ public class MealServiceImpl implements MealService {
 	}
 
 	private void check(MealData meal) {
-		FieldVerifier.checkName(meal.getName());
+		FieldVerifier.checkMealName(meal.getName());
 		FieldVerifier.checkCal(meal.getCal());
 	}
 
@@ -34,9 +34,13 @@ public class MealServiceImpl implements MealService {
 	}
 
 	@Override
-	public MealDataList list(Date fromDate, Date toDate, Date fromTime, Date toTime, 
-			long uid,  long offset, int limit) {		
-		return mealManager.list(fromDate, toDate, fromTime, toTime, uid, offset, limit);
+	public MealDataList list(long fromDate, long toDate, long fromTime, long toTime, 
+			long uid, int offset, int limit) {		
+		return mealManager.list(getDate(fromDate), getDate(toDate), getDate(fromTime), getDate(toTime), uid, offset, limit);
+	}
+
+	private Date getDate(long l) {
+		return l == 0 ? null : new Date(l);
 	}
 
 	@Override

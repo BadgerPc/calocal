@@ -1,7 +1,5 @@
 package vajracode.calocal.shared.service;
 
-import java.util.Date;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
@@ -25,12 +23,12 @@ public interface MealService extends DirectRestService {
     void delete(@PathParam("id") long id);
 
     @GET
-    MealDataList list(@QueryParam("fromDate") Date fromDate, 
-    		@QueryParam("toDate") Date toDate, 
-    		@QueryParam("fromTime") Date fromTime, 
-    		@QueryParam("toTime") Date toTime,
+    MealDataList list(@QueryParam("fromDate") @DefaultValue("0") long fromDate, 
+    		@QueryParam("toDate") @DefaultValue("0") long toDate, 
+    		@QueryParam("fromTime") @DefaultValue("0") long fromTime, 
+    		@QueryParam("toTime") @DefaultValue("0") long toTime,
     		@QueryParam("uid") @DefaultValue("0") long uid,
-    		@QueryParam("offset") @DefaultValue("0") long offset,
+    		@QueryParam("offset") @DefaultValue("0") int offset,
     		@QueryParam("limit") @DefaultValue("100") int limit);
         
 	@GET

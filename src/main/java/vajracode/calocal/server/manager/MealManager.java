@@ -1,5 +1,6 @@
 package vajracode.calocal.server.manager;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.stream.Collectors;
 
@@ -85,15 +86,18 @@ public class MealManager {
 
 	@Transactional(readOnly = true)
 	public MealDataList list(Date fromDate, Date toDate, Date fromTime, Date toTime, 
-			long uid, long offset, int limit) {
+			long uid, int offset, int limit) {
 		if (uid == 0 || (uid != accessManager.getLoggedInUserId() && !accessManager.isAdmin()))
 			uid = accessManager.getLoggedInUserId();
 		
+		UserDTO user = userDao.getReference(uid);
+		
 		MealDataList ret = new MealDataList();
 		ret.setOffset(offset);
-		ret.setTotal(mealDao.getListSize(fromDate, toDate, fromTime, toTime, uid));		
-		ret.setData(mealDao.getList(fromDate, toDate, fromTime, toTime, uid, offset, limit)
-			.stream().map( it -> it.getMealData() ).collect(Collectors.toList()));	
+		ret.setLimit(limit);
+		ret.setTotal(mealDao.getListSize(fromDate, toDate, fromTime, toTime, user));		
+		ret.setData(mealDao.getList(fromDate, toDate, fromTime, toTime, user, offset, limit)
+			.stream().map( it -> it.getMealData() ).collect(Collectors.toCollection(ArrayList::new)));	
 		
 		return ret;
 	}

@@ -119,5 +119,14 @@
 		<url-pattern>/</url-pattern>
 	</filter-mapping>
 	
+	<filter>
+	    <filter-name>exceptionLoggingFilter</filter-name>
+	    <filter-class>vajracode.calocal.server.service.ExceptionsLoggingFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+	    <filter-name>exceptionLoggingFilter</filter-name>
+	    <url-pattern>*</url-pattern>
+	</filter-mapping>	
 
 </web-app>

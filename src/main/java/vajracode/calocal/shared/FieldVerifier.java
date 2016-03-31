@@ -1,7 +1,5 @@
 package vajracode.calocal.shared;
 
-import javax.ws.rs.BadRequestException;
-
 import vajracode.calocal.shared.constants.HTMLConstants;
 import vajracode.calocal.shared.exceptions.FieldException;
 
@@ -92,7 +90,12 @@ public class FieldVerifier {
 
 	public static void checkIdsEqual(long id1, long id2) {
 		if (id1 != id2)
-			throw new BadRequestException("Path id and JSON id dos not match");
+			throw new FieldException("Path id and JSON id dos not match");
+	}
+
+	public static void checkMealName(String string) {
+		if (string.length() == 0)
+			throw new FieldException("Description can not be empty");
 	}
 
 }

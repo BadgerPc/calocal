@@ -64,13 +64,14 @@ h4 {
 h5 {
   font-size: 24px !important;
   line-height: 1.804rem;
-  margin: 32px 0 16px 0 !important; 
+  margin: 0 !important; 
 }
 
 h6 {
   font-size: 1rem;
   line-height: 1.1rem;
-  margin: 0.5rem 0 0.4rem 0; }
+  margin: 0 !important; 
+}
 
 em {
   font-style: italic; 
@@ -81,9 +82,12 @@ em {
 }
 .navbar-fixed {
   position: relative;
-  height: 64px;
+  height: 128px !important;
   z-index: 998; 
 } 
+nav .nav-wrapper {
+    margin-top: 32px;
+}
 .navbar-fixed nav {
     position: fixed; 
     background-color: rgba(0, 0, 0, 0);
@@ -94,14 +98,13 @@ em {
     width: 100%;
     color: #fff;
 }
-
 @media only screen and (min-width: 601px) {
   nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
     height: 64px;
     line-height: 64px; }
 
 .navbar-fixed {
-    height: 64px; } }
+    height: 128px !important; } }
 @font-face {
   font-family: "Roboto";
   src: url("/Calocal/font/roboto/Roboto-Thin.woff2") format("woff2"), url("/Calocal/font/roboto/Roboto-Thin.woff") format("woff"), url("/Calocal/font/roboto/Roboto-Thin.ttf") format("truetype");
@@ -404,7 +407,7 @@ section > ul {
 	</style>
   </head>
   <body> 
-    <div style="width: 100%; min-height: 100%; overflow-x: hidden;">
+    <div style="width: 100%; min-height: 100%; overflow-x: hidden; background-color: #F5F5F5;">
     	<div id="menu">
     		<header class="navbar-fixed">
     			<nav>

@@ -6,7 +6,8 @@ import java.util.List;
 public class MealDataList implements Serializable {
 
 	private List<MealData> data;
-	private long offset, total;		
+	private long total;
+	private int offset, limit;
 	
 	public MealDataList() {
 	}
@@ -19,11 +20,11 @@ public class MealDataList implements Serializable {
 		this.data = data;
 	}
 
-	public long getOffset() {
+	public int getOffset() {
 		return offset;
 	}
 
-	public void setOffset(long offset) {
+	public void setOffset(int offset) {
 		this.offset = offset;
 	}
 
@@ -33,5 +34,13 @@ public class MealDataList implements Serializable {
 
 	public void setTotal(long total) {
 		this.total = total;
+	}
+
+	public int getLimit() {
+		return limit;
+	}
+
+	public void setLimit(int limit) {
+		this.limit = limit;
 	}
 }

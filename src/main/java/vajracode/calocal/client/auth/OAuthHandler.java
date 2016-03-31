@@ -32,7 +32,7 @@ public class OAuthHandler extends BaseEventHandler<CalocalEventBus> implements I
         }
         
         if (code == null) {        	        	
-	        getEventBus().skipNextProgressBar();
+	        //getEventBus().skipNextProgressBar();
 	        onCheckLoggedIn();	            	
         	return;
         }

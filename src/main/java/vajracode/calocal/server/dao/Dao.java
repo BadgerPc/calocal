@@ -1,6 +1,8 @@
 package vajracode.calocal.server.dao;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 
 import org.hibernate.proxy.HibernateProxy;
 import org.hibernate.proxy.LazyInitializer;
@@ -85,5 +87,11 @@ public class Dao<T> {
 			return null;
 		}
 	}
+	
+	public <P> CriteriaQuery<P> getCriteriaQuery(Class<P> cls) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		return cb.createQuery(cls);
+	}	
+
 
 }

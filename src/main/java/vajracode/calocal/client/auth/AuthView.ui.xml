@@ -12,9 +12,7 @@
 	<ui:with field='res' type='vajracode.calocal.client.resources.Resources' />
 	
 	<ui:style>	
-	.card {
-		padding: 32px;
-	}
+
 	</ui:style>		
 		
 	<m:MaterialRow>
@@ -25,7 +23,7 @@
 			<d:tab><g:Label><ui:msg>Sign In</ui:msg></g:Label></d:tab>
 			<d:tab><g:Label><ui:msg>Sign Up</ui:msg></g:Label></d:tab>			
 			<d:content>
-				<m:MaterialPanel addStyleNames="card {style.card}">
+				<m:MaterialPanel addStyleNames="card {res.css.padding32}">
 					<m:MaterialTextBox placeholder="Login" ui:field="siLogin" />
 					<m:MaterialTextBox placeholder="Password" type="password" ui:field="siPass"/>
 					<d:CenteredColFlexPanel>
@@ -36,7 +34,7 @@
 				</m:MaterialPanel>
 			</d:content>
 			<d:content>
-				<m:MaterialPanel addStyleNames="card {style.card}">
+				<m:MaterialPanel addStyleNames="card {res.css.padding32}">
 					<m:MaterialTextBox placeholder="Login" ui:field="suLogin" />
 					<m:MaterialTextBox placeholder="Password" type="password" ui:field="suPass" />
 					<m:MaterialTextBox placeholder="Confirm password" type="password" ui:field="passConfirm" />

@@ -12,14 +12,42 @@
 	<ui:with field='res' type='vajracode.calocal.client.resources.Resources' />
 	
 	<ui:style>	
+	.hr {
+	    border-top: solid 1px rgba(0, 0, 0, 0.18);    	
+	}
 	</ui:style>		
 	
-	<m:MaterialRow addStyleNames="card">
-		<m:MaterialColumn grid="s8 m8 l8">
-		</m:MaterialColumn>
-		<m:MaterialColumn grid="s4 m4 l4">
-		</m:MaterialColumn>
-	</m:MaterialRow>	
+	<m:MaterialPanel addStyleNames="card {res.css.padding32}">
+		<m:MaterialRow>
+			<m:MaterialColumn grid="s8 m8 l8">
+				<d:RowFlexPanel addStyleNames="{res.css.alignItemsCenter}" >
+					<d:Button type="flat" icon="mdi-editor-insert-invitation" size="large" ui:field="dateButton" />
+					<d:Header ui:field="dateLabel" />
+				</d:RowFlexPanel>
+				<d:RowFlexPanel addStyleNames="{res.css.alignItemsCenter}">
+					<d:Button type="flat" icon="mdi-action-schedule" size="large" ui:field="timeButton" />
+					<d:Subheader ui:field="timeLabel" />
+				</d:RowFlexPanel>
+			</m:MaterialColumn>
+			<m:MaterialColumn grid="s4 m4 l4">
+				<d:RowFlexPanel>
+					<d:Header><ui:msg>Calories</ui:msg></d:Header>
+				</d:RowFlexPanel>
+				<d:RowFlexPanel>
+					<g:HTML ui:field="summary"/>
+					<d:Button type="flat" icon="mdi-editor-mode-edit" ui:field="summaryButton" />
+				</d:RowFlexPanel>
+			</m:MaterialColumn>
+		</m:MaterialRow>
+		<d:CenteredColFlexPanel ui:field="content" addStyleNames="{style.hr}" />		
+		<d:CenteredColFlexPanel ui:field="today" addStyleNames="{res.css.marginTop32}">
+			<d:CenteredRowFlexPanel>
+				<m:MaterialTextBox ui:field="mealName" placeholder="{msgs.mealName}" />
+				<d:Button ui:field="addMeal"><ui:msg>Add new meal</ui:msg></d:Button>
+			</d:CenteredRowFlexPanel>
+			<d:Header ui:field="percents" />
+		</d:CenteredColFlexPanel>
+	</m:MaterialPanel>
 	    
     
 </ui:UiBinder>

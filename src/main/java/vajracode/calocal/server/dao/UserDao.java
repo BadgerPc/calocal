@@ -19,4 +19,8 @@ public class UserDao extends Dao<UserDTO> {
 		return em.find(UserDTO.class, id);
 	}
 
+	public UserDTO getReference(long id) {
+		return em.getReference(UserDTO.class, id);
+	}
+
 }

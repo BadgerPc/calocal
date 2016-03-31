@@ -7,6 +7,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.spring.scope.RequestContextFilter;
 
 import vajracode.calocal.server.service.AuthServiceImpl;
+import vajracode.calocal.server.service.MealServiceImpl;
 import vajracode.calocal.server.service.UserServiceImpl;
 
 public class JerseyApplication extends ResourceConfig {
@@ -18,6 +19,7 @@ public class JerseyApplication extends ResourceConfig {
 		register(RequestContextFilter.class);
 		//register(JacksonFeature.class);
         register(AuthServiceImpl.class);
+        register(MealServiceImpl.class);
         register(UserServiceImpl.class);        
         register(FieldExceptionMapper.class);
         register(UncaughtThrowableExceptionMapper.class);
