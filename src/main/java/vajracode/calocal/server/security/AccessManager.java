@@ -4,11 +4,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import vajracode.calocal.server.dto.MealDTO;
 import vajracode.calocal.server.exceptions.UnauthorizedException;
+import vajracode.calocal.shared.model.Role;
 import vajracode.calocal.shared.model.UserData;
 
 @Component
-public class PrincipalAccessor {
+public class AccessManager {
 	
     public UserData getLoggedInUser() {
         UserData user = null;
@@ -27,5 +29,18 @@ public class PrincipalAccessor {
         	throw new UnauthorizedException();
         return user;
     }
+
+	public boolean hasAccessToMeal(MealDTO meal) {
+		UserData u = getLoggedInUser();
+		return u.getRole() == Role.ADMIN || u.getId() == meal.getUser().getId();
+	}
+
+	public boolean isAdmin() {
+		return getLoggedInUser().getRole() == Role.ADMIN;
+	}
+
+	public long getLoggedInUserId() {
+		return getLoggedInUser().getId();
+	}
     
 }

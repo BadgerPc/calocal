@@ -1,5 +1,7 @@
 package vajracode.calocal.shared;
 
+import javax.ws.rs.BadRequestException;
+
 import vajracode.calocal.shared.constants.HTMLConstants;
 import vajracode.calocal.shared.exceptions.FieldException;
 
@@ -81,6 +83,16 @@ public class FieldVerifier {
 	public static void checkPassEqual(String pass, String passConfirm) {
 		if (!pass.equals(passConfirm))
 			throw new FieldException("Passwords do not match");
+	}
+
+	public static void checkCal(int cal) {
+		if (cal < 0)
+			throw new FieldException("Calories count should be positive");
+	}
+
+	public static void checkIdsEqual(long id1, long id2) {
+		if (id1 != id2)
+			throw new BadRequestException("Path id and JSON id dos not match");
 	}
 
 }

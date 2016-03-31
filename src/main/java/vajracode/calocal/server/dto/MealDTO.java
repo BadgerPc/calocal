@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import vajracode.calocal.shared.model.MealData;
+
 @Entity
 @Table(name = "meal")
 public class MealDTO extends DTO {
@@ -47,6 +49,16 @@ public class MealDTO extends DTO {
 
 	public void setUser(UserDTO user) {
 		this.user = user;
+	}
+
+	public MealData getMealData() {
+		MealData data = new MealData();
+		data.setId(getId());
+		data.setName(name);
+		data.setCal(cal);
+		data.setDateTime(consumed);
+		data.setUserId(user.getIdDirect());
+		return data;
 	} 	
 		
 	

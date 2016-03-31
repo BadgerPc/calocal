@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import vajracode.calocal.server.manager.UserManager;
-import vajracode.calocal.server.security.PrincipalAccessor;
+import vajracode.calocal.server.security.AccessManager;
 import vajracode.calocal.shared.FieldVerifier;
 import vajracode.calocal.shared.model.RegistrationData;
 import vajracode.calocal.shared.model.UserData;
@@ -19,7 +19,7 @@ public class AuthServiceImpl implements AuthService {
 	private final Logger log = Logger.getLogger(getClass());
 	
 	@Autowired
-	private PrincipalAccessor principalAccessor;
+	private AccessManager principalAccessor;
 	
 	@Autowired
 	private UserManager userManager;

@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import vajracode.calocal.server.manager.UserManager;
-import vajracode.calocal.server.security.PrincipalAccessor;
+import vajracode.calocal.server.security.AccessManager;
 import vajracode.calocal.shared.model.UserData;
 import vajracode.calocal.shared.model.UserDataList;
 import vajracode.calocal.shared.service.UserService;
@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
 	private UserManager userManager;
 	
 	@Autowired
-	private PrincipalAccessor principalAccessor;
+	private AccessManager principalAccessor;
 		
 	@Override
 	public UserData create(UserData data) {	

@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class MealData implements Serializable {
 	
-	private long id;
+	private long id, userId;
 	private String name;
 	private int cal;
 	private Date dateTime;
@@ -43,6 +43,14 @@ public class MealData implements Serializable {
 
 	public void setDateTime(Date dateTime) {
 		this.dateTime = dateTime;
+	}
+
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 
 }
