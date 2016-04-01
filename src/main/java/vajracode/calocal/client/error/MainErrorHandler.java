@@ -54,31 +54,34 @@ public class MainErrorHandler implements ErrorHandler {
 //		}
 		GWT.log(e.toString());	
 			
-		switch(RestUtils.getStatuCode(e)) {
+		switch(RestUtils.getStatuCode(e)) {		
 			case Response.SC_UNAUTHORIZED:
 				eventBus.authError(msgs.needBeAuth());
 				return true;				
 			case Response.SC_FORBIDDEN:			
-				MaterialToast.alert(msgs.noAccess());
+				MaterialToast.fireToast(msgs.noAccess());
 				return true;			
 			case Response.SC_NOT_FOUND:			
-				MaterialToast.alert(msgs.notFound());
+				MaterialToast.fireToast(msgs.notFound());
 				return true;
 			case Response.SC_BAD_REQUEST:			
-				MaterialToast.alert(msgs.badRequest());
+				MaterialToast.fireToast(msgs.badRequest());
 				return true;
 			case Response.SC_CONFLICT:			
-				MaterialToast.alert(msgs.conflict());
+				MaterialToast.fireToast(msgs.conflict());
 				return true;			
 			case Response.SC_INTERNAL_SERVER_ERROR:			
-				MaterialToast.alert(msgs.unknownError());
+				MaterialToast.fireToast(msgs.unknownError());
 				return true;			
+			case 0:
+				MaterialToast.fireToast(msgs.noNetwork());
+				return true;
 		} 
 		
 		e = unwrap(e);
 		
 		if (e instanceof FieldException) {
-			MaterialToast.alert(e.getMessage());
+			MaterialToast.fireToast(e.getMessage());
 			return true;
 		}
 		

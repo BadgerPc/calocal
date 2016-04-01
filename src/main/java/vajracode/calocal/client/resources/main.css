@@ -102,3 +102,9 @@
 .padding32 {
 	padding: 32px;
 }
+.summary > h5 {
+	display: inline;
+}
+.summary > h6 {
+	display: inline;
+}

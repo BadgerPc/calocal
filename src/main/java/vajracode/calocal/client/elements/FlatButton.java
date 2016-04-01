@@ -2,21 +2,23 @@ package vajracode.calocal.client.elements;
 
 import com.google.gwt.event.dom.client.ClickHandler;
 
+import gwt.material.design.client.constants.ButtonType;
+
 public class FlatButton extends Button {
 
 	public FlatButton() {
 		super();
-		setType(TYPE_FLAT);
+		setType(ButtonType.FLAT);
 	}
 
 	public FlatButton(String text, ClickHandler clickHandler) {
 		super(text, clickHandler);
-		setType(TYPE_FLAT);
+		setType(ButtonType.FLAT);
 	}
 
 	public FlatButton(String text) {
 		super(text);
-		setType(TYPE_FLAT);
+		setType(ButtonType.FLAT);
 	}
 
 	

@@ -23,6 +23,7 @@ public interface MealService extends DirectRestService {
     void delete(@PathParam("id") long id);
 
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
     MealDataList list(@QueryParam("fromDate") @DefaultValue("0") long fromDate, 
     		@QueryParam("toDate") @DefaultValue("0") long toDate, 
     		@QueryParam("fromTime") @DefaultValue("0") long fromTime, 

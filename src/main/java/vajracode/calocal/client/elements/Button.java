@@ -7,28 +7,11 @@ import vajracode.calocal.client.resources.Resources;
 
 public class Button extends MaterialButton {
 
-	public static final String TYPE_FLAT = "flat";
-
-	public Button() {
-		this("", "", "light");		
-	}
-
-	public Button(String text, String type, String icon, String iconPosition, String size, String tooltip) {
-		super(text, type, icon, iconPosition, size, tooltip);
-	}
-
-	public Button(String icon, String color, String type, String waves, String tooltip) {
-		super(icon, color, type, waves, tooltip);
-	}
-
-	public Button(String text, String color, String waves) {
-		super(text, color, waves);
-		addStyleName("valign-wrapper");
-		addStyleName(Resources.INSTANCE.css().marginStandard());		
+	public Button() {		
 	}
 
 	public Button(String text) {
-		this(text, "", "light");		
+		setText(text);		
 	}
 
 	public Button(String text, ClickHandler clickHandler) {

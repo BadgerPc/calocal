@@ -1,14 +1,16 @@
 package vajracode.calocal.shared.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserData implements Serializable {
 
 	private long id;
 	private int dailyCalories;
-	private String name;	
-	private Date created;	
+	private String name;
+	private String password;	
 	private Role role;
 
 	public UserData() {
@@ -30,14 +32,6 @@ public class UserData implements Serializable {
 		this.name = name;
 	}
 
-	public Date getCreated() {
-		return created;
-	}
-
-	public void setCreated(Date created) {
-		this.created = created;
-	}
-
 	public Role getRole() {
 		return role;
 	}
@@ -52,6 +46,14 @@ public class UserData implements Serializable {
 
 	public void setDailyCalories(int dailyCalories) {
 		this.dailyCalories = dailyCalories;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 }

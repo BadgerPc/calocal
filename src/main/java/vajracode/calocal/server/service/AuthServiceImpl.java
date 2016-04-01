@@ -16,6 +16,9 @@ import vajracode.calocal.shared.service.AuthService;
 @Service
 public class AuthServiceImpl implements AuthService {
 
+	private static final String LOGIN_ERROR_MSG = "Spring Security misconfiguration: login";
+	private static final String LOGOUT_ERROR_MSG = "Spring Security misconfiguration: logout";
+
 	private final Logger log = Logger.getLogger(getClass());
 	
 	@Autowired
@@ -31,16 +34,16 @@ public class AuthServiceImpl implements AuthService {
 	public void login(String username, String password) {
 		//intercepted by Spring Security
 		//configured in WebSecurityConfig
-		log.error("Spring Security misconfiguration: login");
-		throw new InternalServerErrorException();
+		log.error(LOGIN_ERROR_MSG);
+		throw new InternalServerErrorException(LOGIN_ERROR_MSG);
 	}
 
 	@Override
 	public void logout() {
 		//intercepted by Spring Security
 		//configured in WebSecurityConfig
-		log.error("Spring Security misconfiguration: logout");
-		throw new InternalServerErrorException();
+		log.error(LOGOUT_ERROR_MSG);
+		throw new InternalServerErrorException(LOGOUT_ERROR_MSG);
 	}
 
 	@Override
@@ -50,9 +53,9 @@ public class AuthServiceImpl implements AuthService {
 
 	@Override
 	public UserData register(RegistrationData data) {
-		FieldVerifier.checkName(data.getLogin());
+		FieldVerifier.checkUserName(data.getLogin());
 		FieldVerifier.checkPass(data.getPass());	
-		return userManager.createUser(data.getLogin(), data.getPass());
+		return userManager.register(data.getLogin(), data.getPass());
 	}
 		
 

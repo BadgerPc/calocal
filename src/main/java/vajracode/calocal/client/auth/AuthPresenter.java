@@ -41,7 +41,7 @@ public class AuthPresenter extends CommonPresenter<AuthView> {
 	}
 
 	public void signIn(String login, String pass) {
-		FieldVerifier.checkName(login);
+		FieldVerifier.checkUserName(login);
 		FieldVerifier.checkPass(pass);
 		service.login(login, pass);		
 	}
@@ -54,14 +54,14 @@ public class AuthPresenter extends CommonPresenter<AuthView> {
 	@AsyncHandler
 	public void onLoginThrown(Throwable e) {
 		if (RestUtils.getStatuCode(e) == Response.SC_UNAUTHORIZED) {
-			MaterialToast.alert(msgs.badCredentials());
+			MaterialToast.fireToast(msgs.badCredentials());
 			view.resetPass();
 		}
 		ErrorManager.get().getErrorHandlers().get(0).handle(e);
 	}
 
 	public void signUp(String login, String pass, String passConfirm) {
-		FieldVerifier.checkName(suLogin = login);
+		FieldVerifier.checkUserName(suLogin = login);
 		FieldVerifier.checkPass(suPass = pass);
 		FieldVerifier.checkPassEqual(pass, passConfirm);
 		service.register(new RegistrationData(login, pass));

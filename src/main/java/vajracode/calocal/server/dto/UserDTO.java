@@ -54,7 +54,6 @@ public class UserDTO extends DTO {
 		UserData ret = new UserData();
 		ret.setId(getId());
 		ret.setName(name);
-		ret.setCreated(created);
 		ret.setRole(role);
 		ret.setDailyCalories(dailyCalories);
 		return ret;

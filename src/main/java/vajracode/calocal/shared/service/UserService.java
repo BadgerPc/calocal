@@ -16,7 +16,7 @@ public interface UserService extends DirectRestService {
 	UserData create(UserData user);
 	
 	@GET
-	UserDataList list(@QueryParam("offset") @DefaultValue("0") long offset, 
+	UserDataList list(@QueryParam("offset") @DefaultValue("0") int offset, 
 		@QueryParam("limit") @DefaultValue("100") int limit);
 
 	@GET

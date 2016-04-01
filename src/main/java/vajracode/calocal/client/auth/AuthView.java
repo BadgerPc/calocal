@@ -28,7 +28,7 @@ public class AuthView extends CommonView<AuthPresenter> {
 		title.setDescription("");
 	}
 	
-	@UiHandler("fb")
+	/*@UiHandler("fb")
 	public void onFbButton(ClickEvent event) {
 		//bus.getEventBus().startOAuthDanceSN(SocialNetwork.FB);
 	}
@@ -36,7 +36,7 @@ public class AuthView extends CommonView<AuthPresenter> {
 	@UiHandler("vk")
 	public void onVkButton(ClickEvent event) {
 		//bus.getEventBus().startOAuthDanceSN(SocialNetwork.VK);
-	}
+	}*/
 	
 	public void setTitle(String msg) {
 		title.setDescription(msg);

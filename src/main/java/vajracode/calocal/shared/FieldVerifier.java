@@ -64,7 +64,7 @@ public class FieldVerifier {
 		return s.replaceAll("(<br>|<br/>)", "\n");
 	}
 
-	public static void checkName(String string) {
+	public static void checkUserName(String string) {
 		if (string.length() < 3 || string.length() > 20 || hasNonLetters(string))
 			throw new FieldException("Login has incorrect length or symbols");
 	}

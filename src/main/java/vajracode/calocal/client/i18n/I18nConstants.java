@@ -52,10 +52,47 @@ public interface I18nConstants extends Constants{
 	@DefaultStringValue("No access")
 	String noAccess();
 
-
+	@DefaultStringValue("out of")
+	String outOf();
 	
+	@DefaultStringValue("Save")
+	String save();
 
+	@DefaultStringValue("No network")
+	String noNetwork();
+
+	@DefaultStringValue("From")
+	String from();
+
+	@DefaultStringValue("To")
+	String to();
+
+	@DefaultStringValue("Apply")
+	String apply();
+
+	@DefaultStringValue("Add new meal")
+	String addNewMeal();
 	
+	@DefaultStringValue("Sign In")
+	String signIn();
+	
+	@DefaultStringValue("Sign Up")
+	String signUp();
+	
+	@DefaultStringValue("Login")
+	String login();
+	
+	@DefaultStringValue("Password")
+	String pass();
+	
+	@DefaultStringValue("Confirm password")
+	String confPass();
+
+	@DefaultStringValue("Desired daily calories consumption")
+	String enterDailyCalories();
+
+	@DefaultStringValue("No meals for chosen period")
+	String noData();
 
 	
 

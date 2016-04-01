@@ -30,4 +30,5 @@ public interface MainCssResource extends CssResource {
 	String marginTop16();
 	String marginTop32();
 	String padding32();
+	String summary();
 }

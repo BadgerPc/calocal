@@ -5,6 +5,8 @@ import javax.inject.Inject;
 import com.google.gwt.dom.client.Style.TextAlign;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -17,9 +19,11 @@ import fr.putnami.pwt.core.service.client.CommandController;
 import fr.putnami.pwt.core.service.client.event.CommandRequestEvent;
 import fr.putnami.pwt.core.service.client.event.CommandRequestEvent.Handler;
 import fr.putnami.pwt.core.service.client.event.CommandResponseEvent;
+import gwt.material.design.client.constants.IconType;
 import vajracode.calocal.client.auth.UserManager;
 import vajracode.calocal.client.elements.Body1Light;
 import vajracode.calocal.client.elements.Button;
+import vajracode.calocal.client.elements.FlatButton;
 import vajracode.calocal.client.framework.CommonView;
 import vajracode.calocal.client.framework.EventBusHolder;
 import vajracode.calocal.client.modals.WaitModal;
@@ -62,6 +66,12 @@ public class RootView extends CommonView implements Handler, fr.putnami.pwt.core
 		});		
 		
 		username = HTMLPanel.wrap(DOM.getElementById("username"));
+		userManager.addValueChangeHandler(new ValueChangeHandler<UserData>() {			
+			@Override
+			public void onValueChange(ValueChangeEvent<UserData> event) {
+				updateUser(event.getValue());
+			}
+		});
 	}
 
 //	public void initAuthButtons() {
@@ -129,14 +139,12 @@ public class RootView extends CommonView implements Handler, fr.putnami.pwt.core
 		return main != null ? (main.getWidgetCount() > 0 ? main.getWidget(0) : null) : null;
 	}
 
-	public void updateUser() {
-		UserData u = userManager.getUserData();
+	public void updateUser(UserData u) {		
 		username.clear();		
 		if (u != null) {
 			username.add(new Body1Light(u.getName()));
-			Button b = new Button();
-			b.setType("flat");
-			b.setIcon("mdi-action-exit-to-app");
+			Button b = new FlatButton();			
+			b.setIconType(IconType.EXIT_TO_APP);
 			b.addClickHandler(new ClickHandler() {				
 				@Override
 				public void onClick(ClickEvent event) {

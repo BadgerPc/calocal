@@ -84,7 +84,9 @@ dependencies {
 	
 	providedCompile "com.googlecode.mvp4g:mvp4g:1.5.0"
 	providedCompile "com.google.gwt.inject:gin:2.1.2"	
-	providedCompile "com.github.gwtmaterialdesign:gwt-material:1.3.3"	
+	
+	providedCompile "com.github.gwtmaterialdesign:gwt-material:1.4.1"
+	providedCompile "com.github.gwtmaterialdesign:gwt-material-themes:1.4"	
 	
 	providedCompile "javax.ws.rs:jsr311-api:1.1.1"
 	providedCompile "org.glassfish.jersey.ext:jersey-spring3:$jerseyVersion"

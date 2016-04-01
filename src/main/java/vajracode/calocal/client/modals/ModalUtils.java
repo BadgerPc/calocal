@@ -1,7 +1,5 @@
 package vajracode.calocal.client.modals;
 
-import gwt.material.design.client.ui.MaterialModal;
-
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -43,8 +41,5 @@ public class ModalUtils {
 		show(null, body);
 	}
 
-	public static void hide() {
-		MaterialModal.closeModal();
-	}
 
 }

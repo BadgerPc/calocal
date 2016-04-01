@@ -1,49 +1,56 @@
-<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"	
-	xmlns:g="urn:import:com.google.gwt.user.client.ui"
-	xmlns:m="urn:import:gwt.material.design.client.ui"
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:m="urn:import:gwt.material.design.client.ui"
 	xmlns:d="urn:import:vajracode.calocal.client.elements"
 	ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
-    ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
-    ui:generateLocales="default"
-	>    
+	ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
+	ui:generateLocales="default">
 
 	<ui:with field='msgs' type='vajracode.calocal.client.i18n.I18nConstants' />
 	<ui:with field='res' type='vajracode.calocal.client.resources.Resources' />
-	
-	<ui:style>	
 
-	</ui:style>		
-		
+	<ui:style>
+	</ui:style>
+
+
+
 	<m:MaterialRow>
-	<d:CenteredColFlexPanel width="100%">
-		<m:MaterialTitle ui:field="title" title="{msgs.pleaseSignIn}"/>
-		<g:HTMLPanel addStyleNames="col l6 m8 s10">
-		<d:Tabs>
-			<d:tab><g:Label><ui:msg>Sign In</ui:msg></g:Label></d:tab>
-			<d:tab><g:Label><ui:msg>Sign Up</ui:msg></g:Label></d:tab>			
-			<d:content>
-				<m:MaterialPanel addStyleNames="card {res.css.padding32}">
-					<m:MaterialTextBox placeholder="Login" ui:field="siLogin" />
-					<m:MaterialTextBox placeholder="Password" type="password" ui:field="siPass"/>
-					<d:CenteredColFlexPanel>
-						<d:Button ui:field="signIn"><ui:msg>Sign In</ui:msg></d:Button>
-						<d:Button ui:field="fb"><ui:msg>Sign in with Facebook</ui:msg></d:Button>
-						<d:Button ui:field="vk"><ui:msg>Sign in with VKontakte</ui:msg></d:Button>
-					</d:CenteredColFlexPanel>
-				</m:MaterialPanel>
-			</d:content>
-			<d:content>
-				<m:MaterialPanel addStyleNames="card {res.css.padding32}">
-					<m:MaterialTextBox placeholder="Login" ui:field="suLogin" />
-					<m:MaterialTextBox placeholder="Password" type="password" ui:field="suPass" />
-					<m:MaterialTextBox placeholder="Confirm password" type="password" ui:field="passConfirm" />
-					<d:Button ui:field="signUp"><ui:msg>Sign Up</ui:msg></d:Button>
-				</m:MaterialPanel>
-			</d:content>
-		</d:Tabs>
-		</g:HTMLPanel>		
-    </d:CenteredColFlexPanel>
-    </m:MaterialRow>    
-    
+		<d:CenteredColFlexPanel width="100%">
+			<m:MaterialTitle ui:field="title" title="{msgs.pleaseSignIn}" />
+			<m:MaterialPanel addStyleNames="col l6 m8 s10">
+				<m:MaterialRow>
+					<m:MaterialColumn grid="s12">
+						<m:MaterialTab>
+							<m:MaterialTabItem grid="s6">
+								<m:MaterialLink text="{msgs.signIn}" href="#tab1" />
+							</m:MaterialTabItem>
+							<m:MaterialTabItem grid="s6">
+								<m:MaterialLink text="{msgs.signUp}" href="#tab2" />
+							</m:MaterialTabItem>
+						</m:MaterialTab>
+					</m:MaterialColumn>
+					<m:MaterialColumn m:id="tab1" grid="s12">
+						<m:MaterialPanel addStyleNames="card {res.css.padding32}">
+							<d:TextBox placeholder="{msgs.login}" ui:field="siLogin" />
+							<d:TextBox placeholder="{msgs.pass}" type="PASSWORD" ui:field="siPass" />
+							<d:CenteredColFlexPanel>
+								<d:FlatButton ui:field="signIn" text="{msgs.signIn}" />
+								<!-- <d:Button ui:field="fb"><ui:msg>Sign in with Facebook</ui:msg></d:Button> 
+									<d:Button ui:field="vk"><ui:msg>Sign in with VKontakte</ui:msg></d:Button> -->
+							</d:CenteredColFlexPanel>
+						</m:MaterialPanel>
+					</m:MaterialColumn>
+					<m:MaterialColumn m:id="tab2" grid="s12">
+						<m:MaterialPanel addStyleNames="card {res.css.padding32}">
+							<d:TextBox placeholder="{msgs.login}" ui:field="suLogin" />
+							<d:TextBox placeholder="{msgs.pass}" type="PASSWORD" ui:field="suPass" />
+							<d:TextBox placeholder="{msgs.confPass}" type="PASSWORD" ui:field="passConfirm" />
+							<d:FlatButton ui:field="signUp" text="{msgs.signUp}" />
+						</m:MaterialPanel>
+					</m:MaterialColumn>
+				</m:MaterialRow>
+			</m:MaterialPanel>
+		</d:CenteredColFlexPanel>
+	</m:MaterialRow>
+
 </ui:UiBinder>

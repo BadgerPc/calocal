@@ -1,5 +1,7 @@
 package vajracode.calocal.client.framework;
 
+import java.util.Date;
+
 import com.google.gwt.user.client.ui.IsWidget;
 import com.mvp4g.client.annotation.*;
 import com.mvp4g.client.annotation.module.AfterLoadChildModule;
@@ -64,7 +66,8 @@ public interface CalocalEventBus extends EventBusWithLookup {
 	@Event(handlers = MainPresenter.class)
 	void main();
 
-	@Event(handlers = RootPresenter.class)
-	void updateUser();	
+	@Event(handlers = MainPresenter.class)
+	void filter(Date fromDate, Date toDate, Date fromTime, Date toTime);
+
 
 }

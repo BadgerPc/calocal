@@ -3,6 +3,7 @@ package vajracode.calocal.server.security;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -17,6 +18,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import vajracode.calocal.server.dao.UserDao;
 import vajracode.calocal.shared.constants.LoginFields;
 import vajracode.calocal.shared.constants.ResourcePaths;
+import vajracode.calocal.shared.model.Role;
 
 @Configuration
 @EnableWebSecurity
@@ -79,11 +81,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
 	                .authorizeRequests()
 	                .antMatchers("/").permitAll()
-	                .antMatchers("/Calocal/*").permitAll()
+	                .antMatchers("/Calocal/**").permitAll()
 	                .antMatchers("/favicon.ico").permitAll()
 	                .antMatchers("/logo.png").permitAll()
 	                .antMatchers("/index.html").permitAll()
-	                .antMatchers(ResourcePaths.API_LOGIN).permitAll()
+	                .antMatchers(ResourcePaths.API_LOGIN).permitAll()	                
+	                .antMatchers(HttpMethod.DELETE, ResourcePaths.API_USER).hasAnyRole(Role.ADMIN.name())
+	                .antMatchers(HttpMethod.POST, ResourcePaths.API_USER).hasAnyRole(Role.ADMIN.name())
+	                .antMatchers(HttpMethod.GET, ResourcePaths.API_USER).hasAnyRole(Role.ADMIN.name())
 	                .anyRequest().authenticated()
                 .and()
 	                .authenticationProvider(authenticationProvider())

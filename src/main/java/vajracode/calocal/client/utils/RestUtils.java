@@ -7,7 +7,7 @@ public class RestUtils {
 	public static int getStatuCode(Throwable e) {
 		if (e instanceof FailedStatusCodeException)
 			 return ((FailedStatusCodeException) e).getStatusCode();
-		return 0;
+		return -1;
 	}
 
 }

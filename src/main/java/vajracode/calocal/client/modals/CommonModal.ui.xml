@@ -15,7 +15,7 @@
 		<m:MaterialModalContent ui:field="content">			
 		</m:MaterialModalContent>
 		
-		<m:MaterialModalFooter align="right" ui:field="footer" 
+		<m:MaterialModalFooter ui:field="footer" 
 			addStyleNames="{res.css.flexHorizontal} {res.css.justifyContentEnd}">			
 		</m:MaterialModalFooter>
 	

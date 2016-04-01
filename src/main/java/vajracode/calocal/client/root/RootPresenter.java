@@ -11,7 +11,6 @@ import fr.putnami.pwt.core.error.client.ErrorManager;
 import vajracode.calocal.client.error.MainErrorHandler;
 import vajracode.calocal.client.framework.CommonPresenter;
 import vajracode.calocal.client.framework.EventBusHolder;
-import vajracode.calocal.client.modals.ModalUtils;
 
 @Presenter( view = RootView.class )
 @Singleton
@@ -49,8 +48,7 @@ public class RootPresenter extends CommonPresenter<RootView> {
 		view.setSkipNextProgressBar(true);
 	}
 		
-	public void onSetBody(IsWidget w) {		
-		ModalUtils.hide();
+	public void onSetBody(IsWidget w) {				
 		if (currentView != null) {
 			currentView.asWidget().removeFromParent();
 		} else {
@@ -65,10 +63,6 @@ public class RootPresenter extends CommonPresenter<RootView> {
 	
 	public boolean isLandingPresent() {
 		return landingPresent;
-	}
-	
-	public void onUpdateUser() {
-		view.updateUser();
 	}
 
 }

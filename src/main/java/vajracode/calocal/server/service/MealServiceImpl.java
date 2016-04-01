@@ -1,11 +1,10 @@
 package vajracode.calocal.server.service;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import vajracode.calocal.server.manager.MealManager;
+import vajracode.calocal.server.utils.ParamUtils;
 import vajracode.calocal.shared.FieldVerifier;
 import vajracode.calocal.shared.model.MealData;
 import vajracode.calocal.shared.model.MealDataList;
@@ -36,12 +35,11 @@ public class MealServiceImpl implements MealService {
 	@Override
 	public MealDataList list(long fromDate, long toDate, long fromTime, long toTime, 
 			long uid, int offset, int limit) {		
-		return mealManager.list(getDate(fromDate), getDate(toDate), getDate(fromTime), getDate(toTime), uid, offset, limit);
+		return mealManager.list(ParamUtils.getDate(fromDate), ParamUtils.getDate(toDate), 
+				ParamUtils.getDate(fromTime), ParamUtils.getDate(toTime), uid, offset, limit);
 	}
 
-	private Date getDate(long l) {
-		return l == 0 ? null : new Date(l);
-	}
+	
 
 	@Override
 	public MealData get(long id) {		

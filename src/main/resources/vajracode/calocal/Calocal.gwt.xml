@@ -12,7 +12,8 @@
 	
 	<inherits name='com.mvp4g.Mvp4gModule'/>
 	
-	<inherits name="gwt.material.design.GwtMaterialDesign" />
+	<inherits name="gwt.material.design.GwtMaterialWithJQuery" />
+	<inherits name="gwt.material.design.themes.GwtMaterialThemeBlue"/>
 
 	<entry-point class="vajracode.calocal.client.CalocalEntryPoint"/>
 
