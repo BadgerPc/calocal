@@ -1,5 +1,7 @@
 package vajracode.calocal.server.manager;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.stream.Collectors;
@@ -16,6 +18,7 @@ import vajracode.calocal.server.dao.UserDao;
 import vajracode.calocal.server.dto.MealDTO;
 import vajracode.calocal.server.dto.UserDTO;
 import vajracode.calocal.server.security.AccessManager;
+import vajracode.calocal.server.utils.ParamUtils;
 import vajracode.calocal.shared.exceptions.FieldException;
 import vajracode.calocal.shared.model.MealData;
 import vajracode.calocal.shared.model.MealDataList;
@@ -85,7 +88,7 @@ public class MealManager {
 	}
 
 	@Transactional(readOnly = true)
-	public MealDataList list(Date fromDate, Date toDate, Date fromTime, Date toTime, 
+	public MealDataList list(LocalDateTime fromDate, LocalDateTime toDate, LocalTime fromTime, LocalTime toTime, 
 			long uid, int offset, int limit) {
 		if (uid == 0 || (uid != accessManager.getLoggedInUserId() && !accessManager.isAdmin()))
 			uid = accessManager.getLoggedInUserId();
@@ -95,6 +98,12 @@ public class MealManager {
 		MealDataList ret = new MealDataList();
 		ret.setOffset(offset);
 		ret.setLimit(limit);
+		ret.setDateFrom(ParamUtils.toDate(fromDate));
+		ret.setDateTo(ParamUtils.toDate(toDate));
+		if (fromTime != null)
+			ret.setTimeFrom(fromTime.toString());
+		if (toTime != null)
+			ret.setTimeTo(toTime.toString());
 		ret.setTotal(mealDao.getListSize(fromDate, toDate, fromTime, toTime, user));		
 		ret.setData(mealDao.getList(fromDate, toDate, fromTime, toTime, user, offset, limit)
 			.stream().map( it -> it.getMealData() ).collect(Collectors.toCollection(ArrayList::new)));	

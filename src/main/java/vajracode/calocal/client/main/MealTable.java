@@ -1,5 +1,6 @@
 package vajracode.calocal.client.main;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -9,7 +10,6 @@ import com.google.gwt.event.logical.shared.HasValueChangeHandlers;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 
 import vajracode.calocal.client.auth.UserManager;
@@ -24,8 +24,7 @@ public class MealTable extends ColFlexPanel implements HasValueChangeHandlers<In
 	@Inject UserManager userManager;
 	@Inject I18nConstants msgs;
 	
-	private HTML summary;
-	private HandlerRegistration hr;
+	private List<HandlerRegistration> handlers = new ArrayList<>();
 	
 	public MealTable() {
 		setWidth("100%");		
@@ -57,11 +56,6 @@ public class MealTable extends ColFlexPanel implements HasValueChangeHandlers<In
 		r.focusOnCal();
 	}
 
-	public void setSummary(HTML summary) {
-		this.summary = summary;
-		update();
-	}
-
 	public void update() {
 		ValueChangeEvent.fire(this, getCalSum());		
 	}
@@ -83,23 +77,26 @@ public class MealTable extends ColFlexPanel implements HasValueChangeHandlers<In
 	@Override
 	protected void onLoad() {
 		super.onLoad();
-		hr = userManager.addValueChangeHandler(new ValueChangeHandler<UserData>() {			
+		handlers.add(userManager.addValueChangeHandler(new ValueChangeHandler<UserData>() {			
 			@Override
 			public void onValueChange(ValueChangeEvent<UserData> event) {
 				update();
 			}
-		});
+		}));
 	}
 
 	@Override
 	protected void onUnload() {
 		super.onUnload();
-		if (hr != null)
-			hr.removeHandler();
+		for (HandlerRegistration hr : handlers)
+			hr.removeHandler();		
 	}
 	
 	@Override
-	public HandlerRegistration addValueChangeHandler(ValueChangeHandler<Integer> handler) {
-		return addHandler(handler, ValueChangeEvent.getType());
+	public HandlerRegistration addValueChangeHandler(ValueChangeHandler<Integer> handler) {		
+		HandlerRegistration ret = addHandler(handler, ValueChangeEvent.getType());
+		handlers.add(ret);
+		update();
+		return ret;
 	}
 }

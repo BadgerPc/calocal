@@ -9,5 +9,6 @@ public class ResourcePaths {
     public static final String MEAL = "/meal";
     
 	public static final String API_LOGIN = API + LOGIN;
-	public static final String API_USER = API + USER;    
+	public static final String API_USER = API + USER;
+	public static final String API_MEAL = API + MEAL;   
 }

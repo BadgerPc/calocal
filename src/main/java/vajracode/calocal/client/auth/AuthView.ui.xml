@@ -45,7 +45,9 @@
 							<d:TextBox placeholder="{msgs.login}" ui:field="suLogin" />
 							<d:TextBox placeholder="{msgs.pass}" type="PASSWORD" ui:field="suPass" />
 							<d:TextBox placeholder="{msgs.confPass}" type="PASSWORD" ui:field="passConfirm" />
-							<d:FlatButton ui:field="signUp" text="{msgs.signUp}" />
+							<d:CenteredColFlexPanel>
+								<d:FlatButton ui:field="signUp" text="{msgs.signUp}" />
+							</d:CenteredColFlexPanel>
 						</m:MaterialPanel>
 					</m:MaterialColumn>
 				</m:MaterialRow>

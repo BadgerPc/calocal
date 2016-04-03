@@ -80,7 +80,7 @@ em {
     padding: 0 1.5rem;
     margin: 0 auto;
 }
-.navbar-fixed {
+.navbar {
   position: relative;
   height: 128px !important;
   z-index: 998; 
@@ -88,8 +88,8 @@ em {
 nav .nav-wrapper {
     margin-top: 32px;
 }
-.navbar-fixed nav {
-    position: fixed; 
+.navbar nav {
+    position: relative; 
     background-color: rgba(0, 0, 0, 0);
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
@@ -400,16 +400,22 @@ section > ul {
 	opacity: 0.87;
 	font-size: 24px;
 }
-#username > div > button > i {
+#username > button > i {
     position: relative;
     top: -16px;
+}
+.tabs {
+    background-color: rgba(0,0,0,0) !important;
+}
+#time-picker {
+	z-index: 2000;
 }
 	</style>
   </head>
   <body> 
     <div style="width: 100%; min-height: 100%; overflow-x: hidden; background-color: #F5F5F5;">
     	<div id="menu">
-    		<header class="navbar-fixed">
+    		<header class="navbar">
     			<nav>
     				<div id="nav-wrapper" class="nav-wrapper container">    					    				
     					<div id="logo" class="brandLogo left">

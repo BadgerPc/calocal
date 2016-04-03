@@ -67,7 +67,7 @@ public interface CalocalEventBus extends EventBusWithLookup {
 	void main();
 
 	@Event(handlers = MainPresenter.class)
-	void filter(Date fromDate, Date toDate, Date fromTime, Date toTime);
+	void filter(Date fromDate, Date toDate, String fromTime, String toTime);
 
 
 }

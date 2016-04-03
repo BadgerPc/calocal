@@ -9,6 +9,7 @@ import fr.putnami.pwt.core.error.client.ErrorManager;
 import fr.putnami.pwt.core.inject.client.annotation.InjectService;
 import fr.putnami.pwt.core.service.client.annotation.AsyncHandler;
 import vajracode.calocal.client.framework.CommonPresenter;
+import vajracode.calocal.client.utils.DateUtils;
 import vajracode.calocal.shared.constants.DateConstants;
 import vajracode.calocal.shared.model.MealData;
 import vajracode.calocal.shared.model.MealDataList;
@@ -22,28 +23,46 @@ public class MainPresenter extends CommonPresenter<MainView> {
 	
 	private DateTimeFormat pureDate = DateTimeFormat.getFormat("d-M-yyyy");
 	
+	private Date fromDatePrev, toDatePrev;
+	private String fromTimePrev, toTimePrev;
+	
 	public void onMain(){					
-		Date now = new Date();							
+		fromDatePrev = null;
+		toDatePrev = null;
+		fromTimePrev = null;
+		toTimePrev = null;
+		Date now = new Date();
 		list(true, now, now, null, null);			
 	}
 	
-	private void list(boolean today, Date fromDate, Date toDate, Date fromTime, Date toTime) {
+	private void list(boolean today, Date fromDatePrev, Date toDatePrev, String fromTimePrev, String toTimePrev) {
 		view.reset();
 		view.setTodayMode(today);
-		fromDate = pureDate.parse(pureDate.format(fromDate));
-		toDate = pureDate.parse(pureDate.format(new Date(toDate.getTime() + DateConstants.MILLIS_DAY + 1)));	
-		service.list(fromDate.getTime(), toDate.getTime(), 
-				fromTime == null ? 0 : fromTime.getTime(), toTime == null ? 0 : toTime.getTime(), 
+		if (fromDatePrev != null)
+			fromDatePrev = pureDate.parse(pureDate.format(fromDatePrev));
+		if (toDatePrev != null)
+			toDatePrev = pureDate.parse(pureDate.format(new Date(toDatePrev.getTime() + DateConstants.MILLIS_DAY)));	
+		service.list(fromDatePrev != null ? fromDatePrev.getTime() : 0, 
+				toDatePrev != null ? toDatePrev.getTime() : 0, 
+				DateUtils.uiToTime(fromTimePrev), DateUtils.uiToTime(toTimePrev), 
 				0, 0, Integer.MAX_VALUE);
 		eventBus.setBody(view);
 	}
 
-	public void onFilter(Date fromDate, Date toDate, Date fromTime, Date toTime) {
-		list(false, fromDate, toDate, fromTime, toTime);
+	public void onFilter(Date fromDate, Date toDate, String fromTime, String toTime) {
+		if (fromDate != null)
+			fromDatePrev = fromDate;
+		if (toDate != null)
+			toDatePrev = toDate;
+		if (fromTime != null)
+			fromTimePrev = fromTime;
+		if (toTime != null)
+			toTimePrev = toTime;
+		list(false, fromDatePrev, toDatePrev, fromTimePrev, toTimePrev);
 	}
 	
 	@AsyncHandler
-	public void onList(MealDataList list){		
+	public void onList(MealDataList list){
 		view.apply(list);		
 	}
 

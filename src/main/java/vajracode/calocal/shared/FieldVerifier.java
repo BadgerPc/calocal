@@ -1,5 +1,12 @@
 package vajracode.calocal.shared;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Date;
+
+import com.google.gwt.core.shared.GwtIncompatible;
+
+import vajracode.calocal.client.utils.DateUtils;
 import vajracode.calocal.shared.constants.HTMLConstants;
 import vajracode.calocal.shared.exceptions.FieldException;
 
@@ -96,6 +103,42 @@ public class FieldVerifier {
 	public static void checkMealName(String string) {
 		if (string.length() == 0)
 			throw new FieldException("Description can not be empty");
+	}
+
+	public static void checkFilterDates(Date from, Date to) {
+		if (from != null && to != null && from.getTime() > to.getTime())
+			throw new FieldException("'From' date should not be greater than 'To' date");
+	}
+
+	@GwtIncompatible
+	public static void checkFilterDates(LocalDateTime from, LocalDateTime to) {
+		if (from != null && to != null && from.isAfter(to))
+			throw new FieldException("'From' date should not be greater than 'To' date");
+	}
+
+	public static void checkFilterTimes(Date from, Date to) {
+//		Date from = DateUtils.time.parse(sFrom);
+//		Date to = DateUtils.time.parse(sTo);
+		if (from != null && to != null && from.getTime() > to.getTime())
+			throw new FieldException("'From' time should not be greater than 'To' time");		
+	}
+
+	@GwtIncompatible
+	public static void checkFilterTimes(LocalTime from, LocalTime to) {
+		if (from != null && to != null && from.isAfter(to))
+			throw new FieldException("'From' time should not be greater than 'To' time");
+	}
+
+	public static void checkFilterTimesUi(String sFrom, String sTo) {
+		if (sFrom == null || sTo == null)
+			return;
+		try {
+			Date from = DateUtils.timeUi.parse(sFrom);
+			Date to = DateUtils.timeUi.parse(sTo);
+			checkFilterTimes(from, to);
+		} catch (IllegalArgumentException e) {
+			throw new FieldException("Wrong time format (ex.\"17:25\"): " + e.getMessage());
+		}
 	}
 
 }

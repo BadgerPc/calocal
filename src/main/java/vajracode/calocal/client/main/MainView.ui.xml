@@ -25,6 +25,7 @@
 				<d:RowFlexPanel addStyleNames="{res.css.alignItemsCenter}" >
 					<d:FlatButton iconType="INSERT_INVITATION" size="LARGE" ui:field="dateButton" />
 					<d:Header ui:field="dateLabel" />
+					<m:MaterialLink ui:field="cleanFilter" text="{msgs.resetFilter}" addStyleNames="{res.css.margin16px}" />
 				</d:RowFlexPanel>
 				<d:RowFlexPanel addStyleNames="{res.css.alignItemsCenter}">
 					<d:FlatButton iconType="SCHEDULE" size="LARGE" ui:field="timeButton" />
@@ -32,10 +33,10 @@
 				</d:RowFlexPanel>
 			</m:MaterialColumn>
 			<m:MaterialColumn grid="s4 m4 l4">
-				<d:RowFlexPanel height="44px">
+				<d:RowFlexPanel height="54px" addStyleNames="{res.css.alignItemsCenter}">
 					<d:Header><ui:msg>Calories</ui:msg></d:Header>
 				</d:RowFlexPanel>
-				<d:RowFlexPanel addStyleNames="{res.css.alignItemsCenter}">
+				<d:RowFlexPanel height="54px" addStyleNames="{res.css.alignItemsCenter}">
 					<d:CalSummary ui:field="summary" />
 					<d:FlatButton iconType="EDIT" ui:field="summaryButton" />
 				</d:RowFlexPanel>
@@ -45,7 +46,7 @@
 		<d:CenteredColFlexPanel ui:field="today" addStyleNames="{res.css.marginTop32}">
 			<d:CenteredRowFlexPanel>
 				<m:MaterialTextBox ui:field="mealName" placeholder="{msgs.mealName}" />
-				<d:Button ui:field="addMeal" text="{msgs.addNewMeal}"/>
+				<d:Button ui:field="addMeal" text="{msgs.addNewMeal}" addStyleNames="{res.css.margin16px}"/>
 			</d:CenteredRowFlexPanel>
 			<d:Header ui:field="percents" />
 		</d:CenteredColFlexPanel>

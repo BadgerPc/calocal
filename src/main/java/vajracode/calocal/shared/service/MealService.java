@@ -12,6 +12,7 @@ import vajracode.calocal.shared.model.MealDataList;
 
 @Path(ResourcePaths.MEAL)
 @Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public interface MealService extends DirectRestService {
 	
     @POST
@@ -22,12 +23,11 @@ public interface MealService extends DirectRestService {
     @Path("/{id}")
     void delete(@PathParam("id") long id);
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @GET    
     MealDataList list(@QueryParam("fromDate") @DefaultValue("0") long fromDate, 
     		@QueryParam("toDate") @DefaultValue("0") long toDate, 
-    		@QueryParam("fromTime") @DefaultValue("0") long fromTime, 
-    		@QueryParam("toTime") @DefaultValue("0") long toTime,
+    		@QueryParam("fromTime") String fromTime, 
+    		@QueryParam("toTime") String toTime,
     		@QueryParam("uid") @DefaultValue("0") long uid,
     		@QueryParam("offset") @DefaultValue("0") int offset,
     		@QueryParam("limit") @DefaultValue("100") int limit);

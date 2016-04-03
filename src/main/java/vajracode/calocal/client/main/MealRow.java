@@ -44,7 +44,7 @@ public class MealRow extends CenteredRowFlexPanel implements Injected {
 	}
 
 	private String getTimeText() {
-		return DateUtils.time.format(meal.getDateTime());
+		return DateUtils.timeUi.format(meal.getDateTime());
 	}
 
 	private Widget getEditButton() {

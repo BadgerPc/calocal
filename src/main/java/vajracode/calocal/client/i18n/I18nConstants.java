@@ -94,7 +94,14 @@ public interface I18nConstants extends Constants{
 	@DefaultStringValue("No meals for chosen period")
 	String noData();
 
-	
+	@DefaultStringValue("reset filter")
+	String resetFilter();
+
+	@DefaultStringValue("Average")
+	String average();
+
+	@DefaultStringValue("All days")
+	String allDays();
 
 	
 }

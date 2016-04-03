@@ -17,17 +17,26 @@ public class CalSummary extends HTML {
 	@Inject UserManager userManager;
 	@Inject I18nConstants msgs;
 	private HandlerRegistration hr;
-	private int sum;
+	private int cal;
 	
 	public CalSummary() {
 		addStyleName(Resources.INSTANCE.css().summary()); 
 	}
 	
-	public void update(int sum) {
-		this.sum = sum;
+	public void updateSum(int sum) {
+		update(sum, true);		
+	}
+	
+	private void update(int cal, boolean sum) {		
+		this.cal = cal;
+		if (userManager.getUserData() == null)
+			return;
 		int daily = userManager.getUserData().getDailyCalories();
-		setHTML("<h5 class=" + (sum > daily ? "red-text" : "green-text") + ">" 
-				+ sum + "</h5> <h6>" + msgs.outOf() + "</h6> <h5>" + daily + "</h5>");
+		String html = "<h5 class=" + (cal > daily ? "red-text" : "green-text") + ">" 
+				+ cal + "</h5> <h6>" + msgs.outOf() + "</h6> <h5>" + daily + "</h5>";
+		if (!sum)
+			html = msgs.average() + "<br>" + html;
+		setHTML(html);
 	}
 	
 	@Override
@@ -36,7 +45,7 @@ public class CalSummary extends HTML {
 		hr = userManager.addValueChangeHandler(new ValueChangeHandler<UserData>() {			
 			@Override
 			public void onValueChange(ValueChangeEvent<UserData> event) {
-				update(sum);
+				updateSum(cal);
 			}
 		});
 	}
@@ -46,5 +55,10 @@ public class CalSummary extends HTML {
 		super.onUnload();
 		if (hr != null)
 			hr.removeHandler();
+	}
+
+	public void updateAvg(int avg) {
+		update(avg, false);
+		
 	}
 }

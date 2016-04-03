@@ -12,6 +12,7 @@ import vajracode.calocal.shared.model.UserData;
 
 @Path(ResourcePaths.LOGIN)
 @Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public interface AuthService extends DirectRestService {
     @POST    
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -23,7 +24,7 @@ public interface AuthService extends DirectRestService {
     @GET
     UserData getCurrentUser();
 
-    @PUT   
+    @PUT
 	UserData register(RegistrationData data);
 
 }

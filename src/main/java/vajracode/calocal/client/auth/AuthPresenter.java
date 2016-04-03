@@ -15,6 +15,7 @@ import vajracode.calocal.client.utils.NativeUtils;
 import vajracode.calocal.client.utils.RestUtils;
 import vajracode.calocal.shared.FieldVerifier;
 import vajracode.calocal.shared.model.RegistrationData;
+import vajracode.calocal.shared.model.UserData;
 import vajracode.calocal.shared.service.AuthService;
 
 
@@ -68,7 +69,7 @@ public class AuthPresenter extends CommonPresenter<AuthView> {
 	}
 	
 	@AsyncHandler
-	public void onRegister(Void v) {
+	public void onRegister(UserData user) {
 		signIn(suLogin, suPass);
 	}
 	

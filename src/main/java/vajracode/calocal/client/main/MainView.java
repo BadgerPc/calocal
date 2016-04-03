@@ -27,6 +27,8 @@ import vajracode.calocal.client.modals.EditDailyCaloriesModal;
 import vajracode.calocal.client.modals.FilterDateModal;
 import vajracode.calocal.client.modals.FilterTimeModal;
 import vajracode.calocal.client.resources.Resources;
+import vajracode.calocal.client.utils.DateUtils;
+import vajracode.calocal.shared.constants.DateConstants;
 import vajracode.calocal.shared.model.MealData;
 import vajracode.calocal.shared.model.MealDataList;
 
@@ -48,11 +50,13 @@ public class MainView extends CommonView<MainPresenter> {
 	@UiField FlowPanel today, content;
 	@UiField MaterialTextBox mealName;	
 	@UiField Button addMeal;
+	@UiField Widget cleanFilter;
 
 	private MealTable todayMeals;
-	private MealArray allMeals;
+	private MealArray mealArray;
 	private Header welcome;
-	private Date fromDate, toDate, fromTime, toTime;
+	private Date fromDate, toDate;
+	private String fromTime, toTime;
 
 	public MainView() {		
 	}	
@@ -67,7 +71,9 @@ public class MainView extends CommonView<MainPresenter> {
 		mealName.clear();
 		percents.setText("");
 		addMeal.setEnabled(true);
-		todayMeals = null;		
+		cleanFilter.setVisible(false);
+		todayMeals = null;
+		mealArray = null;
 	}
 
 	private void init() {
@@ -81,15 +87,30 @@ public class MainView extends CommonView<MainPresenter> {
 		else
 			applyFilteredData(list);
 	}
-
+	
 	private void applyFilteredData(MealDataList list) {
-		content.add(getAllMeals().apply(list.getData()));
-		updateWelcome(list.getData().size() > 0, msgs.noData());
+		fromDate = list.getDateFrom();
+		toDate = list.getDateTo();
+		fromTime = DateUtils.timeToUi(list.getTimeFrom());
+		toTime = DateUtils.timeToUi(list.getTimeTo());
+		if (list.getDateFrom() != null && list.getDateTo() != null)
+			dateLabel.setText(DateUtils.date.format(fromDate) + " - " 
+				+ DateUtils.date.format(new Date(toDate.getTime() - DateConstants.MILLIS_DAY)));
+		else
+			dateLabel.setText(msgs.allDays());
+		
+		if (list.getTimeFrom() != null && list.getTimeTo() != null)
+			timeLabel.setText(fromTime + " - " + toTime);
+		
+		cleanFilter.setVisible(true);
+		content.add(getMealArray().apply(list.getData()));		
+		updateWelcome(list.getData().size() == 0, msgs.noData());
+		summary.updateAvg(getMealArray().getCalAvg());
 	}
 
 	private void applyTodayData(MealDataList list) {
 		content.add(getTodayMeals().apply(list.getData()));
-		updateWelcome(list.getData().size() > 0, msgs.todayWelcome());
+		updateWelcome(list.getData().size() == 0, msgs.todayWelcome());
 	}
 
 	private void updateWelcome(boolean show, String msg) {
@@ -103,22 +124,22 @@ public class MainView extends CommonView<MainPresenter> {
 
 	private MealTable getTodayMeals() {
 		if (todayMeals == null) {
-			todayMeals = mealTableProvider.get();		
+			todayMeals = mealTableProvider.get();			
 			todayMeals.addValueChangeHandler(new ValueChangeHandler<Integer>() {				
 				@Override
 				public void onValueChange(ValueChangeEvent<Integer> event) {
-					summary.update(event.getValue());
+					summary.updateSum(event.getValue());
 				}
 			});
 		}
 		return todayMeals;
 	}
 	
-	private MealArray getAllMeals() {
-		if (allMeals == null) {
-			allMeals = allMealsProvider.get();					
+	private MealArray getMealArray() {
+		if (mealArray == null) {
+			mealArray = allMealsProvider.get();			
 		}
-		return allMeals;
+		return mealArray;
 	}
 
 	private boolean isTodayMode() {
@@ -132,7 +153,8 @@ public class MainView extends CommonView<MainPresenter> {
 	@UiHandler("addMeal")
 	public void addMealHandler(ClickEvent event) {
 		addMeal.setEnabled(false);
-		getPresenter().addMeal(mealName.getText());	
+		getPresenter().addMeal(mealName.getText());
+		mealName.clear();
 	}
 
 	@UiHandler("mealName")
@@ -145,7 +167,7 @@ public class MainView extends CommonView<MainPresenter> {
 		content.add(getTodayMeals());
 		todayMeals.addAndEdit(meal);
 		addMeal.setEnabled(true);
-		updateWelcome(todayMeals.getMealsCount() > 0, msgs.todayWelcome());
+		updateWelcome(todayMeals.getMealsCount() == 0, msgs.todayWelcome());
 	}
 
 	public void onAddMealFailed() {
@@ -165,5 +187,10 @@ public class MainView extends CommonView<MainPresenter> {
 	@UiHandler("timeButton")
 	public void timeButtonHandler(ClickEvent event) {
 		filterTimeModalProvider.get().init(fromTime, toTime).show();
+	}
+	
+	@UiHandler("cleanFilter")
+	public void cleanFilterHandler(ClickEvent event) {
+		bus.getEventBus().main();
 	}
 }

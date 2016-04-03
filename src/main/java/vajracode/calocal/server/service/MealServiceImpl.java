@@ -1,5 +1,8 @@
 package vajracode.calocal.server.service;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,10 +36,15 @@ public class MealServiceImpl implements MealService {
 	}
 
 	@Override
-	public MealDataList list(long fromDate, long toDate, long fromTime, long toTime, 
-			long uid, int offset, int limit) {		
-		return mealManager.list(ParamUtils.getDate(fromDate), ParamUtils.getDate(toDate), 
-				ParamUtils.getDate(fromTime), ParamUtils.getDate(toTime), uid, offset, limit);
+	public MealDataList list(long fromDate, long toDate, String fromTime, String toTime, 
+			long uid, int offset, int limit) {
+		LocalDateTime dFromDate = ParamUtils.getDate(fromDate);
+		LocalDateTime dToDate = ParamUtils.getDate(toDate);
+		LocalTime dFromTime = ParamUtils.getTime(fromTime);
+		LocalTime dToTime = ParamUtils.getTime(toTime);
+		FieldVerifier.checkFilterDates(dFromDate, dToDate);
+		FieldVerifier.checkFilterTimes(dFromTime, dToTime);
+		return mealManager.list(dFromDate, dToDate, dFromTime, dToTime, uid, offset, limit);
 	}
 
 	

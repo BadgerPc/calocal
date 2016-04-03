@@ -1,6 +1,8 @@
 package vajracode.calocal.server.dao;
 
-import java.util.Date;
+import java.sql.Time;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import javax.persistence.criteria.*;
@@ -17,7 +19,7 @@ public class MealDao extends Dao<MealDTO> {
 		return em.find(MealDTO.class, id);
 	}
 
-	public List<MealDTO> getList(Date fromDate, Date toDate, Date fromTime, Date toTime, 
+	public List<MealDTO> getList(LocalDateTime fromDate, LocalDateTime toDate, LocalTime fromTime, LocalTime toTime, 
 			UserDTO user, int offset, int limit) {		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<MealDTO> query = cb.createQuery(MealDTO.class);
@@ -30,7 +32,7 @@ public class MealDao extends Dao<MealDTO> {
 			.getResultList();
 	}	
 
-	public long getListSize(Date fromDate, Date toDate, Date fromTime, Date toTime, UserDTO user) {
+	public long getListSize(LocalDateTime fromDate, LocalDateTime toDate, LocalTime fromTime, LocalTime toTime, UserDTO user) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();		
 		CriteriaQuery<Long> query = cb.createQuery(Long.class);
 		Root<MealDTO> root = query.from(MealDTO.class);
@@ -40,16 +42,18 @@ public class MealDao extends Dao<MealDTO> {
 	}
 
 	private Predicate getListExpression(CriteriaBuilder cb, Root<MealDTO> root, 
-			Date fromDate, Date toDate, Date fromTime, Date toTime, UserDTO user) {		
+			LocalDateTime fromDate, LocalDateTime toDate, LocalTime fromTime, LocalTime toTime, UserDTO user) {		
 		Predicate p = cb.equal(root.get("user"), user);
 		if (fromDate != null)
-			p = cb.and(p, cb.greaterThanOrEqualTo(root.get("consumed"), fromDate));
+			p = cb.and(p, cb.greaterThanOrEqualTo(root.get("consumed"), java.sql.Timestamp.valueOf(fromDate)));
 		if (toDate != null)
-			p = cb.and(p, cb.lessThanOrEqualTo(root.get("consumed"), toDate));
+			p = cb.and(p, cb.lessThanOrEqualTo(root.get("consumed"), java.sql.Timestamp.valueOf(toDate)));
 		if (fromTime != null)
-			p = cb.and(p, cb.greaterThanOrEqualTo(cb.function("time", Date.class, root.get("consumed")), fromTime));
+			p = cb.and(p, cb.greaterThanOrEqualTo(cb.function("time", 
+				Time.class, root.get("consumed")), Time.valueOf(fromTime)));
 		if (toTime != null)
-			p = cb.and(p, cb.lessThanOrEqualTo(cb.function("time", Date.class, root.get("consumed")), toTime));
+			p = cb.and(p, cb.lessThanOrEqualTo(cb.function("time", 
+				Time.class, root.get("consumed")), Time.valueOf(toTime)));
 		return p;
 	}
 

@@ -12,6 +12,12 @@ public class MealData implements Serializable {
 	
 	public MealData() {
 	}
+	
+	public MealData(String name, int cal, Date dateTime) {
+		this.name = name;
+		this.cal = cal;
+		this.dateTime = dateTime;
+	}
 
 	public long getId() {
 		return id;
