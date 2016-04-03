@@ -40,11 +40,15 @@ public class DayMealPanel extends MaterialPanel {
 	}
 
 	public void add(MealData meal) {
-		table.add(meal);
+		table.addToBegining(meal);
 	}
 
 	public int getCalSum() {
-		return table.getCalSum();
+		return table.getValue();
+	}
+
+	public MealTable getMealTable() {
+		return table;
 	}
 
 }

@@ -99,11 +99,7 @@ public class MealManager {
 		ret.setOffset(offset);
 		ret.setLimit(limit);
 		ret.setDateFrom(ParamUtils.toDate(fromDate));
-		ret.setDateTo(ParamUtils.toDate(toDate));
-		if (fromTime != null)
-			ret.setTimeFrom(fromTime.toString());
-		if (toTime != null)
-			ret.setTimeTo(toTime.toString());
+		ret.setDateTo(ParamUtils.toDate(toDate));		
 		ret.setTotal(mealDao.getListSize(fromDate, toDate, fromTime, toTime, user));		
 		ret.setData(mealDao.getList(fromDate, toDate, fromTime, toTime, user, offset, limit)
 			.stream().map( it -> it.getMealData() ).collect(Collectors.toCollection(ArrayList::new)));	

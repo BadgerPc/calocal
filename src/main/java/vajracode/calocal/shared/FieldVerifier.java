@@ -119,8 +119,10 @@ public class FieldVerifier {
 	public static void checkFilterTimes(Date from, Date to) {
 //		Date from = DateUtils.time.parse(sFrom);
 //		Date to = DateUtils.time.parse(sTo);
-		if (from != null && to != null && from.getTime() > to.getTime())
-			throw new FieldException("'From' time should not be greater than 'To' time");		
+		if ((from != null && to == null) || (from == null && to != null))
+			throw new FieldException("'timeFrom' and 'timeTo' can be empty only together");
+//		if (from != null && to != null && from.getTime() > to.getTime())
+//			throw new FieldException("'From' time should not be greater than 'To' time");		
 	}
 
 	@GwtIncompatible
@@ -129,13 +131,13 @@ public class FieldVerifier {
 			throw new FieldException("'From' time should not be greater than 'To' time");
 	}
 
-	public static void checkFilterTimesUi(String sFrom, String sTo) {
+	public static void checkFilterTimesUi(String sFrom, String sTo) {		
 		if (sFrom == null || sTo == null)
 			return;
 		try {
 			Date from = DateUtils.timeUi.parse(sFrom);
 			Date to = DateUtils.timeUi.parse(sTo);
-			checkFilterTimes(from, to);
+			//checkFilterTimes(from, to);
 		} catch (IllegalArgumentException e) {
 			throw new FieldException("Wrong time format (ex.\"17:25\"): " + e.getMessage());
 		}

@@ -50,6 +50,7 @@ public class AuthPresenter extends CommonPresenter<AuthView> {
 	@AsyncHandler
 	public void onLogin(Void v) {
 		eventBus.checkLoggedIn();
+		view.resetPass();
 	}
 	
 	@AsyncHandler

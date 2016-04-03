@@ -1,5 +1,6 @@
 package vajracode.calocal.client.main;
 
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -23,11 +24,12 @@ public class MealRow extends CenteredRowFlexPanel implements Injected {
 	
 	private MealData meal;
 	private TextBox tbDate, tbName, tbCal;
+	private Widget lDate, lName, lCal;
 	private Button bFinish, bDelete;
 	private MealTable mealTable;
 	
 	public MealRow() {
-		addStyleName(Resources.INSTANCE.css().justifyContentSpace());
+		addStyleName(Resources.INSTANCE.css().justifyContentStart());
 	}
 	
 	public MealRow(MealData meal) {
@@ -37,9 +39,13 @@ public class MealRow extends CenteredRowFlexPanel implements Injected {
 	
 	private void update() {
 		clear();
-		add(getWidget(getTimeText()));
-		add(getWidget(meal.getName()));
-		add(getWidget(String.valueOf(meal.getCal())));
+		add(lDate = getWidget(getTimeText()));
+		lDate.addStyleName(Resources.INSTANCE.css().marginRight64());
+		add(lName = getWidget(meal.getName()));
+		lName.addStyleName(Resources.INSTANCE.css().marginRight64());
+		lName.setWidth("100%");
+		add(lCal = getWidget(String.valueOf(meal.getCal())));		
+		lCal.getElement().getStyle().setMarginRight(8, Unit.PX);
 		add(getEditButton());
 	}
 
@@ -64,13 +70,14 @@ public class MealRow extends CenteredRowFlexPanel implements Injected {
 	}
 
 	private Widget getWidget(String text) {
-		return new Body1(text);
+		return new Body1(text);		
 	}
 
 	public void edit() {
 		clear();
 		add(tbDate = getDateEditField());
 		add(tbName = getNameEditField());
+		tbName.setWidth("65%");
 		add(tbCal = getCalEditField());
 		add(bFinish = getFinishButton());
 		add(bDelete = getDeleteButton());
@@ -130,7 +137,7 @@ public class MealRow extends CenteredRowFlexPanel implements Injected {
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
 				try {
-					String date = DateUtils.date.format(meal.getDateTime());
+					String date = DateUtils.dateYear.format(meal.getDateTime());
 					meal.setDateTime(DateUtils.full.parse(event.getValue() + " - " + date));
 				} catch (IllegalArgumentException e) {
 					tbDate.setText(getTimeText());

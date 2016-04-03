@@ -37,14 +37,19 @@ public class MealServiceImpl implements MealService {
 
 	@Override
 	public MealDataList list(long fromDate, long toDate, String fromTime, String toTime, 
-			long uid, int offset, int limit) {
+			int timeOffset, long uid, int offset, int limit) {
 		LocalDateTime dFromDate = ParamUtils.getDate(fromDate);
 		LocalDateTime dToDate = ParamUtils.getDate(toDate);
-		LocalTime dFromTime = ParamUtils.getTime(fromTime);
-		LocalTime dToTime = ParamUtils.getTime(toTime);
+		LocalTime dFromTime = ParamUtils.getTime(fromTime, timeOffset);
+		LocalTime dToTime = ParamUtils.getTime(toTime, timeOffset);
 		FieldVerifier.checkFilterDates(dFromDate, dToDate);
 		FieldVerifier.checkFilterTimes(dFromTime, dToTime);
-		return mealManager.list(dFromDate, dToDate, dFromTime, dToTime, uid, offset, limit);
+		MealDataList ret = mealManager.list(dFromDate, dToDate, dFromTime, dToTime, uid, offset, limit);
+		if (fromTime != null)
+			ret.setTimeFrom(fromTime);
+		if (toTime != null)
+			ret.setTimeTo(toTime);
+		return ret;
 	}
 
 	

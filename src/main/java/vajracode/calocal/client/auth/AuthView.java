@@ -53,7 +53,10 @@ public class AuthView extends CommonView<AuthPresenter> {
 	}
 
 	public void resetPass() {
-		siPass.setText("");		
+		siPass.setText("");
+		suPass.setText("");
+		passConfirm.setText("");
+		suLogin.setText("");
 	}
 	
 }

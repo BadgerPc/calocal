@@ -44,8 +44,8 @@
 		</m:MaterialRow>
 		<d:CenteredColFlexPanel ui:field="content" addStyleNames="{style.hr}" />		
 		<d:CenteredColFlexPanel ui:field="today" addStyleNames="{res.css.marginTop32}">
-			<d:CenteredRowFlexPanel>
-				<m:MaterialTextBox ui:field="mealName" placeholder="{msgs.mealName}" />
+			<d:CenteredRowFlexPanel width="100%">
+				<m:MaterialTextBox ui:field="mealName" placeholder="{msgs.mealName}" width="34%"/>
 				<d:Button ui:field="addMeal" text="{msgs.addNewMeal}" addStyleNames="{res.css.margin16px}"/>
 			</d:CenteredRowFlexPanel>
 			<d:Header ui:field="percents" />

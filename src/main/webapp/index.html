@@ -82,7 +82,7 @@ em {
 }
 .navbar {
   position: relative;
-  height: 128px !important;
+  height: 92px !important;
   z-index: 998; 
 } 
 nav .nav-wrapper {
@@ -104,7 +104,7 @@ nav .nav-wrapper {
     line-height: 64px; }
 
 .navbar-fixed {
-    height: 128px !important; } }
+    height: 92px !important; } }
 @font-face {
   font-family: "Roboto";
   src: url("/Calocal/font/roboto/Roboto-Thin.woff2") format("woff2"), url("/Calocal/font/roboto/Roboto-Thin.woff") format("woff"), url("/Calocal/font/roboto/Roboto-Thin.ttf") format("truetype");
@@ -414,8 +414,11 @@ section > ul {
   </head>
   <body> 
     <div style="width: 100%; min-height: 100%; overflow-x: hidden; background-color: #F5F5F5;">
+    	<div id="loader" class="progress">
+        	<div class="indeterminate"></div>
+        </div>
     	<div id="menu">
-    		<header class="navbar">
+    		<header class="navbar">    			
     			<nav>
     				<div id="nav-wrapper" class="nav-wrapper container">    					    				
     					<div id="logo" class="brandLogo left">
@@ -424,10 +427,7 @@ section > ul {
     					</div>
     					<div id="username" />    					
     				</div>
-    			</nav>    			
-    			<div id="loader" class="progress">
-                	<div class="indeterminate"></div>
-            	</div>
+    			</nav>    			    			
     		</header>
     	</div>
     	<center>

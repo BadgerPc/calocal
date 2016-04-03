@@ -45,7 +45,7 @@ public class MainPresenter extends CommonPresenter<MainView> {
 		service.list(fromDatePrev != null ? fromDatePrev.getTime() : 0, 
 				toDatePrev != null ? toDatePrev.getTime() : 0, 
 				DateUtils.uiToTime(fromTimePrev), DateUtils.uiToTime(toTimePrev), 
-				0, 0, Integer.MAX_VALUE);
+				DateUtils.getTimeZoneOffset(), 0, 0, Integer.MAX_VALUE);
 		eventBus.setBody(view);
 	}
 

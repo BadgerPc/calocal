@@ -28,6 +28,6 @@ public class TextBox extends MaterialTextBox {
 	@Override
 	public void setType(InputType type) {
 		super.setType(type);
-		removeStyleName("validate");
+		valueBoxBase.removeStyleName("validate");
 	}
 }

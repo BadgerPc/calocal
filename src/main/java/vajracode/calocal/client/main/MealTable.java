@@ -1,30 +1,22 @@
 package vajracode.calocal.client.main;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
 
-import com.google.gwt.event.logical.shared.HasValueChangeHandlers;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Widget;
 
-import vajracode.calocal.client.auth.UserManager;
-import vajracode.calocal.client.elements.ColFlexPanel;
 import vajracode.calocal.client.i18n.I18nConstants;
 import vajracode.calocal.shared.model.MealData;
-import vajracode.calocal.shared.model.UserData;
 
-public class MealTable extends ColFlexPanel implements HasValueChangeHandlers<Integer> {
+public class MealTable extends MealCollectionBase {
 	
 	@Inject Provider<MealRow> mealRowProvider;
-	@Inject UserManager userManager;
 	@Inject I18nConstants msgs;
 	
-	private List<HandlerRegistration> handlers = new ArrayList<>();
+	
 	
 	public MealTable() {
 		setWidth("100%");		
@@ -36,31 +28,43 @@ public class MealTable extends ColFlexPanel implements HasValueChangeHandlers<In
 	}
 
 	public MealTable apply(List<MealData> data) {
-		for (int i = data.size() - 1; i >= 0; i--) {
-			add(data.get(i));
+		for (MealData m : data) {
+			addToBegining(m);
 		}
 		return this;
 	}
 
-	public MealRow add(MealData meal) {
-		MealRow r = mealRowProvider.get().apply(meal);
-		r.setMealTable(this);
+	public MealRow addToBegining(MealData meal) {
+		MealRow r = getMealRow(meal);
+		insert(r, 0);		
+		update();
+		return r;
+	}
+	
+	public MealRow addToEnd(MealData meal) {
+		MealRow r = getMealRow(meal);
 		add(r);
 		update();
 		return r;
 	}
 
+	private MealRow getMealRow(MealData meal) {
+		MealRow r = mealRowProvider.get().apply(meal);
+		r.setMealTable(this);
+		return r;
+	}
+
 	public void addAndEdit(MealData meal) {
-		MealRow r = add(meal);
+		MealRow r = addToEnd(meal);
 		r.edit();
 		r.focusOnCal();
 	}
 
 	public void update() {
-		ValueChangeEvent.fire(this, getCalSum());		
+		ValueChangeEvent.fire(this, getValue());		
 	}
 
-	public int getCalSum() {
+	public int getValue() {
 		int sum = 0;
 		for (Widget w : this) {
 			if (w instanceof MealRow) {
@@ -74,29 +78,5 @@ public class MealTable extends ColFlexPanel implements HasValueChangeHandlers<In
 		return getWidgetCount();
 	}
 	
-	@Override
-	protected void onLoad() {
-		super.onLoad();
-		handlers.add(userManager.addValueChangeHandler(new ValueChangeHandler<UserData>() {			
-			@Override
-			public void onValueChange(ValueChangeEvent<UserData> event) {
-				update();
-			}
-		}));
-	}
-
-	@Override
-	protected void onUnload() {
-		super.onUnload();
-		for (HandlerRegistration hr : handlers)
-			hr.removeHandler();		
-	}
 	
-	@Override
-	public HandlerRegistration addValueChangeHandler(ValueChangeHandler<Integer> handler) {		
-		HandlerRegistration ret = addHandler(handler, ValueChangeEvent.getType());
-		handlers.add(ret);
-		update();
-		return ret;
-	}
 }

@@ -94,8 +94,8 @@ public class MainView extends CommonView<MainPresenter> {
 		fromTime = DateUtils.timeToUi(list.getTimeFrom());
 		toTime = DateUtils.timeToUi(list.getTimeTo());
 		if (list.getDateFrom() != null && list.getDateTo() != null)
-			dateLabel.setText(DateUtils.date.format(fromDate) + " - " 
-				+ DateUtils.date.format(new Date(toDate.getTime() - DateConstants.MILLIS_DAY)));
+			dateLabel.setText(DateUtils.formatDateSmart(fromDate) + " - " 
+				+ DateUtils.formatDateSmart(new Date(toDate.getTime() - DateConstants.MILLIS_DAY)));
 		else
 			dateLabel.setText(msgs.allDays());
 		
@@ -105,7 +105,7 @@ public class MainView extends CommonView<MainPresenter> {
 		cleanFilter.setVisible(true);
 		content.add(getMealArray().apply(list.getData()));		
 		updateWelcome(list.getData().size() == 0, msgs.noData());
-		summary.updateAvg(getMealArray().getCalAvg());
+		summary.updateAvg(getMealArray().getValue());
 	}
 
 	private void applyTodayData(MealDataList list) {
@@ -137,7 +137,13 @@ public class MainView extends CommonView<MainPresenter> {
 	
 	private MealArray getMealArray() {
 		if (mealArray == null) {
-			mealArray = allMealsProvider.get();			
+			mealArray = allMealsProvider.get();
+			mealArray.addValueChangeHandler(new ValueChangeHandler<Integer>() {				
+				@Override
+				public void onValueChange(ValueChangeEvent<Integer> event) {
+					summary.updateSum(event.getValue());
+				}
+			});
 		}
 		return mealArray;
 	}

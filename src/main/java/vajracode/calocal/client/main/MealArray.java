@@ -7,11 +7,13 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
-import vajracode.calocal.client.elements.ColFlexPanel;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
+
 import vajracode.calocal.client.utils.DateUtils;
 import vajracode.calocal.shared.model.MealData;
 
-public class MealArray extends ColFlexPanel {
+public class MealArray extends MealCollectionBase {
 
 	@Inject Provider<DayMealPanel> panelProvider;
 	
@@ -29,13 +31,19 @@ public class MealArray extends ColFlexPanel {
 				p = panelProvider.get().apply(meal.getDateTime());
 				panels.put(date, p);
 				add(p);
+				p.getMealTable().addValueChangeHandler(new ValueChangeHandler<Integer>() {					
+					@Override
+					public void onValueChange(ValueChangeEvent<Integer> event) {
+						update();
+					}
+				});
 			}
 			p.add(meal);
 		}
 		return this;
 	}
 
-	public int getCalAvg() {
+	public int getValue() {
 		return panels.size() == 0 ? 0 : getCalSum() / panels.size();
 	}
 

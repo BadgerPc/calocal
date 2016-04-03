@@ -28,6 +28,7 @@ public interface MealService extends DirectRestService {
     		@QueryParam("toDate") @DefaultValue("0") long toDate, 
     		@QueryParam("fromTime") String fromTime, 
     		@QueryParam("toTime") String toTime,
+    		@QueryParam("timeOffset") @DefaultValue("0") int timeOffset,
     		@QueryParam("uid") @DefaultValue("0") long uid,
     		@QueryParam("offset") @DefaultValue("0") int offset,
     		@QueryParam("limit") @DefaultValue("100") int limit);

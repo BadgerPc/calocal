@@ -24,6 +24,10 @@
 	justify-content: flex-end; -webkit-box-pack: end; -webkit-justify-content: flex-end; -ms-flex-pack: end;          
 }
 
+.justifyContentStart {
+	justify-content: flex-start; -webkit-box-pack: start; -webkit-justify-content: flex-start; -ms-flex-pack: start;          
+}
+
 .alignSelfCenter {
 	align-self: center; -ms-flex-item-align: center; -webkit-align-self: center;
 }
@@ -98,6 +102,9 @@
 }
 .marginTop32 {
 	margin-top: 32px;
+}
+.marginRight64 {
+	margin-right: 64px;
 }
 .padding32 {
 	padding: 32px;

@@ -8,7 +8,8 @@ public interface MainCssResource extends CssResource {
 	String flexHorizontal();
 	String flexVertical();
 	String justifyContentCenter();
-	String justifyContentSpace();
+	String justifyContentSpace();	
+	String justifyContentStart();
 	String flexShrink0();
 	String flexGrow1();
 	String cursorPointer();
@@ -31,4 +32,5 @@ public interface MainCssResource extends CssResource {
 	String marginTop32();
 	String padding32();
 	String summary();
+	String marginRight64();
 }

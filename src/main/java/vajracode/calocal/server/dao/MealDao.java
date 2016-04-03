@@ -42,18 +42,30 @@ public class MealDao extends Dao<MealDTO> {
 	}
 
 	private Predicate getListExpression(CriteriaBuilder cb, Root<MealDTO> root, 
-			LocalDateTime fromDate, LocalDateTime toDate, LocalTime fromTime, LocalTime toTime, UserDTO user) {		
+			LocalDateTime fromDate, LocalDateTime toDate, 
+			LocalTime fromTime, LocalTime toTime, UserDTO user) {		
 		Predicate p = cb.equal(root.get("user"), user);
 		if (fromDate != null)
 			p = cb.and(p, cb.greaterThanOrEqualTo(root.get("consumed"), java.sql.Timestamp.valueOf(fromDate)));
 		if (toDate != null)
 			p = cb.and(p, cb.lessThanOrEqualTo(root.get("consumed"), java.sql.Timestamp.valueOf(toDate)));
-		if (fromTime != null)
-			p = cb.and(p, cb.greaterThanOrEqualTo(cb.function("time", 
-				Time.class, root.get("consumed")), Time.valueOf(fromTime)));
-		if (toTime != null)
-			p = cb.and(p, cb.lessThanOrEqualTo(cb.function("time", 
-				Time.class, root.get("consumed")), Time.valueOf(toTime)));
+		if (fromTime != null && toTime != null) {
+			if (fromTime.isBefore(toTime)) {
+				p = cb.and(p, cb.greaterThanOrEqualTo(cb.function("time", 
+					Time.class, root.get("consumed")), Time.valueOf(fromTime)));
+				p = cb.and(p, cb.lessThanOrEqualTo(cb.function("time", 
+						Time.class, root.get("consumed")), Time.valueOf(toTime)));
+			} else {
+				Predicate or = cb.or(
+						cb.lessThanOrEqualTo(cb.function("time", 
+							Time.class, root.get("consumed")), Time.valueOf(toTime)), 
+						cb.greaterThanOrEqualTo(cb.function("time", 
+							Time.class, root.get("consumed")), Time.valueOf(fromTime)));
+				p = cb.and(p, or);
+			}
+		}
+		
+			
 		return p;
 	}
 
