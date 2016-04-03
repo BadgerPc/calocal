@@ -1,6 +1,7 @@
 package vajracode.calocal.shared.service;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 
 import org.fusesource.restygwt.client.DirectRestService;
 import org.fusesource.restygwt.client.Options;
@@ -10,6 +11,8 @@ import vajracode.calocal.shared.model.UserData;
 import vajracode.calocal.shared.model.UserDataList;
 
 @Path(ResourcePaths.USER)
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public interface UserService extends DirectRestService {
 
 	@POST

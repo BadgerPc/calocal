@@ -17,7 +17,7 @@ public class SecurityUser implements UserDetails {
 
     public SecurityUser(UserData user, String password) {
         this.user = user;
-        this.authorities = Arrays.asList(new SimpleGrantedAuthority(user.getRole().name()));
+        this.authorities = Arrays.asList(new SimpleGrantedAuthority(user.getRole().roleName()));
         pass = password.toCharArray();
     }
 

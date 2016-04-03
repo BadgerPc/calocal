@@ -151,7 +151,9 @@ public class MainView extends CommonView<MainPresenter> {
 	}
 	
 	@UiHandler("addMeal")
-	public void addMealHandler(ClickEvent event) {
+	public void addMealHandler(ClickEvent event) {		
+		if (mealName.getText().length() == 0)
+			return;
 		addMeal.setEnabled(false);
 		getPresenter().addMeal(mealName.getText());
 		mealName.clear();
@@ -163,11 +165,17 @@ public class MainView extends CommonView<MainPresenter> {
 			addMealHandler(null);
 	}
 	
-	public void addMeal(MealData meal) {		
-		content.add(getTodayMeals());
+	public void addMeal(MealData meal) {	
+		ensureTodayMealsAppened();		
 		todayMeals.addAndEdit(meal);
 		addMeal.setEnabled(true);
 		updateWelcome(todayMeals.getMealsCount() == 0, msgs.todayWelcome());
+	}
+
+	private void ensureTodayMealsAppened() {
+		MealTable t = getTodayMeals();
+		if (!t.isAttached())
+			content.add(t);
 	}
 
 	public void onAddMealFailed() {

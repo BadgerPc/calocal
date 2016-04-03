@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import javax.ws.rs.ForbiddenException;
 import javax.ws.rs.NotFoundException;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,8 @@ import vajracode.calocal.shared.model.UserDataList;
 
 @Component
 public class UserManager {
+	
+	private final Logger log = Logger.getLogger(getClass());
 
 	@Autowired
 	private UserDao userDao;
@@ -65,7 +68,9 @@ public class UserManager {
 			data.setRole(user.getRole());			
 		}
 		user.setName(data.getName());
-		user.setPassword(passwordEncoder.encodePassword(data.getPassword()));
+		if (data.getPassword() != null) {
+			user.setPassword(passwordEncoder.encodePassword(data.getPassword()));
+		}
 		user.setRole(user.getRole());
 		user.setDailyCalories(data.getDailyCalories());
 		userDao.flush();
@@ -86,17 +91,20 @@ public class UserManager {
 		return user;
 	}
 
+	@Transactional
 	public void delete(long id) {
 		userDao.delete(getAccessibleUser(id));
 	}
 
+	@Transactional(readOnly = true)
 	public UserDataList list(int offset, int limit) {					
 		UserDataList ret = new UserDataList();
 		ret.setOffset(offset);
 		ret.setLimit(limit);
 		ret.setTotal(userDao.getUserCount());				
-		ret.setData(userDao.getUserList()
+		ret.setData(userDao.getUserList(offset, limit)
 			.stream().map( it -> it.getUserData() ).collect(Collectors.toCollection(ArrayList::new)));
+		log.debug("list " + ret.getData().size() + "/" + ret.getTotal());
 		return ret;
 	}
 

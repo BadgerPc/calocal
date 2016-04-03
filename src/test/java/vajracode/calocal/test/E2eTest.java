@@ -13,8 +13,7 @@ import org.junit.Test;
 
 import vajracode.calocal.server.utils.ParamUtils;
 import vajracode.calocal.shared.constants.DateConstants;
-import vajracode.calocal.shared.model.MealData;
-import vajracode.calocal.shared.model.MealDataList;
+import vajracode.calocal.shared.model.*;
 
 public class E2eTest extends CalocalTest {
 	
@@ -23,7 +22,7 @@ public class E2eTest extends CalocalTest {
 		
 		init();		
 		
-		auth();
+		authUser();
 		
 		mealGetEmpty();
 		
@@ -32,9 +31,48 @@ public class E2eTest extends CalocalTest {
 		mealGet();
 		
 		mealDelete();
+		
+		mealGetEmpty();
+		
+		logOut();
+		
+		authAdmin();
+		
+		userRUD();
 
+		logOut();
 	}
-	
+
+	private void userRUD() {
+		UserDataList list = userTarget.request().get().readEntity(UserDataList.class);
+		assertNotNull(list);
+		
+		UserData user = null;
+		int size = list.getData().size();
+		for (UserData u : list.getData()) {
+			if (u.getId() == userId) {
+				user = u;
+				break;
+			}
+		}
+		assertNotNull(user);
+		
+		assertNotNull(user = userTarget.path("/" + userId).request().get().readEntity(UserData.class));
+		
+		String newName = getRandomString();
+		user.setName(newName);
+		user = userTarget.path("/" + userId).request().put(getEntity(user)).readEntity(UserData.class);
+		
+		assertNotNull(user);
+		assertEquals(newName, user.getName());
+		
+		assertEquals(Status.NO_CONTENT.getStatusCode(), 
+				userTarget.path("/" + userId).request().delete().getStatus());
+		
+		list = userTarget.request().get().readEntity(UserDataList.class);
+		assertNotNull(list);
+		assertEquals(size - 1, list.getData().size());
+	}
 
 	private void mealDelete() {		
 		MealDataList list = mealTarget.request().get().readEntity(MealDataList.class);
@@ -44,12 +82,7 @@ public class E2eTest extends CalocalTest {
 		for (MealData d : list.getData()) {
 			assertEquals(Status.NO_CONTENT.getStatusCode(), 
 					mealTarget.path("/" + d.getId()).request().delete().getStatus());
-		}
-		
-		list = mealTarget.request().get().readEntity(MealDataList.class);
-		
-		assertNotNull(list);
-		assertEquals(0, list.getData().size());
+		}		
 	}
 	
 	

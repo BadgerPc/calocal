@@ -29,8 +29,9 @@ public class UserDao extends Dao<UserDTO> {
 		return em.createQuery("select count(*) from UserDTO", Long.class).getSingleResult();
 	}
 
-	public List<UserDTO> getUserList() {
-		return em.createQuery("from UserDTO", UserDTO.class).getResultList();
+	public List<UserDTO> getUserList(int offset, int limit) {
+		return em.createQuery("from UserDTO", UserDTO.class)
+			.setMaxResults(limit).setFirstResult(offset).getResultList();
 	}
 
 }

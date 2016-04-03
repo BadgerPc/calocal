@@ -1,6 +1,5 @@
 package vajracode.calocal.server.service;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +10,7 @@ import vajracode.calocal.shared.model.UserDataList;
 import vajracode.calocal.shared.service.UserService;
 
 @Service
-public class UserServiceImpl implements UserService {
-
-	private final Logger log = Logger.getLogger(getClass());
+public class UserServiceImpl implements UserService {	
 	
 	@Autowired
 	private UserManager userManager;
@@ -27,7 +24,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDataList list(int offset, int limit) {
-		return userManager.list(offset, limit);
+		return userManager.list(offset, limit);		
 	}
 
 	@Override
@@ -39,6 +36,8 @@ public class UserServiceImpl implements UserService {
 	public UserData update(long id, UserData data) {
 		check(data);
 		FieldVerifier.checkIdsEqual(id, data.getId());
+		if (data.getPassword() != null)
+			FieldVerifier.checkPass(data.getPassword());
 		return userManager.update(data);				
 	}
 

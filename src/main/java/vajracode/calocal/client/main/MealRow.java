@@ -162,7 +162,7 @@ public class MealRow extends CenteredRowFlexPanel implements Injected {
 	}
 
 	public void focusOnCal() {
-		//TODO
+		tbCal.setFocus(true);
 	}
 
 	public MealRow apply(MealData meal) {

@@ -8,8 +8,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Date;
 import java.util.Random;
-import java.util.logging.Handler;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.ws.rs.client.Client;
@@ -45,21 +43,23 @@ public class CalocalTest extends JerseyTest {
 	protected Logger logger = Logger.getLogger(getClass().getCanonicalName());    
 	
 	protected Random rand = new Random();
-	protected String login = "test" + rand.nextInt(10000);
-	protected String pass = "pass" + rand.nextInt(10000);
+	protected String login = getRandomLogin();
+	protected String pass = getRandomString();
 	protected long userId;
 	
 	protected WebTarget loginTarget, mealTarget, userTarget;
 	protected JerseyClient client;
 	
 	public CalocalTest() {
-		Level level = Level.FINEST;
-		logger.setLevel(level);
-	    for (Handler h : logger.getHandlers())
-	    	h.setLevel(level);
-	    logger.log(level, "Logging enabled");
+//		Level level = Level.FINEST;
+//		logger.setLevel(level);			  
+//	    logger.log(level, "Logging enabled");
 	}
 	
+	private String getRandomLogin() {
+		return "test" + rand.nextInt(Integer.MAX_VALUE / 2);	
+	}
+
 	@Override
 	protected Application configure() {
 		enable(TestProperties.LOG_TRAFFIC);
@@ -106,13 +106,20 @@ public class CalocalTest extends JerseyTest {
 		return client;
 	}	
 
-	protected void auth() {
+	protected void authUser() {
 		assertEquals(Status.UNAUTHORIZED.getStatusCode(), 
 			loginTarget.request().get().getStatus()); 
 		
-		UserData ud = loginTarget.request().put(
-			Entity.entity(new RegistrationData(login, pass), MediaType.APPLICATION_JSON_TYPE))
-			.readEntity(UserData.class);
+		UserData ud = null;
+		do {
+			try {
+				ud = loginTarget.request().put(
+					Entity.entity(new RegistrationData(login, pass), MediaType.APPLICATION_JSON_TYPE))
+					.readEntity(UserData.class);
+			} catch (Exception e) {
+				login = getRandomString();
+			}
+		} while (ud == null);
 		
 		assertNotNull(ud);
 		assertEquals(login, ud.getName());
@@ -120,6 +127,10 @@ public class CalocalTest extends JerseyTest {
 		assertTrue(ud.getId() > 0);
 		userId = ud.getId();
 		
+		authUser(login, pass);
+	}
+	
+	private void authUser(String login, String pass) {
 		Form form = new Form();
 		form.param(LoginFields.USERNAME, login);
 		form.param(LoginFields.PASSWORD, pass);
@@ -127,6 +138,17 @@ public class CalocalTest extends JerseyTest {
 		assertEquals(Status.OK.getStatusCode(), 
 			loginTarget.request().post(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED_TYPE))
 			.getStatus());
+		
+		assertEquals(login, loginTarget.request().get().readEntity(UserData.class).getName());
+	}
+
+	protected void authAdmin() {
+		authUser("admin", "anri2");
+	}
+	
+	protected void logOut() {
+		assertEquals(Status.OK.getStatusCode(), 
+				loginTarget.request().delete().getStatus()); 
 	}
 
 	protected <T> Entity<T> getEntity(T in) {
@@ -136,7 +158,7 @@ public class CalocalTest extends JerseyTest {
 	protected void init() {    
 		loginTarget = target(ResourcePaths.API_LOGIN);
 		mealTarget = target(ResourcePaths.API_MEAL);
-		
+		userTarget = target(ResourcePaths.API_USER);
 	}
 	
 	public static Date getDateBack(long millis) {
