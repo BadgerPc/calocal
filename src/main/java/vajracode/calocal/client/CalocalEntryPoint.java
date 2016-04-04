@@ -9,6 +9,7 @@ import com.mvp4g.client.Mvp4gModule;
 import fr.putnami.pwt.core.error.client.ErrorHandler;
 import fr.putnami.pwt.core.error.client.ErrorManager;
 import fr.putnami.pwt.core.inject.client.Module;
+import vajracode.calocal.client.error.CustomExceptionMapper;
 import vajracode.calocal.client.error.MainErrorDisplayer;
 import vajracode.calocal.client.error.MainErrorHandler;
 import vajracode.calocal.client.resources.Resources;
@@ -19,6 +20,7 @@ public class CalocalEntryPoint implements EntryPoint, Module {
 	public void onModuleLoad() {
 		Defaults.setServiceRoot("/api");
 		Defaults.setDateFormat(null);
+		Defaults.setExceptionMapper(new CustomExceptionMapper());
 		
 		final ErrorHandler eh = new MainErrorHandler();
 		ErrorManager.get().registerErrorHandler(eh);

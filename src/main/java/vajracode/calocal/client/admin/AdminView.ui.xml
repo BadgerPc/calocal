@@ -1,0 +1,37 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"	
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:m="urn:import:gwt.material.design.client.ui"
+	xmlns:d="urn:import:vajracode.calocal.client.elements"
+	ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
+    ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
+    ui:generateLocales="default"
+	>    
+
+	<ui:with field='msgs' type='vajracode.calocal.client.i18n.I18nConstants' />
+	<ui:with field='res' type='vajracode.calocal.client.resources.Resources' />
+	
+	<ui:style>	
+	.hr {	    	   
+	    padding-top: 16px;
+	}
+	.ddc {
+		margin-right: 12px;
+	}
+	</ui:style>		
+	
+	<m:MaterialPanel addStyleNames="card {res.css.padding32}">
+		<d:CenteredRowFlexPanel addStyleNames="{res.css.justifyContentStart}">
+			<d:Body1Light text="{msgs.login}" width="100%"/>
+			<d:Body1Light text="{msgs.ddc}" addStyleNames="{style.ddc}" />
+			<d:Body1Light text="{msgs.role}" width="189px"/>
+		</d:CenteredRowFlexPanel>
+		<d:CenteredColFlexPanel ui:field="content" addStyleNames="{style.hr}" />	
+		<d:CenteredRowFlexPanel width="100%">
+			<d:TextBox ui:field="userName" placeholder="{msgs.userName}" width="34%"/>
+			<d:Button ui:field="addUser" text="{msgs.addNewUser}" addStyleNames="{res.css.margin16px}"/>
+		</d:CenteredRowFlexPanel>	
+	</m:MaterialPanel>
+	    
+    
+</ui:UiBinder>

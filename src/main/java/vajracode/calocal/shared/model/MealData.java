@@ -1,11 +1,10 @@
 package vajracode.calocal.shared.model;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class MealData implements Serializable {
+public class MealData extends Data {
 	
-	private long id, userId;
+	private long userId;
 	private String name;
 	private int cal;
 	private Date dateTime;
@@ -17,14 +16,6 @@ public class MealData implements Serializable {
 		this.name = name;
 		this.cal = cal;
 		this.dateTime = dateTime;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getName() {

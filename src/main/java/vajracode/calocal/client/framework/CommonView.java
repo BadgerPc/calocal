@@ -7,7 +7,8 @@ import com.mvp4g.client.view.ReverseViewInterface;
 
 import fr.putnami.pwt.core.mvp.client.View;
 
-public class CommonView<T extends CommonPresenter> extends Composite implements View, ReverseViewInterface<T> {
+public class CommonView<T extends CommonPresenter> extends Composite 
+	implements View, ReverseViewInterface<T> {
 
 	@Inject protected EventBusHolder bus;
 	

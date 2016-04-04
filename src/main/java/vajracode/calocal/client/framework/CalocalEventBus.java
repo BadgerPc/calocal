@@ -8,6 +8,7 @@ import com.mvp4g.client.annotation.module.AfterLoadChildModule;
 import com.mvp4g.client.annotation.module.BeforeLoadChildModule;
 import com.mvp4g.client.event.EventBusWithLookup;
 
+import vajracode.calocal.client.admin.AdminPresenter;
 import vajracode.calocal.client.auth.AuthPresenter;
 import vajracode.calocal.client.auth.OAuthHandler;
 import vajracode.calocal.client.main.MainPresenter;
@@ -68,6 +69,10 @@ public interface CalocalEventBus extends EventBusWithLookup {
 
 	@Event(handlers = MainPresenter.class)
 	void filter(Date fromDate, Date toDate, String fromTime, String toTime);
+
+	
+	@Event(handlers = AdminPresenter.class)
+	void admin();
 
 
 }

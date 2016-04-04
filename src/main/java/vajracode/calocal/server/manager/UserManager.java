@@ -2,6 +2,7 @@ package vajracode.calocal.server.manager;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import javax.ws.rs.ForbiddenException;
@@ -48,8 +49,8 @@ public class UserManager {
 		UserDTO user = new UserDTO();
 		user.setCreated(new Date());
 		user.setName(login);
-		user.setPassword(passwordEncoder.encodePassword(pass));
-		user.setRole(role);
+		user.setPassword(passwordEncoder.encodePassword(pass == null ? login + (new Random().nextInt()) : pass));
+		user.setRole(role == null ? Role.USER : role);
 		user.setDailyCalories(1000);
 		userDao.persist(user);
 		userDao.flush();
@@ -65,14 +66,18 @@ public class UserManager {
 	public UserData update(UserData data) {
 		UserDTO user = getAccessibleUser(data.getId());
 		if (!accessManager.isAdmin()) {						
-			data.setRole(user.getRole());			
+			data.setRole(null);			
 		}
-		user.setName(data.getName());
+		if (data.getName() != null)
+			user.setName(data.getName());
 		if (data.getPassword() != null) {
 			user.setPassword(passwordEncoder.encodePassword(data.getPassword()));
 		}
-		user.setRole(user.getRole());
-		user.setDailyCalories(data.getDailyCalories());
+		if (data.getRole() != null)
+			user.setRole(data.getRole());
+		if (data.getDailyCalories() != null)
+			user.setDailyCalories(data.getDailyCalories());
+		
 		userDao.flush();
 		return user.getUserData();
 	}

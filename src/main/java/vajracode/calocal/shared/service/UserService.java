@@ -13,7 +13,7 @@ import vajracode.calocal.shared.model.UserDataList;
 @Path(ResourcePaths.USER)
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public interface UserService extends DirectRestService {
+public interface UserService extends DirectRestService, CRUDService<UserData> {
 
 	@POST
 	UserData create(UserData user);

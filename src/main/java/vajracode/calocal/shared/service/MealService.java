@@ -13,7 +13,7 @@ import vajracode.calocal.shared.model.MealDataList;
 @Path(ResourcePaths.MEAL)
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public interface MealService extends DirectRestService {
+public interface MealService extends DirectRestService, CRUDService<MealData> {
 	
     @POST
     MealData create(MealData meal);

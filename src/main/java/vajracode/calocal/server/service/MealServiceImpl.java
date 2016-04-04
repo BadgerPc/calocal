@@ -42,6 +42,8 @@ public class MealServiceImpl implements MealService {
 		LocalDateTime dToDate = ParamUtils.getDate(toDate);
 		LocalTime dFromTime = ParamUtils.getTime(fromTime, timeOffset);
 		LocalTime dToTime = ParamUtils.getTime(toTime, timeOffset);
+		if (dToTime != null)
+			dToTime = dToTime.plusMinutes(1);
 		FieldVerifier.checkFilterDates(dFromDate, dToDate);
 		FieldVerifier.checkFilterTimes(dFromTime, dToTime);
 		MealDataList ret = mealManager.list(dFromDate, dToDate, dFromTime, dToTime, uid, offset, limit);

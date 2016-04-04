@@ -1,27 +1,16 @@
 package vajracode.calocal.shared.model;
 
-import java.io.Serializable;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserData implements Serializable {
+public class UserData extends Data {
 
-	private long id;
-	private int dailyCalories;
+	private Integer dailyCalories;
 	private String name;
 	private String password;	
 	private Role role;
 
 	public UserData() {
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getName() {
@@ -40,11 +29,11 @@ public class UserData implements Serializable {
 		this.role = role;
 	}
 
-	public int getDailyCalories() {
+	public Integer getDailyCalories() {
 		return dailyCalories;
 	}
 
-	public void setDailyCalories(int dailyCalories) {
+	public void setDailyCalories(Integer dailyCalories) {
 		this.dailyCalories = dailyCalories;
 	}
 

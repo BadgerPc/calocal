@@ -1,35 +1,26 @@
 package vajracode.calocal.client.main;
 
 import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.ui.Widget;
 
-import fr.putnami.pwt.core.error.client.ErrorManager;
-import fr.putnami.pwt.core.inject.client.Injected;
 import fr.putnami.pwt.core.inject.client.annotation.InjectService;
-import fr.putnami.pwt.core.service.client.annotation.AsyncHandler;
-import gwt.material.design.client.constants.IconType;
-import vajracode.calocal.client.elements.*;
+import vajracode.calocal.client.elements.TextBox;
 import vajracode.calocal.client.resources.Resources;
+import vajracode.calocal.client.table.CRUDRow;
 import vajracode.calocal.client.utils.DateUtils;
 import vajracode.calocal.shared.model.MealData;
 import vajracode.calocal.shared.service.MealService;
 
-public class MealRow extends CenteredRowFlexPanel implements Injected {
+public class MealRow extends CRUDRow<MealData> {
 
-	@InjectService MealService service;
+	protected @InjectService MealService service;
 	
-	private MealData meal;
 	private TextBox tbDate, tbName, tbCal;
-	private Widget lDate, lName, lCal;
-	private Button bFinish, bDelete;
-	private MealTable mealTable;
+	private Widget lDate, lName, lCal;	
 	
-	public MealRow() {
-		addStyleName(Resources.INSTANCE.css().justifyContentStart());
+	public MealRow() {		
 	}
 	
 	public MealRow(MealData meal) {
@@ -37,40 +28,20 @@ public class MealRow extends CenteredRowFlexPanel implements Injected {
 		apply(meal);
 	}
 	
-	private void update() {
+	protected void update() {
 		clear();
 		add(lDate = getWidget(getTimeText()));
 		lDate.addStyleName(Resources.INSTANCE.css().marginRight64());
-		add(lName = getWidget(meal.getName()));
+		add(lName = getWidget(data.getName()));
 		lName.addStyleName(Resources.INSTANCE.css().marginRight64());
 		lName.setWidth("100%");
-		add(lCal = getWidget(String.valueOf(meal.getCal())));		
+		add(lCal = getWidget(String.valueOf(data.getCal())));		
 		lCal.getElement().getStyle().setMarginRight(8, Unit.PX);
 		add(getEditButton());
 	}
 
 	private String getTimeText() {
-		return DateUtils.timeUi.format(meal.getDateTime());
-	}
-
-	private Widget getEditButton() {
-		return getIcoButton(IconType.MODE_EDIT, new ClickHandler() {			
-			@Override
-			public void onClick(ClickEvent event) {
-				edit();
-			}
-		});
-	}
-
-	private Button getIcoButton(IconType icon, ClickHandler clickHandler) {		
-		Button b = new FlatButton();		
-		b.setIconType(icon);
-		b.addClickHandler(clickHandler);
-		return b;
-	}
-
-	private Widget getWidget(String text) {
-		return new Body1(text);		
+		return DateUtils.timeUi.format(data.getDateTime());
 	}
 
 	public void edit() {
@@ -79,66 +50,17 @@ public class MealRow extends CenteredRowFlexPanel implements Injected {
 		add(tbName = getNameEditField());
 		tbName.setWidth("65%");
 		add(tbCal = getCalEditField());
-		add(bFinish = getFinishButton());
-		add(bDelete = getDeleteButton());
+		add(getFinishButton());
+		add(getDeleteButton());
 	}
 	
-	private Button getDeleteButton() {
-		return getIcoButton(IconType.DELETE, new ClickHandler() {			
-			@Override
-			public void onClick(ClickEvent event) {
-				bDelete.setEnabled(false);
-				service.delete(meal.getId());
-			}
-		});
-	}
-	
-	private Button getFinishButton() {
-		return getIcoButton(IconType.DONE, new ClickHandler() {			
-			@Override
-			public void onClick(ClickEvent event) {
-				bFinish.setEnabled(false);
-				done();
-			}
-		});
-	}
-
-	protected void done() {
-		service.update(meal.getId(), meal);
-	}
-	
-	@AsyncHandler
-	public void onUpdate(MealData data) {
-		meal = data;
-		update();
-		mealTable.update();
-	}
-	
-	@AsyncHandler
-	public void onUpdateThrowable(Throwable t){
-		bFinish.setEnabled(true);
-		ErrorManager.get().getErrorHandlers().get(0).handle(t);
-	}
-	
-	@AsyncHandler
-	public void onDelete(Void v) {
-		removeFromParent();
-		mealTable.update();
-	}
-	
-	@AsyncHandler
-	public void onDeleteThrowable(Throwable t){
-		bDelete.setEnabled(true);
-		ErrorManager.get().getErrorHandlers().get(0).handle(t);
-	}
-
 	private TextBox getDateEditField() {		
 		return new TextBox(getTimeText(), new ValueChangeHandler<String>() {
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
 				try {
-					String date = DateUtils.dateYear.format(meal.getDateTime());
-					meal.setDateTime(DateUtils.full.parse(event.getValue() + " - " + date));
+					String date = DateUtils.dateYear.format(data.getDateTime());
+					data.setDateTime(DateUtils.full.parse(event.getValue() + " - " + date));
 				} catch (IllegalArgumentException e) {
 					tbDate.setText(getTimeText());
 				}
@@ -147,22 +69,22 @@ public class MealRow extends CenteredRowFlexPanel implements Injected {
 	}
 	
 	private TextBox getNameEditField() {		
-		return new TextBox(meal.getName(), new ValueChangeHandler<String>() {
+		return new TextBox(data.getName(), new ValueChangeHandler<String>() {
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
-				meal.setName(event.getValue());
+				data.setName(event.getValue());
 			}
 		});
 	}
 	
 	private TextBox getCalEditField() {		
-		return new TextBox(String.valueOf(meal.getCal()), new ValueChangeHandler<String>() {
+		return new TextBox(String.valueOf(data.getCal()), new ValueChangeHandler<String>() {
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
 				try {
-					meal.setCal(Integer.parseInt(event.getValue()));
+					data.setCal(Integer.parseInt(event.getValue()));
 				} catch (NumberFormatException e) {
-					tbCal.setText(String.valueOf(meal.getCal()));
+					tbCal.setText(String.valueOf(data.getCal()));
 				}
 			}
 		});
@@ -172,19 +94,42 @@ public class MealRow extends CenteredRowFlexPanel implements Injected {
 		tbCal.setFocus(true);
 	}
 
-	public MealRow apply(MealData meal) {
-		this.meal = meal;
-		update();
-		return this;
+	public MealService getService() {
+		return service;
+	}
+	
+	/*@Override
+	protected void delete() {
+		service.delete(data.getId());
+	}
+	
+	@Override
+	protected void done() {
+		service.update(data.getId(), data);
+	}
+	
+	@Override
+	@AsyncHandler
+	public void onUpdate(MealData data) {
+		super.onUpdateInner(data);
 	}
 
-	public void setMealTable(MealTable mealTable) {
-		this.mealTable = mealTable;
+	@Override
+	@AsyncHandler
+	public void onUpdateThrown(Throwable t) {
+		super.onUpdateThrownInner(t);
 	}
 
-	public MealData getMeal() {
-		return meal;
+	@Override
+	@AsyncHandler
+	public void onDelete(Void v) {
+		super.onDeleteInner(v);
 	}
 
+	@Override
+	@AsyncHandler
+	public void onDeleteThrown(Throwable t) {
+		super.onDeleteThrownInner(t);
+	}*/
 
 }

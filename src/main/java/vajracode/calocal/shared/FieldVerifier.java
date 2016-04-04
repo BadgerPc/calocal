@@ -72,6 +72,8 @@ public class FieldVerifier {
 	}
 
 	public static void checkUserName(String string) {
+		if (string == null)
+			return;
 		if (string.length() < 3 || string.length() > 20 || hasNonLetters(string))
 			throw new FieldException("Login has incorrect length or symbols");
 	}
@@ -85,12 +87,14 @@ public class FieldVerifier {
         return !string.matches("^[a-zA-Z0-9]*$");
 	}
 
-	public static void checkPassEqual(String pass, String passConfirm) {
+	public static void checkPassEqual(String pass, String passConfirm) {		
 		if (!pass.equals(passConfirm))
 			throw new FieldException("Passwords do not match");
 	}
 
-	public static void checkCal(int cal) {
+	public static void checkCal(Integer cal) {
+		if (cal == null)
+			return;
 		if (cal < 0)
 			throw new FieldException("Calories count should be positive");
 	}
@@ -113,22 +117,13 @@ public class FieldVerifier {
 	@GwtIncompatible
 	public static void checkFilterDates(LocalDateTime from, LocalDateTime to) {
 		if (from != null && to != null && from.isAfter(to))
-			throw new FieldException("'From' date should not be greater than 'To' date");
-	}
-
-	public static void checkFilterTimes(Date from, Date to) {
-//		Date from = DateUtils.time.parse(sFrom);
-//		Date to = DateUtils.time.parse(sTo);
-		if ((from != null && to == null) || (from == null && to != null))
-			throw new FieldException("'timeFrom' and 'timeTo' can be empty only together");
-//		if (from != null && to != null && from.getTime() > to.getTime())
-//			throw new FieldException("'From' time should not be greater than 'To' time");		
+			throw new FieldException("'dateFrom' should not be greater than 'dateTo'");
 	}
 
 	@GwtIncompatible
 	public static void checkFilterTimes(LocalTime from, LocalTime to) {
-		if (from != null && to != null && from.isAfter(to))
-			throw new FieldException("'From' time should not be greater than 'To' time");
+		if ((from != null && to == null) || (from == null && to != null))
+			throw new FieldException("'timeFrom' and 'timeTo' can be empty only together");
 	}
 
 	public static void checkFilterTimesUi(String sFrom, String sTo) {		

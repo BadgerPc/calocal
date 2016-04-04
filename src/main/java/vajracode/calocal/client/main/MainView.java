@@ -141,7 +141,7 @@ public class MainView extends CommonView<MainPresenter> {
 			mealArray.addValueChangeHandler(new ValueChangeHandler<Integer>() {				
 				@Override
 				public void onValueChange(ValueChangeEvent<Integer> event) {
-					summary.updateSum(event.getValue());
+					summary.updateAvg(event.getValue());
 				}
 			});
 		}
@@ -173,7 +173,7 @@ public class MainView extends CommonView<MainPresenter> {
 	
 	public void addMeal(MealData meal) {	
 		ensureTodayMealsAppened();		
-		todayMeals.addAndEdit(meal);
+		todayMeals.addAndEdit(meal).focusOnCal();
 		addMeal.setEnabled(true);
 		updateWelcome(todayMeals.getMealsCount() == 0, msgs.todayWelcome());
 	}

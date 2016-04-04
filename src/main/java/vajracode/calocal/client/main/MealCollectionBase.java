@@ -11,10 +11,11 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 
 import vajracode.calocal.client.auth.UserManager;
-import vajracode.calocal.client.elements.ColFlexPanel;
+import vajracode.calocal.client.table.CRUDTable;
+import vajracode.calocal.shared.model.MealData;
 import vajracode.calocal.shared.model.UserData;
 
-public abstract class MealCollectionBase extends ColFlexPanel implements HasValueChangeHandlers<Integer> {
+public abstract class MealCollectionBase extends CRUDTable<MealData, MealRow> implements HasValueChangeHandlers<Integer> {
 
 	@Inject UserManager userManager;
 	

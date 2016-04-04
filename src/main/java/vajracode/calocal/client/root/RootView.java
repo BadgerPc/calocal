@@ -1,6 +1,7 @@
 package vajracode.calocal.client.root;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 
 import com.google.gwt.dom.client.Style.TextAlign;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -20,28 +21,29 @@ import fr.putnami.pwt.core.service.client.event.CommandRequestEvent;
 import fr.putnami.pwt.core.service.client.event.CommandRequestEvent.Handler;
 import fr.putnami.pwt.core.service.client.event.CommandResponseEvent;
 import gwt.material.design.client.constants.IconType;
+import gwt.material.design.client.ui.MaterialLink;
 import vajracode.calocal.client.auth.UserManager;
 import vajracode.calocal.client.elements.Body1Light;
 import vajracode.calocal.client.elements.Button;
 import vajracode.calocal.client.elements.FlatButton;
 import vajracode.calocal.client.framework.CommonView;
 import vajracode.calocal.client.framework.EventBusHolder;
+import vajracode.calocal.client.i18n.I18nConstants;
+import vajracode.calocal.client.modals.ChangePasswordModal;
 import vajracode.calocal.client.modals.WaitModal;
+import vajracode.calocal.client.resources.Resources;
 import vajracode.calocal.client.utils.NativeUtils;
+import vajracode.calocal.shared.model.Role;
 import vajracode.calocal.shared.model.UserData;
 
-public class RootView extends CommonView implements Handler, fr.putnami.pwt.core.service.client.event.CommandResponseEvent.Handler {
-
-	//interface ViewUiBinder extends UiBinder<Widget, RootView> {}
-	//private static ViewUiBinder uiBinder = GWT.create( ViewUiBinder.class );	
-	
-	//@InjectService AuthService service;
+public class RootView extends CommonView<RootPresenter> implements Handler, fr.putnami.pwt.core.service.client.event.CommandResponseEvent.Handler {
 	
 	@Inject private EventBusHolder bus;
 	@Inject private UserManager userManager;
+	@Inject private I18nConstants msgs;
+	@Inject Provider<ChangePasswordModal> changePassProvider;
 	
 	private HTMLPanel main, username;
-	//@Inject private Menu menu; 
 	
 	private boolean skipNextProgressBar;
 	
@@ -72,6 +74,15 @@ public class RootView extends CommonView implements Handler, fr.putnami.pwt.core
 				updateUser(event.getValue());
 			}
 		});
+		
+		HTMLPanel logo = HTMLPanel.wrap(DOM.getElementById("logo"));
+		logo.addStyleName(Resources.INSTANCE.css().cursorPointer());
+		logo.addDomHandler(new ClickHandler() {			
+			@Override
+			public void onClick(ClickEvent event) {
+				bus.getEventBus().main();
+			}
+		}, ClickEvent.getType());
 	}
 
 //	public void initAuthButtons() {
@@ -142,16 +153,51 @@ public class RootView extends CommonView implements Handler, fr.putnami.pwt.core
 	public void updateUser(UserData u) {		
 		username.clear();		
 		if (u != null) {
+			if (u.getRole() == Role.ADMIN) {				
+				username.add(getAdminLink());
+			}
 			username.add(new Body1Light(u.getName()));
-			Button b = new FlatButton();			
-			b.setIconType(IconType.EXIT_TO_APP);
-			b.addClickHandler(new ClickHandler() {				
-				@Override
-				public void onClick(ClickEvent event) {
-					bus.getEventBus().signOut();
-				}
-			});
-			username.add(b);
+			username.add(getChangePassButton());
+			username.add(getSignOutButton());
 		}
+	}
+
+	private Widget getSignOutButton() {		
+		return getIconButton(IconType.EXIT_TO_APP, new ClickHandler() {				
+			@Override
+			public void onClick(ClickEvent event) {
+				bus.getEventBus().signOut();
+			}
+		});
+	}
+	
+	private Widget getChangePassButton() {
+		return getIconButton(IconType.ENHANCED_ENCRYPTION, new ClickHandler() {				
+			@Override
+			public void onClick(ClickEvent event) {
+				changePassProvider.get().apply(userManager.getUserData().getId()).show();
+			}
+		});		
+	}
+
+	private Widget getIconButton(IconType icon, ClickHandler clickHandler) {
+		Button b = new FlatButton();			
+		b.setIconType(icon);
+		b.addClickHandler(clickHandler);
+		b.setWidth("60px");
+		return b;		
+	}
+
+	private Widget getAdminLink() {
+		MaterialLink admin = new MaterialLink(msgs.admin());
+		admin.addStyleName(Resources.INSTANCE.css().margin16px());
+		admin.addStyleName("blue-text");
+		admin.addClickHandler(new ClickHandler() {					
+			@Override
+			public void onClick(ClickEvent event) {
+				bus.getEventBus().admin();
+			}
+		});
+		return admin;
 	}
 }

@@ -90,6 +90,12 @@ public interface I18nConstants extends Constants{
 
 	@DefaultStringValue("Desired daily calories consumption")
 	String enterDailyCalories();
+	
+	@DefaultStringValue("Desired Daily Cal.")
+	String ddc();
+	
+	@DefaultStringValue("Role")
+	String role();
 
 	@DefaultStringValue("No meals for chosen period")
 	String noData();
@@ -103,5 +109,13 @@ public interface I18nConstants extends Constants{
 	@DefaultStringValue("All days")
 	String allDays();
 
+	@DefaultStringValue("admin")
+	String admin();
+	
+	@DefaultStringValue("User login")
+	String userName();
+
+	@DefaultStringValue("Add new user")
+	String addNewUser();
 	
 }

@@ -23,9 +23,4 @@ public class EventBusHolder {
 		return eventBus;
 	}
 
-//	public CheckroomEventBus getTokenGenerator() {
-//		eventBus.setTokenGenerationModeForNextEvent();
-//		return eventBus;
-//	}
-
 }

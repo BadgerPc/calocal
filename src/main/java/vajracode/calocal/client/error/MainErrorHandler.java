@@ -19,7 +19,6 @@ import vajracode.calocal.client.elements.Header;
 import vajracode.calocal.client.framework.CalocalEventBus;
 import vajracode.calocal.client.i18n.I18nConstants;
 import vajracode.calocal.client.modals.WaitModal;
-import vajracode.calocal.client.utils.RestUtils;
 import vajracode.calocal.shared.exceptions.FieldException;
 
 public class MainErrorHandler implements ErrorHandler {
@@ -54,29 +53,26 @@ public class MainErrorHandler implements ErrorHandler {
 //		}
 		GWT.log(e.toString());	
 			
-		switch(RestUtils.getStatuCode(e)) {		
+		if (e instanceof ServerException) {
+			ServerException se = (ServerException) e;
+			switch(se.getStatusCode()) {		
 			case Response.SC_UNAUTHORIZED:
 				eventBus.authError(msgs.needBeAuth());
-				return true;				
-			case Response.SC_FORBIDDEN:			
-				MaterialToast.fireToast(msgs.noAccess());
-				return true;			
-			case Response.SC_NOT_FOUND:			
-				MaterialToast.fireToast(msgs.notFound());
-				return true;
-			case Response.SC_BAD_REQUEST:			
-				MaterialToast.fireToast(msgs.badRequest());
-				return true;
-			case Response.SC_CONFLICT:			
-				MaterialToast.fireToast(msgs.conflict());
-				return true;			
-			case Response.SC_INTERNAL_SERVER_ERROR:			
-				MaterialToast.fireToast(msgs.unknownError());
-				return true;			
+				return true;								
 			case 0:
 				MaterialToast.fireToast(msgs.noNetwork());
 				return true;
-		} 
+			default:
+				GWT.log("Error message: " + se.getErrorData().getError());
+				String msg = (se.getErrorData() != null && se.getErrorData().getError() != null
+					&& se.getErrorData().getError().length() > 0) ? 
+					se.getErrorData().getError() : getDefaultErrorMessage(se.getStatusCode());
+					if (msg == null)
+						msg = se.getMessage();
+				MaterialToast.fireToast(msg);
+				return true;
+			}
+		}
 		
 		e = unwrap(e);
 		
@@ -95,6 +91,23 @@ public class MainErrorHandler implements ErrorHandler {
 		return true;
 	}
 	
+	private String getDefaultErrorMessage(int statusCode) {
+		switch(statusCode) {
+		case Response.SC_FORBIDDEN:			
+			return msgs.noAccess();			
+		case Response.SC_NOT_FOUND:			
+			return msgs.notFound();
+		case Response.SC_BAD_REQUEST:			
+			return msgs.badRequest();
+		case Response.SC_CONFLICT:			
+			return msgs.conflict();			
+		case Response.SC_INTERNAL_SERVER_ERROR:			
+			return msgs.unknownError();
+		}
+		return null;
+	}
+
+
 	private boolean isNetworkException(Throwable e) {
 		if (e instanceof StatusCodeException) return true;
 		String msg = e.getMessage();

@@ -12,8 +12,6 @@
 	<ui:style>
 	</ui:style>
 
-
-
 	<m:MaterialRow>
 		<d:CenteredColFlexPanel width="100%">
 			<m:MaterialTitle ui:field="title" title="{msgs.pleaseSignIn}" />
