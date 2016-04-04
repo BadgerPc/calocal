@@ -26,8 +26,8 @@ public class ParamUtils {
 			LocalTime remote = LocalTime.parse(time);
 			ZonedDateTime utc = ZonedDateTime.now(ZoneId.of("Z"))
 				.withHour(remote.getHour()).withMinute(remote.getMinute()).plusMinutes(timeOffsetToUTC);		
-			LocalTime lt = utc.withZoneSameInstant(ZoneId.systemDefault()).toLocalTime();
-			log.debug(time + "+" + timeOffsetToUTC + " -> " + lt.toString());
+			LocalTime lt = utc.withZoneSameInstant(zone).toLocalTime();
+			log.debug(time + "+" + timeOffsetToUTC + " -> " + lt.toString() + " " + zone.toString());
 			return lt;
 		} catch (DateTimeParseException e) {
 			throw new FieldException("Wrong time format: " + e.getMessage());

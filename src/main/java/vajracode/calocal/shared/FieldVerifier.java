@@ -105,8 +105,8 @@ public class FieldVerifier {
 	}
 
 	public static void checkMealName(String string) {
-		if (string.length() == 0)
-			throw new FieldException("Description can not be empty");
+		if (string.length() == 0 || string.length() > 255)
+			throw new FieldException("Description can not be empty or longer than 255 characters");
 	}
 
 	public static void checkFilterDates(Date from, Date to) {
@@ -136,6 +136,10 @@ public class FieldVerifier {
 		} catch (IllegalArgumentException e) {
 			throw new FieldException("Wrong time format (ex.\"17:25\"): " + e.getMessage());
 		}
+	}
+
+	public static void checkDate(Date date) {
+		
 	}
 
 }

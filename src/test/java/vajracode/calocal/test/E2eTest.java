@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.TimeZone;
 
 import javax.ws.rs.core.Response.Status;
 
@@ -100,9 +101,12 @@ public class E2eTest extends CalocalTest {
 		
 		assertNotNull(list);
 		assertEquals(2, list.getData().size());
+				
+		int timeOffset = -TimeZone.getDefault().getOffset(new Date().getTime()) / 1000 / 60;
 		
 		list = mealTarget.queryParam("fromTime", LocalTime.of(9, 0).toString())
 				.queryParam("toTime", LocalTime.of(13, 0).toString())
+				.queryParam("timeOffset", timeOffset)
 				.request().get().readEntity(MealDataList.class);
 		
 		assertNotNull(list);
@@ -110,6 +114,7 @@ public class E2eTest extends CalocalTest {
 		
 		list = mealTarget.queryParam("fromTime", LocalTime.of(9, 0).toString())
 				.queryParam("toTime", LocalTime.of(10, 55).toString())
+				.queryParam("timeOffset", timeOffset)
 				.request().get().readEntity(MealDataList.class);
 				
 		assertNotNull(list);
@@ -133,9 +138,9 @@ public class E2eTest extends CalocalTest {
 		assertNotNull(ret1);
 		assertEquals(in.getName(), ret1.getName());
 		assertEquals(in.getCal(), ret1.getCal());
-		assertEquals(userId, ret1.getUserId());
+		assertEquals(userId, (long)ret1.getUserId());
 						
-		LocalDateTime ldt = LocalDateTime.now(), inLdt = ldt.withHour(10).withMinute(45);
+		LocalDateTime ldt = LocalDateTime.now(), inLdt = ldt.withHour(10).withMinute(45);		
 		ret1.setDateTime(ParamUtils.toDate(inLdt));
 		ret1 = mealTarget.path("/" + ret1.getId()).request().put(getEntity(ret1)).readEntity(MealData.class);
 		

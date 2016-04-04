@@ -59,16 +59,19 @@ public class MealManager {
 		if (data.getUserId() != accessManager.getLoggedInUserId())
 			throw new FieldException("It's prohibited to change meal owner");
 		MealDTO meal = getAccessibleMeal(data.getId());		
-		meal.setName(data.getName());
-		meal.setCal(data.getCal());
-		meal.setConsumed(data.getDateTime());
+		if (data.getName() != null)
+			meal.setName(data.getName());
+		if (data.getCal() != null)
+			meal.setCal(data.getCal());
+		if (data.getDateTime() != null)
+			meal.setConsumed(data.getDateTime());
 		mealDao.flush();
 		return meal.getMealData();
 	}
 
 	@Transactional
 	public MealData create(MealData data) {
-		if (data.getUserId() == 0)
+		if (data.getUserId() == null || data.getUserId() == 0)
 			data.setUserId(accessManager.getLoggedInUserId());
 		else if (data.getUserId() != accessManager.getLoggedInUserId() && !accessManager.isAdmin())
 			throw new FieldException("You can't add the meal for another user");
@@ -81,7 +84,7 @@ public class MealManager {
 		meal.setName(data.getName());
 		meal.setUser(user);
 		meal.setConsumed(data.getDateTime() == null ? new Date() : data.getDateTime());
-		meal.setCal(data.getCal());
+		meal.setCal(data.getCal() == null ? 0 : data.getCal());
 		mealDao.persist(meal);
 		mealDao.flush();
 		return meal.getMealData();

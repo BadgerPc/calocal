@@ -58,9 +58,8 @@ public class MealRow extends CRUDRow<MealData> {
 		return new TextBox(getTimeText(), new ValueChangeHandler<String>() {
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
-				try {
-					String date = DateUtils.dateYear.format(data.getDateTime());
-					data.setDateTime(DateUtils.full.parse(event.getValue() + " - " + date));
+				try {					
+					data.setDateTime(DateUtils.getDateWithTime(event.getValue(), data.getDateTime()));
 				} catch (IllegalArgumentException e) {
 					tbDate.setText(getTimeText());
 				}
@@ -98,38 +97,5 @@ public class MealRow extends CRUDRow<MealData> {
 		return service;
 	}
 	
-	/*@Override
-	protected void delete() {
-		service.delete(data.getId());
-	}
-	
-	@Override
-	protected void done() {
-		service.update(data.getId(), data);
-	}
-	
-	@Override
-	@AsyncHandler
-	public void onUpdate(MealData data) {
-		super.onUpdateInner(data);
-	}
-
-	@Override
-	@AsyncHandler
-	public void onUpdateThrown(Throwable t) {
-		super.onUpdateThrownInner(t);
-	}
-
-	@Override
-	@AsyncHandler
-	public void onDelete(Void v) {
-		super.onDeleteInner(v);
-	}
-
-	@Override
-	@AsyncHandler
-	public void onDeleteThrown(Throwable t) {
-		super.onDeleteThrownInner(t);
-	}*/
 
 }

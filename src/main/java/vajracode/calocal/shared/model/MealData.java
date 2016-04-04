@@ -4,9 +4,9 @@ import java.util.Date;
 
 public class MealData extends Data {
 	
-	private long userId;
+	private Long userId;
 	private String name;
-	private int cal;
+	private Integer cal;
 	private Date dateTime;
 	
 	public MealData() {
@@ -26,11 +26,11 @@ public class MealData extends Data {
 		this.name = name;
 	}
 
-	public int getCal() {
+	public Integer getCal() {
 		return cal;
 	}
 
-	public void setCal(int cal) {
+	public void setCal(Integer cal) {
 		this.cal = cal;
 	}
 
@@ -42,11 +42,11 @@ public class MealData extends Data {
 		this.dateTime = dateTime;
 	}
 
-	public long getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(long userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 

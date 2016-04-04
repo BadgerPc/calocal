@@ -2,6 +2,7 @@ package vajracode.calocal.client.utils;
 
 import java.util.Date;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.DateTimeFormat;
 
 import vajracode.calocal.shared.exceptions.FieldException;
@@ -40,6 +41,15 @@ public class DateUtils {
 
 	public static int getTimeZoneOffset() {
 		return new Date().getTimezoneOffset();
+	}
+
+	public static Date getDateWithTime(String inTime, Date inDate) {
+		Date parsed = time.parse(inTime);
+		String normalizedTime = time.format(parsed);		
+		String nowDate = DateUtils.dateYear.format(inDate);
+		Date ret = DateUtils.full.parse(normalizedTime + " - " + nowDate);
+		GWT.log(ret.toString());
+		return ret;
 	}
 	
 

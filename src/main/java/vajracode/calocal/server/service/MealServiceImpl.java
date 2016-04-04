@@ -28,6 +28,7 @@ public class MealServiceImpl implements MealService {
 	private void check(MealData meal) {
 		FieldVerifier.checkMealName(meal.getName());
 		FieldVerifier.checkCal(meal.getCal());
+		FieldVerifier.checkDate(meal.getDateTime());
 	}
 
 	@Override
@@ -42,7 +43,7 @@ public class MealServiceImpl implements MealService {
 		LocalDateTime dToDate = ParamUtils.getDate(toDate);
 		LocalTime dFromTime = ParamUtils.getTime(fromTime, timeOffset);
 		LocalTime dToTime = ParamUtils.getTime(toTime, timeOffset);
-		if (dToTime != null)
+		if (dToTime != null && dFromTime != null && dToTime.equals(dFromTime))
 			dToTime = dToTime.plusMinutes(1);
 		FieldVerifier.checkFilterDates(dFromDate, dToDate);
 		FieldVerifier.checkFilterTimes(dFromTime, dToTime);

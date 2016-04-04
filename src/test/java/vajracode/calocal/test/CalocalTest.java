@@ -143,7 +143,7 @@ public class CalocalTest extends JerseyTest {
 	}
 
 	protected void authAdmin() {
-		authUser("admin", "anri2");
+		authUser("admin", "adminadmin");
 	}
 	
 	protected void logOut() {

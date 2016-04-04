@@ -1,8 +1,5 @@
 package vajracode.calocal.server.jersey;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -12,44 +9,34 @@ import javax.ws.rs.ext.Provider;
 import org.apache.log4j.Logger;
 
 import vajracode.calocal.shared.exceptions.ErrorData;
+import vajracode.calocal.shared.exceptions.FieldException;
 
 @Provider
 public class UncaughtThrowableExceptionMapper implements ExceptionMapper<Throwable> {
 
 	private final Logger log = Logger.getLogger(getClass());
-	
-	 @Override
-	    public Response toResponse(Throwable exception)
-	    {
-	        log.error("toResponse() caught exception", exception);
 
-	        return Response.status(getStatusCode(exception))
-	                .entity(new ErrorData(exception.getMessage()))
-	                .type(MediaType.APPLICATION_JSON_TYPE)
-	                .build();
-	    }
+	@Override
+	public Response toResponse(Throwable e) {
+		log.error("toResponse() caught exception", e);
 
-	    /*
-	     * Get appropriate HTTP status code for an exception.
-	     */
-	    private int getStatusCode(Throwable exception)
-	    {
-	        if (exception instanceof WebApplicationException)
-	        {
-	            return ((WebApplicationException)exception).getResponse().getStatus();
-	        }
+		return Response.status(getStatusCode(e)).entity(new ErrorData(getMessage(e)))
+				.type(MediaType.APPLICATION_JSON_TYPE).build();
+	}
 
-	        return Response.Status.INTERNAL_SERVER_ERROR.getStatusCode();
-	    }
+	private String getMessage(Throwable e) {
+		if (e instanceof FieldException) {
+			return e.getMessage();
+		}
+		return "Internal server error";
+	}
 
-	    /*
-	     * Get response body for an exception.
-	     */
-	    private Object getEntity(Throwable exception)
-	    {
-	        // return stack trace for debugging (probably don't want this in prod...)
-	        StringWriter errorMsg = new StringWriter();
-	        exception.printStackTrace(new PrintWriter(errorMsg));
-	        return errorMsg.toString();            
-	    }
+	private int getStatusCode(Throwable e) {
+		if (e instanceof WebApplicationException) {
+			return ((WebApplicationException) e).getResponse().getStatus();
+		}
+
+		return Response.Status.INTERNAL_SERVER_ERROR.getStatusCode();
+	}
+
 }
