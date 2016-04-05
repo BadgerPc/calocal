@@ -9,6 +9,10 @@ import vajracode.calocal.server.exceptions.UnauthorizedException;
 import vajracode.calocal.shared.model.Role;
 import vajracode.calocal.shared.model.UserData;
 
+/**
+ * Access to Spring Security session information
+ *
+ */
 @Component
 public class AccessManager {
 	

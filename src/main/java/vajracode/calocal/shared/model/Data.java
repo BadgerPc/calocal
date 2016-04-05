@@ -2,6 +2,10 @@ package vajracode.calocal.shared.model;
 
 import java.io.Serializable;
 
+/**
+ * Root for the DTOs, representing resources on the client-side
+ *
+ */
 public class Data implements Serializable {
 	
 	protected long id;

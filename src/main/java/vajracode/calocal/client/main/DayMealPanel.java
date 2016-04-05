@@ -25,7 +25,7 @@ public class DayMealPanel extends MaterialPanel {
 		RowFlexPanel header = new RowFlexPanel();		
 		header.addStyleName(Resources.INSTANCE.css().justifyContentSpace());		
 		add(header);
-		header.add(new Header(DateUtils.date.format(date)));
+		header.add(new Header(DateUtils.formatDateSmart(date)));
 		header.add(summary);
 		
 		add(table);

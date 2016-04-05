@@ -8,6 +8,11 @@ import javax.inject.Provider;
 import vajracode.calocal.client.elements.ColFlexPanel;
 import vajracode.calocal.shared.model.Data;
 
+/**
+ * Root for the data-table, representing some resource
+ *
+ * @see vajracode.calocal.shared.service.CRUDService
+ */
 @SuppressWarnings("rawtypes")
 public abstract class CRUDTable<T extends Data, R extends CRUDRow> extends ColFlexPanel {
 

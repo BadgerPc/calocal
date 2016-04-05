@@ -8,6 +8,10 @@ import org.apache.log4j.Logger;
 
 import vajracode.calocal.shared.exceptions.FieldException;
 
+/**
+ * Some date conversion utils
+ *
+ */
 public class ParamUtils {
 	
 	private static final Logger log = Logger.getLogger("vajracode.calocal.server.utils.ParamUtils");
@@ -19,6 +23,11 @@ public class ParamUtils {
 		return millis == 0 ? null : LocalDateTime.ofInstant(Instant.ofEpochMilli(millis), zone);
 	}
 
+	/**
+	 * @param time ISO-style time presentation 
+	 * @param timeOffsetToUTC JS-style offset if time from UTC (in minutes) 
+	 * @return local time for system timezone
+	 */
 	public static LocalTime getTime(String time, int timeOffsetToUTC) {
 		if (time == null)
 			return null;

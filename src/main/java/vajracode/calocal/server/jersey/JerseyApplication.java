@@ -10,12 +10,15 @@ import vajracode.calocal.server.service.MealServiceImpl;
 import vajracode.calocal.server.service.UserServiceImpl;
 import vajracode.calocal.server.utils.LogUtils;
 
+/**
+ * Jersey configuration
+ *
+ */
 public class JerseyApplication extends ResourceConfig {
 
 	public JerseyApplication() {
 		LogUtils.setJerseyLoggingLevel(Level.FINEST);	    
 		register(RequestContextFilter.class);
-		//register(JacksonFeature.class);
         register(AuthServiceImpl.class);
         register(MealServiceImpl.class);
         register(UserServiceImpl.class);        

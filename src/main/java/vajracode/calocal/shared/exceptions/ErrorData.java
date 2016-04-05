@@ -2,6 +2,10 @@ package vajracode.calocal.shared.exceptions;
 
 import java.io.Serializable;
 
+/**
+ * Repsresents Serve-side error on client-side
+ *
+ */
 public class ErrorData implements Serializable {
 	
 	private String error;

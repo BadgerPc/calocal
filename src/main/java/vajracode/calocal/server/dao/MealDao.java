@@ -12,6 +12,10 @@ import org.springframework.stereotype.Component;
 import vajracode.calocal.server.dto.MealDTO;
 import vajracode.calocal.server.dto.UserDTO;
 
+/**
+ * Meal data access object
+ *
+ */
 @Component
 public class MealDao extends Dao<MealDTO> {
 	

@@ -11,6 +11,11 @@ import org.apache.log4j.Logger;
 import vajracode.calocal.shared.exceptions.ErrorData;
 import vajracode.calocal.shared.exceptions.FieldException;
 
+/**
+ * Maps service's exceptions to corresponding response codes 
+ * and adds to response {@link vajracode.calocal.shared.exceptions.ErrorData.ErrorData} object with error details.
+ * 
+ */
 @Provider
 public class UncaughtThrowableExceptionMapper implements ExceptionMapper<Throwable> {
 

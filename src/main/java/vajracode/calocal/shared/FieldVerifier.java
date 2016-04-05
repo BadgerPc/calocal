@@ -11,6 +11,10 @@ import vajracode.calocal.shared.constants.HTMLConstants;
 import vajracode.calocal.shared.exceptions.FieldException;
 
 
+/**
+ * Some utilities for user input validation
+ *
+ */
 public class FieldVerifier {	
 
 	public static boolean isOkString(String s) {

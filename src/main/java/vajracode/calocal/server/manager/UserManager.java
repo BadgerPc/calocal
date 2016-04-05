@@ -22,6 +22,10 @@ import vajracode.calocal.shared.model.Role;
 import vajracode.calocal.shared.model.UserData;
 import vajracode.calocal.shared.model.UserDataList;
 
+/**
+ * User resource manupulation class
+ *
+ */
 @Component
 public class UserManager {
 	

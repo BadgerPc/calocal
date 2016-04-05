@@ -13,6 +13,11 @@ import vajracode.calocal.client.resources.Resources;
 import vajracode.calocal.shared.model.Data;
 import vajracode.calocal.shared.service.CRUDService;
 
+/**
+ * Widget, repsresenting instance of the resource. Has CRUD-actions support.
+ *
+ * @see vajracode.calocal.client.table.CRUDTable
+ */
 public abstract class CRUDRow<T extends Data> extends CenteredRowFlexPanel implements Injected {
 	
 	private CRUDTable table;

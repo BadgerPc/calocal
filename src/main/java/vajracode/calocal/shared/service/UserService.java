@@ -10,6 +10,10 @@ import vajracode.calocal.shared.constants.ResourcePaths;
 import vajracode.calocal.shared.model.UserData;
 import vajracode.calocal.shared.model.UserDataList;
 
+/**
+ * REST-style access to the users 
+ *
+ */
 @Path(ResourcePaths.USER)
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
@@ -18,6 +22,13 @@ public interface UserService extends DirectRestService, CRUDService<UserData> {
 	@POST
 	UserData create(UserData user);
 	
+	/**
+	 * Lists all users. Paging arguments can be spcified or omitted.
+	 * 
+	 * @param offset defaults to 0
+	 * @param limit defaults to 100
+	 * @return
+	 */
 	@GET
 	UserDataList list(@QueryParam("offset") @DefaultValue("0") int offset, 
 		@QueryParam("limit") @DefaultValue("100") int limit);

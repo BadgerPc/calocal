@@ -9,6 +9,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import vajracode.calocal.shared.model.UserData;
 
+
+/**
+ * Spring Security user data
+ *
+ */
 public class SecurityUser implements UserDetails {
 	
     private UserData user;

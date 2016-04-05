@@ -10,6 +10,9 @@ import vajracode.calocal.shared.constants.ResourcePaths;
 import vajracode.calocal.shared.model.RegistrationData;
 import vajracode.calocal.shared.model.UserData;
 
+/**
+ * Handles user authentication in a rest-like way
+ */
 @Path(ResourcePaths.LOGIN)
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)

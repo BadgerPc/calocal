@@ -23,6 +23,10 @@ import vajracode.calocal.shared.exceptions.FieldException;
 import vajracode.calocal.shared.model.MealData;
 import vajracode.calocal.shared.model.MealDataList;
 
+/**
+ * Meal resource manupulation class
+ *
+ */
 @Component
 public class MealManager {
 	

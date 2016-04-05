@@ -6,6 +6,10 @@ import javax.servlet.*;
 
 import org.apache.log4j.Logger;
 
+/**
+ * Simple unhandled exceptions logger
+ *
+ */
 public class ExceptionsLoggingFilter implements Filter {
 
 	private final Logger log = Logger.getLogger(getClass());

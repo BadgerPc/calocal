@@ -20,6 +20,10 @@ import vajracode.calocal.shared.constants.LoginFields;
 import vajracode.calocal.shared.constants.ResourcePaths;
 import vajracode.calocal.shared.model.Role;
 
+/**
+ * Spring Security configuration. Has it's own context for all injected beans. 
+ *
+ */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)

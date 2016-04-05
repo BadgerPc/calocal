@@ -36,6 +36,10 @@ import vajracode.calocal.client.utils.NativeUtils;
 import vajracode.calocal.shared.model.Role;
 import vajracode.calocal.shared.model.UserData;
 
+/**
+ * Application's root view
+ *
+ */
 public class RootView extends CommonView<RootPresenter> implements Handler, fr.putnami.pwt.core.service.client.event.CommandResponseEvent.Handler {
 	
 	@Inject private EventBusHolder bus;

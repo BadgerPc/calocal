@@ -9,6 +9,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.stereotype.Component;
 
+/**
+ * Spring Security authenification handler
+ * @see vajracode.calocal.server.security.WebSecurityConfig
+ *
+ */
 @Component
 public class HttpLogoutSuccessHandler implements LogoutSuccessHandler {
     @Override

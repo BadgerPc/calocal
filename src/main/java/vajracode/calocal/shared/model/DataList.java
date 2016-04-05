@@ -3,6 +3,11 @@ package vajracode.calocal.shared.model;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Root for the DTOs list, representing resources list on the client-side. 
+ * Supports pagination
+ *
+ */
 public class DataList<T> implements Serializable {
 
 	private List<T> data;

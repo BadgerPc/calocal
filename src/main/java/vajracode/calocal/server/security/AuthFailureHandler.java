@@ -11,6 +11,11 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 
+/**
+ * Spring Security authenification handler
+ * @see vajracode.calocal.server.security.WebSecurityConfig
+ *
+ */
 @Component
 public class AuthFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 	
@@ -22,9 +27,6 @@ public class AuthFailureHandler extends SimpleUrlAuthenticationFailureHandler {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
         log.debug("Authentication failure: " + exception.getMessage());
-        
-//        PrintWriter writer = response.getWriter();
-//        mapper.writeValue(writer, new ErrorData(exception.getMessage()));        
-//        writer.flush();
+
     }
 }

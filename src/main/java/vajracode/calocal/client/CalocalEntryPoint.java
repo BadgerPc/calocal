@@ -15,6 +15,10 @@ import vajracode.calocal.client.error.MainErrorHandler;
 import vajracode.calocal.client.resources.Resources;
 
 
+/**
+ * GWT applications starting point
+ *
+ */
 public class CalocalEntryPoint implements EntryPoint, Module {	
 	
 	public void onModuleLoad() {
@@ -38,9 +42,6 @@ public class CalocalEntryPoint implements EntryPoint, Module {
 		
 		Mvp4gModule module = GWT.create(Mvp4gModule.class);
 		module.createAndStartModule();				
-		//DOM.getElementById("preloader").removeFromParent();
-		//RootPanel.get().add((Widget) module.getStartView());
 		module.getStartView();
-		//RootPanel.get().add(injector.getRootView().init());
 	}
 }

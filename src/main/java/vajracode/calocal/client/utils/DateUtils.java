@@ -7,6 +7,11 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 
 import vajracode.calocal.shared.exceptions.FieldException;
 
+/**
+ * Some date utils.
+ * GWT has no date manipulation utils, but has full-spower formatting utils, so they are used.
+ *
+ */
 public class DateUtils {
 	
 	public static final DateTimeFormat full = DateTimeFormat.getFormat("hh:mm - d MMMM yyyy");
@@ -33,6 +38,9 @@ public class DateUtils {
 		}
 	}
 
+	/**
+	 * Formats the date. Ommits year if it corresponds to the current year. 
+	 */
 	public static String formatDateSmart(Date d) {
 		int y = Integer.parseInt(year.format(d));
 		int yNow = Integer.parseInt(year.format(new Date()));
@@ -43,6 +51,9 @@ public class DateUtils {
 		return new Date().getTimezoneOffset();
 	}
 
+	/**
+	 * @return Date with inTime time and inDate date
+	 */
 	public static Date getDateWithTime(String inTime, Date inDate) {
 		Date parsed = time.parse(inTime);
 		String normalizedTime = time.format(parsed);		

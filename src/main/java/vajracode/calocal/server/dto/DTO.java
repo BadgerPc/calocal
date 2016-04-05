@@ -9,10 +9,8 @@ import org.hibernate.proxy.LazyInitializer;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import vajracode.calocal.shared.model.HasId;
-
 @MappedSuperclass
-public class DTO implements Serializable, HasId {
+public class DTO implements Serializable {
 		
 	@Id	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(columnDefinition="BIGINT(20) UNSIGNED")
@@ -37,7 +35,6 @@ public class DTO implements Serializable, HasId {
 		return DTO.getIdDirect(this);
 	}
 
-	@Override
 	public long getId() {		
 		return id;
 	}

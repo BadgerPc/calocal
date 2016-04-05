@@ -12,6 +12,10 @@ import vajracode.calocal.client.error.MainErrorHandler;
 import vajracode.calocal.client.framework.CommonPresenter;
 import vajracode.calocal.client.framework.EventBusHolder;
 
+/**
+ * Application's root presenter
+ *
+ */
 @Presenter( view = RootView.class )
 @Singleton
 public class RootPresenter extends CommonPresenter<RootView> {

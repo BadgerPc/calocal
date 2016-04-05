@@ -13,6 +13,10 @@ import vajracode.calocal.server.dao.UserDao;
 import vajracode.calocal.server.dto.UserDTO;
 import vajracode.calocal.shared.model.Role;
 
+/**
+ * Spring Security UserDetailsService implementation for {@link vajracode.calocal.server.dto.UserDTO} 
+ *
+ */
 @Component
 public class SecurityUserService implements UserDetailsService {
     

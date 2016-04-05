@@ -9,6 +9,10 @@ import javax.ws.rs.ext.Provider;
 import vajracode.calocal.shared.exceptions.ErrorData;
 import vajracode.calocal.shared.exceptions.FieldException;
 
+/**
+ * Maps service's query parameters and object's field validation exceptions to BAD_REQUEST response
+ * @see vajracode.calocal.shared.exceptions.FieldException
+ */
 @Provider
 public class FieldExceptionMapper implements ExceptionMapper<FieldException> {
 

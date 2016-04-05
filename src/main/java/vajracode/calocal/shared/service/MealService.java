@@ -10,6 +10,10 @@ import vajracode.calocal.shared.constants.ResourcePaths;
 import vajracode.calocal.shared.model.MealData;
 import vajracode.calocal.shared.model.MealDataList;
 
+/**
+ * REST-style access to the meals 
+ *
+ */
 @Path(ResourcePaths.MEAL)
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
@@ -23,6 +27,20 @@ public interface MealService extends DirectRestService, CRUDService<MealData> {
     @Path("/{id}")
     void delete(@PathParam("id") long id);
 
+    /**
+     * 
+     * Lists all meals applying specified filter parameters. 
+     * 
+     * @param fromDate starting from this date-time (unixtime)
+     * @param toDate up to this date-time (unixtime)
+     * @param fromTime only meals, consumed at this time range
+     * @param toTime only meals, consumed at this time range
+     * @param timeOffset time range offset from UTC (JS-style, in minutes)
+     * @param uid meals consumer's id, defaults to current user 
+     * @param offset paging parameter, defaults to 0
+     * @param limit paging parameter, defaults to 100
+     * @return
+     */
     @GET    
     MealDataList list(@QueryParam("fromDate") @DefaultValue("0") long fromDate, 
     		@QueryParam("toDate") @DefaultValue("0") long toDate, 

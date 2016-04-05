@@ -30,18 +30,22 @@ public class AuthServiceImpl implements AuthService {
 	public AuthServiceImpl() {		
 	}
 	
+	/**
+	 * Should be intercepted by Spring Security.  
+	 * @see vajracode.calocal.server.security.WebSecurityConfig
+	 */
 	@Override
 	public void login(String username, String password) {
-		//intercepted by Spring Security
-		//configured in WebSecurityConfig
 		log.error(LOGIN_ERROR_MSG);
 		throw new InternalServerErrorException(LOGIN_ERROR_MSG);
 	}
 
+	/**
+	 * Should be intercepted by Spring Security.  
+	 * @see vajracode.calocal.server.security.WebSecurityConfig
+	 */
 	@Override
-	public void logout() {
-		//intercepted by Spring Security
-		//configured in WebSecurityConfig
+	public void logout() {		
 		log.error(LOGOUT_ERROR_MSG);
 		throw new InternalServerErrorException(LOGOUT_ERROR_MSG);
 	}

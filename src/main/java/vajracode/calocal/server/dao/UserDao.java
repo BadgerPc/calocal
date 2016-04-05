@@ -7,6 +7,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import vajracode.calocal.server.dto.UserDTO;
 
+/**
+ * User data access object
+ *
+ */
 @Component
 public class UserDao extends Dao<UserDTO> {
 

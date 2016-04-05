@@ -14,6 +14,10 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import fr.putnami.pwt.core.service.shared.exception.CommandException;
 
+/**
+ * GWT remote logger backend  
+ *
+ */
 public class RemoteLoggingServiceImpl extends RemoteServiceServlet implements RemoteLoggingService {
 	
 	private final Logger log = Logger.getLogger(RemoteLoggingServiceImpl.class);
