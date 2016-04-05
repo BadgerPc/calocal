@@ -10,6 +10,11 @@ import com.google.gwt.json.client.JSONParser;
 
 import vajracode.calocal.shared.exceptions.ErrorData;
 
+/**
+ * Extends RestyGWT exception mapper to add {@link vajracode.calocal.shared.exceptions.ErrorData} 
+ * to server-generated errors.
+ *
+ */
 public class CustomExceptionMapper extends ExceptionMapper {
 	
 	public interface ErrorDataCodec extends JsonEncoderDecoder<ErrorData> {}

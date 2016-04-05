@@ -26,8 +26,8 @@ public class AdminView extends CommonView<AdminPresenter> {
 	private static ViewUiBinder uiBinder = GWT.create(ViewUiBinder.class);
 	interface ViewUiBinder extends UiBinder<Widget, AdminView> {}	
 	
-	@Inject I18nConstants msgs;
-	@Inject Provider<UserTable> userTableProvider;
+	@Inject private I18nConstants msgs;
+	@Inject private Provider<UserTable> userTableProvider;
 	
 	@UiField ColFlexPanel content;
 	@UiField TextBox userName;	

@@ -39,19 +39,7 @@ public class RootPresenter extends CommonPresenter<RootView> {
 	public void onInitHistory(){
 		eventBus.main();
 	}	
-
-	public void onStartProgressBar(){
-		view.startProgressBar();
-	}
 	
-	public void onStopProgressBar(){
-		view.stopProgressBar();
-	}
-	
-	public void onSkipNextProgressBar() {
-		view.setSkipNextProgressBar(true);
-	}
-		
 	public void onSetBody(IsWidget w) {				
 		if (currentView != null) {
 			currentView.asWidget().removeFromParent();

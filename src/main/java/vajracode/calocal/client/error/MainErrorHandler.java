@@ -18,7 +18,6 @@ import gwt.material.design.client.ui.MaterialToast;
 import vajracode.calocal.client.elements.Header;
 import vajracode.calocal.client.framework.CalocalEventBus;
 import vajracode.calocal.client.i18n.I18nConstants;
-import vajracode.calocal.client.modals.WaitModal;
 import vajracode.calocal.shared.exceptions.FieldException;
 
 public class MainErrorHandler implements ErrorHandler {
@@ -37,20 +36,12 @@ public class MainErrorHandler implements ErrorHandler {
 	
 	@Override
 	public boolean handle(Throwable e) {
-		WaitModal.hide();
-		
 		if (e instanceof IncompatibleRemoteServiceException) {
 			eventBus.setBody(new Header(msgs.updateApplication()));
 			GWT.log(e.getMessage());
 			return true;
 		}				
 		
-//		String cause = null, message = null;
-//		if (e instanceof CommandException){
-//			CommandException ce = (CommandException)e; 
-//			cause = ce.getCauseClassName();
-//			message = ce.getCauseMessage();			
-//		}
 		GWT.log(e.toString());	
 			
 		if (e instanceof ServerException) {

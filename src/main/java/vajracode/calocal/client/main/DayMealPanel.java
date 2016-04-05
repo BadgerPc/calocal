@@ -15,10 +15,14 @@ import vajracode.calocal.client.resources.Resources;
 import vajracode.calocal.client.utils.DateUtils;
 import vajracode.calocal.shared.model.MealData;
 
+/**
+ * Panel, containing meals table for one day, summary on them and date 
+ *
+ */
 public class DayMealPanel extends MaterialPanel {
 
-	@Inject CalSummary summary;
-	@Inject MealTable table;
+	@Inject private CalSummary summary;
+	@Inject private MealTable table;
 	
 	public DayMealPanel apply(Date date) {
 		addStyleName(Resources.INSTANCE.css().marginTop32());

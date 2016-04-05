@@ -8,6 +8,10 @@ import com.google.gwt.logging.client.ConsoleLogHandler;
 import com.google.gwt.logging.client.SystemLogHandler;
 import com.mvp4g.client.event.Mvp4gLogger;
 
+/**
+ * MVP4G has some useful debug logging, but it contins a lot of extra text. This logger cleans it out.
+ *
+ */
 public class CustomLogger implements Mvp4gLogger {
 
 	private static final String PREFIX = "Module: Mvp4gModule || ";

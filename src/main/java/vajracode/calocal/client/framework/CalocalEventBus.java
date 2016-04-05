@@ -4,8 +4,6 @@ import java.util.Date;
 
 import com.google.gwt.user.client.ui.IsWidget;
 import com.mvp4g.client.annotation.*;
-import com.mvp4g.client.annotation.module.AfterLoadChildModule;
-import com.mvp4g.client.annotation.module.BeforeLoadChildModule;
 import com.mvp4g.client.event.EventBusWithLookup;
 
 import vajracode.calocal.client.admin.AdminPresenter;
@@ -14,6 +12,10 @@ import vajracode.calocal.client.auth.OAuthHandler;
 import vajracode.calocal.client.main.MainPresenter;
 import vajracode.calocal.client.root.RootPresenter;
 
+/**
+ * Application's MVP4G event bus
+ *
+ */
 @Events( startPresenter = RootPresenter.class, ginModules = {MainGinModule.class} )
 @Debug(logger = CustomLogger.class)
 public interface CalocalEventBus extends EventBusWithLookup {
@@ -25,17 +27,6 @@ public interface CalocalEventBus extends EventBusWithLookup {
 	@InitHistory
 	@Event(handlers = RootPresenter.class)
 	void initHistory();
-
-	@BeforeLoadChildModule
-	@Event(handlers = RootPresenter.class)
-	void startProgressBar();
-	
-	@AfterLoadChildModule
-	@Event(handlers = RootPresenter.class)
-	void stopProgressBar();
-	
-	@Event(handlers = RootPresenter.class)
-	void skipNextProgressBar();
 
 	@Event(handlers = RootPresenter.class)
 	void setBody(IsWidget w);

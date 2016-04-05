@@ -13,9 +13,13 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import vajracode.calocal.client.utils.DateUtils;
 import vajracode.calocal.shared.model.MealData;
 
+/**
+ * Widget, collection of meal panels for several days 
+ * @see vajracode.calocal.client.main.DayMealPanel
+ */
 public class MealArray extends MealCollectionBase {
 
-	@Inject Provider<DayMealPanel> panelProvider;
+	@Inject private Provider<DayMealPanel> panelProvider;
 	
 	private Map<String, DayMealPanel> panels = new HashMap<>();
 	

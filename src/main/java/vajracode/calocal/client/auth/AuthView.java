@@ -12,6 +12,10 @@ import gwt.material.design.client.ui.MaterialTitle;
 import vajracode.calocal.client.framework.CommonView;
 
 
+/**
+ * Authentication page
+ *
+ */
 public class AuthView extends CommonView<AuthPresenter> {
 
 	private static ViewUiBinder uiBinder = GWT.create(ViewUiBinder.class);

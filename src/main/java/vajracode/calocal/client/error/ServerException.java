@@ -4,6 +4,11 @@ import org.fusesource.restygwt.client.FailedStatusCodeException;
 
 import vajracode.calocal.shared.exceptions.ErrorData;
 
+/**
+ * All server errors translate to this exception
+ * @see vajracode.calocal.client.error.CustomExceptionMapper 
+ *
+ */
 public class ServerException extends FailedStatusCodeException {
 
 	private ErrorData errorData;

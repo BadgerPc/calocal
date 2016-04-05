@@ -2,6 +2,10 @@ package vajracode.calocal.client.framework;
 
 import javax.inject.Singleton;
 
+/**
+ * Singleton, holding the application's event bus
+ *
+ */
 @Singleton
 public class EventBusHolder {
 

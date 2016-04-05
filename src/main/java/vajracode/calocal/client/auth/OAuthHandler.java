@@ -15,12 +15,16 @@ import vajracode.calocal.client.utils.NativeUtils;
 import vajracode.calocal.shared.model.UserData;
 import vajracode.calocal.shared.service.AuthService;
 
+/**
+ * Some authentification events handler
+ *
+ */
 @EventHandler
 public class OAuthHandler extends BaseEventHandler<CalocalEventBus> implements Injected {
 
 	@InjectService AuthService service;	
-	@Inject UserManager userManager;
-	@Inject I18nConstants msgs;
+	@Inject private UserManager userManager;
+	@Inject private I18nConstants msgs;
 	
 	public void onOAuth() {
 		final String code = Location.getParameter("code");

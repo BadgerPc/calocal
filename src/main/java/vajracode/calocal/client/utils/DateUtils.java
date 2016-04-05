@@ -14,7 +14,7 @@ import vajracode.calocal.shared.exceptions.FieldException;
  */
 public class DateUtils {
 	
-	public static final DateTimeFormat full = DateTimeFormat.getFormat("hh:mm - d MMMM yyyy");
+	public static final DateTimeFormat full = DateTimeFormat.getFormat("HH:mm - d MMMM yyyy");
 	public static final DateTimeFormat dateYear = DateTimeFormat.getFormat("d MMMM yyyy");
 	public static final DateTimeFormat year = DateTimeFormat.getFormat("yyyy");
 	public static final DateTimeFormat date = DateTimeFormat.getFormat("d MMMM");

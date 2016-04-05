@@ -19,7 +19,7 @@ import vajracode.calocal.shared.service.UserService;
 public class EditDailyCaloriesModal extends CommonModal {
 	
 	@InjectService UserService service;
-	@Inject UserManager userManager;
+	@Inject private UserManager userManager;
 	
 	private I18nConstants msgs = GWT.create(I18nConstants.class);
 	

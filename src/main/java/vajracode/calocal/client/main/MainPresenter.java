@@ -16,6 +16,10 @@ import vajracode.calocal.shared.model.MealDataList;
 import vajracode.calocal.shared.service.MealService;
 
 
+/**
+ * Main application page's presenter
+ *
+ */
 @Presenter(view = MainView.class)
 public class MainPresenter extends CommonPresenter<MainView> {
 		

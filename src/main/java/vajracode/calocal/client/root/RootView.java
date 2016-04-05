@@ -30,9 +30,7 @@ import vajracode.calocal.client.framework.CommonView;
 import vajracode.calocal.client.framework.EventBusHolder;
 import vajracode.calocal.client.i18n.I18nConstants;
 import vajracode.calocal.client.modals.ChangePasswordModal;
-import vajracode.calocal.client.modals.WaitModal;
 import vajracode.calocal.client.resources.Resources;
-import vajracode.calocal.client.utils.NativeUtils;
 import vajracode.calocal.shared.model.Role;
 import vajracode.calocal.shared.model.UserData;
 
@@ -45,11 +43,9 @@ public class RootView extends CommonView<RootPresenter> implements Handler, fr.p
 	@Inject private EventBusHolder bus;
 	@Inject private UserManager userManager;
 	@Inject private I18nConstants msgs;
-	@Inject Provider<ChangePasswordModal> changePassProvider;
+	@Inject private Provider<ChangePasswordModal> changePassProvider;
 	
 	private HTMLPanel main, username;
-	
-	private boolean skipNextProgressBar;
 	
 	public void init(){
 		CommandController.get().addCommandRequestHandler(this);
@@ -61,7 +57,6 @@ public class RootView extends CommonView<RootPresenter> implements Handler, fr.p
 		ErrorManager.get().registerErrorHandler(new ErrorHandler() {			
 			@Override
 			public boolean handle(Throwable error) {
-				stopProgressBar();
 				return false;
 			}
 			
@@ -88,51 +83,15 @@ public class RootView extends CommonView<RootPresenter> implements Handler, fr.p
 			}
 		}, ClickEvent.getType());
 	}
-
-//	public void initAuthButtons() {
-//		addButtonsTo("auth-buttons1");
-//		addButtonsTo("auth-buttons2");
-//	}
-	
-	/*private void addButtonsTo(String id) {		
-		try {
-			main.addAndReplaceElement(getAuthButtons(), id);
-		} catch (NoSuchElementException e) {};
-	}
-
-	private RowFlexPanel getAuthButtons() {
-		RowFlexPanel p = new CenteredRowFlexPanel();
-		p.clear();		
-		for (final SocialNetwork sn : SocialNetwork.values())
-			p.add(new Button(sn.getTitle(), new ClickHandler() {				
-				@Override
-				public void onClick(ClickEvent event) {
-					bus.getEventBus().startOAuthDanceSN(sn);
-				}
-			}));	
-		return p;
-	}*/
-
-	
-	public void startProgressBar() {
-		if (skipNextProgressBar)
-			skipNextProgressBar = false;
-		else if (!NativeUtils.hasLoader())
-			WaitModal.show();
-	}
-
-	public void stopProgressBar() {
-		WaitModal.hide();
-	}
 	
 	@Override
 	public void onCommandRequest(CommandRequestEvent event) {
-		startProgressBar();
+		
 	}
 
 	@Override
 	public void onCommandResponse(CommandResponseEvent event) {
-		stopProgressBar();
+		
 	}
 
 	public void setWidget(IsWidget w) {		
@@ -145,10 +104,6 @@ public class RootView extends CommonView<RootPresenter> implements Handler, fr.p
 			e.getChild(0).removeFromParent();	
 		e.getStyle().setTextAlign(TextAlign.LEFT);
 	};
-
-	public void setSkipNextProgressBar(boolean b) {
-		skipNextProgressBar = b;
-	}
 
 	public Widget getMainWidget() {
 		return main != null ? (main.getWidgetCount() > 0 ? main.getWidget(0) : null) : null;

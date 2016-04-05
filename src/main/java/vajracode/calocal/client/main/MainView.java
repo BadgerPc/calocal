@@ -38,12 +38,12 @@ public class MainView extends CommonView<MainPresenter> {
 	private static ViewUiBinder uiBinder = GWT.create(ViewUiBinder.class);
 	interface ViewUiBinder extends UiBinder<Widget, MainView> {}	
 	
-	@Inject I18nConstants msgs;
-	@Inject Provider<MealTable> mealTableProvider;
-	@Inject Provider<MealArray> allMealsProvider;
-	@Inject Provider<EditDailyCaloriesModal> editDailyCaloriesModalProvider;
-	@Inject Provider<FilterDateModal> filterDateModalProvider;
-	@Inject Provider<FilterTimeModal> filterTimeModalProvider;
+	@Inject private I18nConstants msgs;
+	@Inject private Provider<MealTable> mealTableProvider;
+	@Inject private Provider<MealArray> allMealsProvider;
+	@Inject private Provider<EditDailyCaloriesModal> editDailyCaloriesModalProvider;
+	@Inject private Provider<FilterDateModal> filterDateModalProvider;
+	@Inject private Provider<FilterTimeModal> filterTimeModalProvider;
 		
 	@UiField Header dateLabel, timeLabel, percents;
 	@UiField(provided = true) @Inject CalSummary summary;

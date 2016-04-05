@@ -26,7 +26,7 @@ public class UserRow extends CRUDRow<UserData> {
 	
 	@InjectService UserService service;
 	
-	@Inject Provider<ChangePasswordModal> changePassProvider;
+	@Inject private Provider<ChangePasswordModal> changePassProvider;
 
 	private TextBox tbName, tbCal;
 	private RoleListBox lbRole;

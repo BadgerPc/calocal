@@ -15,9 +15,13 @@ import vajracode.calocal.client.table.CRUDTable;
 import vajracode.calocal.shared.model.MealData;
 import vajracode.calocal.shared.model.UserData;
 
+/**
+ * Base class for Widgets, containing many meals and their summary
+ *
+ */
 public abstract class MealCollectionBase extends CRUDTable<MealData, MealRow> implements HasValueChangeHandlers<Integer> {
 
-	@Inject UserManager userManager;
+	@Inject private UserManager userManager;
 	
 	private List<HandlerRegistration> handlers = new ArrayList<>();
 	

@@ -13,9 +13,13 @@ import vajracode.calocal.client.utils.DateUtils;
 import vajracode.calocal.shared.model.MealData;
 import vajracode.calocal.shared.service.MealService;
 
+/**
+ * Meal row with CRUD functionality
+ *
+ */
 public class MealRow extends CRUDRow<MealData> {
 
-	protected @InjectService MealService service;
+	@InjectService MealService service;
 	
 	private TextBox tbDate, tbName, tbCal;
 	private Widget lDate, lName, lCal;	

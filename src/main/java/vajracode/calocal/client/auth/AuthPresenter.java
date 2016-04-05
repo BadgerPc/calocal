@@ -19,12 +19,16 @@ import vajracode.calocal.shared.model.UserData;
 import vajracode.calocal.shared.service.AuthService;
 
 
+/**
+ * Authentification page's presenter
+ *
+ */
 @Presenter(view = AuthView.class)
 public class AuthPresenter extends CommonPresenter<AuthView> {
 		
 	@InjectService AuthService service;
-	@Inject UserManager userManager;
-	@Inject I18nConstants msgs;
+	@Inject private UserManager userManager;
+	@Inject private I18nConstants msgs;
 	
 	private String suLogin;
 	private String suPass;

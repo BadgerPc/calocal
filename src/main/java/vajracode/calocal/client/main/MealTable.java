@@ -6,6 +6,10 @@ import com.google.gwt.user.client.ui.Widget;
 
 import vajracode.calocal.shared.model.MealData;
 
+/**
+ * Simple table with meal rows
+ *
+ */
 public class MealTable extends MealCollectionBase {
 	
 	public MealTable() {		

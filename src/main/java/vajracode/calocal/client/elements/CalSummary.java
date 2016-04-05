@@ -12,10 +12,14 @@ import vajracode.calocal.client.i18n.I18nConstants;
 import vajracode.calocal.client.resources.Resources;
 import vajracode.calocal.shared.model.UserData;
 
+/**
+ * Displays summary about some meals array. Automatically updates on user settings change.
+ *
+ */
 public class CalSummary extends HTML {
 
-	@Inject UserManager userManager;
-	@Inject I18nConstants msgs;
+	@Inject private UserManager userManager;
+	@Inject private I18nConstants msgs;
 	private HandlerRegistration hr;
 	private int cal;
 	

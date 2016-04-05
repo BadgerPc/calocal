@@ -16,7 +16,7 @@ import vajracode.calocal.shared.constants.DateConstants;
 
 public class FilterDateModal extends CommonModal {
 	
-	@Inject EventBusHolder bus;
+	@Inject private EventBusHolder bus;
 	
 	private I18nConstants msgs = GWT.create(I18nConstants.class);
 	

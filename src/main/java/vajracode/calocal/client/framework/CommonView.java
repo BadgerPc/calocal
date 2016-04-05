@@ -7,6 +7,10 @@ import com.mvp4g.client.view.ReverseViewInterface;
 
 import fr.putnami.pwt.core.mvp.client.View;
 
+/**
+ * Base for the main widget. Has injected event bus and presenter.
+ *
+ */
 public class CommonView<T extends CommonPresenter> extends Composite 
 	implements View, ReverseViewInterface<T> {
 
