@@ -48,7 +48,7 @@ public class UserManager {
 
 	private void checkExistingName(String login) {		
 		if (userDao.getUserByName(login) != null)
-			throw new ConflictException("User with name " + login + " already exists");
+			throw new ConflictException();
 	}
 
 	private UserDTO createUser(String login, String pass, Role role) {
@@ -78,7 +78,7 @@ public class UserManager {
 		if (data.getName() != null) {
 			UserDTO conc = userDao.getUserByName(data.getName());
 			if (conc != null && conc.getId() != data.getId())
-				throw new ConflictException("User with name " + data.getName() + " already exists");
+				throw new ConflictException();
 			user.setName(data.getName());
 		}
 		if (data.getPassword() != null) {

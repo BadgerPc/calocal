@@ -277,11 +277,9 @@ test.doLast {
 compileTestJava.doFirst {
 	classpath = classpath.filter{ File file ->
         !file.name.contains("jsr311") && !file.name.contains("gwt-")
-    }
-	/*project.configurations.testCompile.allDependencies.each { dep ->
-          println "      ${dep.group}:${dep.name}:${dep.version}"
-        }*/
+    }	
 }
+
 
 test.doFirst {
 	classpath = classpath.filter{ File file ->

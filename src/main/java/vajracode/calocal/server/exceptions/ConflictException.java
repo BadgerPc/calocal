@@ -9,8 +9,4 @@ public class ConflictException extends WebApplicationException {
 		super(Response.Status.CONFLICT);
 	}
 
-	public ConflictException(String msg) {
-		super(msg, Response.Status.CONFLICT);	
-	}	
-
 }
