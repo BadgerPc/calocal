@@ -13,10 +13,7 @@ import java.util.logging.Logger;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.Application;
-import javax.ws.rs.core.Form;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.*;
 
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.glassfish.jersey.apache.connector.ApacheClientProperties;
@@ -31,14 +28,24 @@ import org.glassfish.jersey.test.external.ExternalTestContainerFactory;
 import org.glassfish.jersey.test.spi.TestContainer;
 import org.glassfish.jersey.test.spi.TestContainerException;
 import org.glassfish.jersey.test.spi.TestContainerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import vajracode.calocal.server.manager.UserManager;
 import vajracode.calocal.shared.constants.LoginFields;
 import vajracode.calocal.shared.constants.ResourcePaths;
 import vajracode.calocal.shared.model.RegistrationData;
 import vajracode.calocal.shared.model.Role;
 import vajracode.calocal.shared.model.UserData;
 
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration("classpath*:repository-config.xml")
 public class CalocalTest extends JerseyTest {
+	
+	private static final String ADMIN_NAME = "admin";
+	private static final String ADMIN_PASS = "adminadmin";
+
+	@Autowired
+	private UserManager userManager;
 	
 	protected Logger logger = Logger.getLogger(getClass().getCanonicalName());    
 	
@@ -77,7 +84,7 @@ public class CalocalTest extends JerseyTest {
 			@Override
 			public TestContainer create(URI baseUri, DeploymentContext context) throws IllegalArgumentException {
 				try {
-					baseUri = new URI("http://localhost:8080/");
+					baseUri = new URI("http://localhost:8081/");
 				} catch (URISyntaxException e) {					
 					e.printStackTrace();
 				}
@@ -91,8 +98,8 @@ public class CalocalTest extends JerseyTest {
 		if (client == null) {
 			ClientConfig cc = new ClientConfig();			
 	        cc.connectorProvider(new ApacheConnectorProvider());
-	        cc.property(ClientProperties.READ_TIMEOUT, 2000);
-	        cc.property(ClientProperties.CONNECT_TIMEOUT, 500);
+	        cc.property(ClientProperties.READ_TIMEOUT, 5000);
+	        cc.property(ClientProperties.CONNECT_TIMEOUT, 5000);
 	        
 	        PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager();
 	        connectionManager.setMaxTotal(100);
@@ -107,9 +114,9 @@ public class CalocalTest extends JerseyTest {
 	}	
 
 	protected void authUser() {
-		assertEquals(Status.UNAUTHORIZED.getStatusCode(), 
+		assertEquals(Response.Status.UNAUTHORIZED.getStatusCode(), 
 			loginTarget.request().get().getStatus()); 
-		
+				
 		UserData ud = null;
 		do {
 			try {
@@ -127,6 +134,11 @@ public class CalocalTest extends JerseyTest {
 		assertTrue(ud.getId() > 0);
 		userId = ud.getId();
 		
+		assertEquals(Response.Status.CONFLICT.getStatusCode(), 
+				loginTarget.request().put(Entity.entity(
+						new RegistrationData(login, pass), MediaType.APPLICATION_JSON_TYPE))
+				.getStatus());
+		
 		authUser(login, pass);
 	}
 	
@@ -135,7 +147,7 @@ public class CalocalTest extends JerseyTest {
 		form.param(LoginFields.USERNAME, login);
 		form.param(LoginFields.PASSWORD, pass);
 		 
-		assertEquals(Status.OK.getStatusCode(), 
+		assertEquals(Response.Status.OK.getStatusCode(), 
 			loginTarget.request().post(Entity.entity(form,MediaType.APPLICATION_FORM_URLENCODED_TYPE))
 			.getStatus());
 		
@@ -143,11 +155,11 @@ public class CalocalTest extends JerseyTest {
 	}
 
 	protected void authAdmin() {
-		authUser("admin", "adminadmin");
+		authUser(ADMIN_NAME, ADMIN_PASS);
 	}
 	
 	protected void logOut() {
-		assertEquals(Status.OK.getStatusCode(), 
+		assertEquals(Response.Status.OK.getStatusCode(), 
 				loginTarget.request().delete().getStatus()); 
 	}
 
@@ -156,11 +168,22 @@ public class CalocalTest extends JerseyTest {
 	}
 
 	protected void init() {    
+		//addUserAdmin();		
 		loginTarget = target(ResourcePaths.API_LOGIN);
 		mealTarget = target(ResourcePaths.API_MEAL);
 		userTarget = target(ResourcePaths.API_USER);
 	}
 	
+//	private void addUserAdmin() {
+//		UserData u = new UserData();
+//		u.setName(ADMIN_NAME);
+//		u.setPassword(ADMIN_PASS);
+//		u.setRole(Role.ADMIN);
+//		try {
+//			userManager.create(u);
+//		} catch (EntityExistsException e) {}
+//	}
+
 	public static Date getDateBack(long millis) {
 		return new Date(System.currentTimeMillis() - millis);
 	}

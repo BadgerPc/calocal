@@ -7,6 +7,10 @@ public class ConflictException extends WebApplicationException {
 	
 	public ConflictException() {
 		super(Response.Status.CONFLICT);
+	}
+
+	public ConflictException(String msg) {
+		super(msg, Response.Status.CONFLICT);	
 	}	
 
 }

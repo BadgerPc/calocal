@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
 		
 	@Override
 	public UserData create(UserData data) {	
-		check(data);
+		check(data);		
 		return userManager.create(data);
 	}
 

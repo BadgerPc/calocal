@@ -4,6 +4,8 @@ apply plugin: 'maven-publish'
 apply plugin: 'gwt'
 apply plugin: 'war'
 apply plugin: 'eclipse'
+//apply plugin: 'jetty'
+apply from: 'https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.plugin'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -23,6 +25,12 @@ sourceSets {
     main {
         java {
             exclude '**/test/*'         
+        }
+    }
+    test {        
+        resources {
+        	output.resourcesDir = "build/classes/main"
+            srcDir 'src/test/resources'
         }
     }
 }
@@ -53,31 +61,19 @@ compileJava{
     options.encoding = 'UTF-8'
 }
 
+configurations {	
+}
 
 dependencies {	
-	//providedCompile 'org.slf4j:slf4j-api:1.6.1'
-	//compile 'org.slf4j:jcl-over-slf4j:1.6.1'
-	//providedCompile 'org.slf4j:slf4j-log4j12:1.6.1'
 	providedCompile 'log4j:log4j:1.2.17'
 
 	providedCompile "javax.validation:validation-api:1.0.0.GA"
 
 	providedCompile "com.google.gwt:gwt-servlet:$gwtVersion"
 	providedCompile "com.google.gwt:gwt-user:$gwtVersion"
-	/*{
-	    transitive = false;
-	}*/
 	providedCompile "com.google.gwt:gwt-dev:$gwtVersion" 
-	/*{
-	    transitive = false;
-	}*/			  
-
+	
 	providedCompile "fr.putnami.pwt:pwt:$pwtVersion"
-	/*compile ("fr.putnami.pwt:pwt-spring:$pwtVersion") {
-		 exclude group: "org.codehaus.jackson"
-		 exclude group: "commons-fileupload"
-		 exclude group: "commons-io"
-	}*/
 	
 	providedCompile "org.fusesource.restygwt:restygwt:2.0.3"
 	
@@ -86,10 +82,11 @@ dependencies {
 	
 	providedCompile "com.github.gwtmaterialdesign:gwt-material:1.4.1"
 	providedCompile "com.github.gwtmaterialdesign:gwt-material-themes:1.4"	
-	
-	providedCompile "javax.ws.rs:jsr311-api:1.1.1"
+		
 	providedCompile "org.glassfish.jersey.ext:jersey-spring3:$jerseyVersion"
 	providedCompile "org.glassfish.jersey.media:jersey-media-json-jackson:$jerseyVersion"
+	
+	providedCompile "javax.ws.rs:jsr311-api:1.1.1"	
 	
 	providedCompile "com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion"
 	providedCompile "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"	
@@ -103,20 +100,6 @@ dependencies {
 	providedCompile "org.springframework.security:spring-security-config:$springSecurityVersion"
 	providedCompile "org.springframework.security:spring-security-web:$springSecurityVersion"    
 	
-	providedCompile "org.springframework.social:spring-social-core:$springSocialVersion"
-	providedCompile "org.springframework.social:spring-social-web:$springSocialVersion"
-	providedCompile "org.springframework.social:spring-social-config:$springSocialVersion"
-	providedCompile "org.springframework.social:spring-social-security:$springSocialVersion"
-	//providedCompile "org.springframework.social:spring-social-facebook:2.0.2.RELEASE"
-	providedCompile ("org.springframework.social:spring-social-vkontakte:1.1.0.BUILD-20150810.103921-19") {
-		 exclude group: "com.fasterxml.jackson.core"
-	}	
-	//http://fugru.com/archiva/repository/snapshots/org/springframework/social/spring-social-vkontakte/1.1.0.BUILD-SNAPSHOT/
-	
-	//spring-social dependencies
-	providedCompile "org.springframework.security:spring-security-crypto:$springSecurityVersion"
-	providedCompile "org.apache.httpcomponents:httpclient:4.5"	
-	
 	providedCompile "org.hibernate:hibernate-entitymanager:$hiberVersion"
 	providedCompile "org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final"	
 	
@@ -126,22 +109,20 @@ dependencies {
 	providedCompile "org.apache.tomcat:tomcat-catalina:8.0.28"
 	
 	testCompile "junit:junit:4+"
+	
 	testCompile "org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-external:$jerseyVersion"
 	testCompile "org.glassfish.jersey.connectors:jersey-apache-connector:$jerseyVersion"
-		
-	
+	testCompile "org.springframework:spring-test:$springVersion"
+	gretty "mysql:mysql-connector-java:5.1.38"
+	//gretty "org.apache.httpcomponents:httpclient:4.5"
+    //testCompile "javax.servlet:servlet-api:2.5"
 }
 
 gwt {
 	gwtVersion = project.gwtVersion;
 	maxHeapSize = "1G";
-//	draftCompileGwt.enabled = true
 	
-//	gwtDev {
-//		jvmArgs('-Xdebug',  '-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8000')
-//	}
-	
-	modules = ['vajracode.calocal.Calocal']	
+	modules = ['vajracode.calocal.Calocal']		
 
 	sourceSets {
         main {
@@ -163,7 +144,6 @@ gwt {
         //compileReport = true;       
     }
 }
-
 
 if (gwt.eclipse.addGwtContainer) {
 	eclipse.classpath.file{
@@ -192,13 +172,14 @@ eclipse {
 war.archiveName "ROOT.war"
 
 task draftConfig() {			
-	
+	outputs.upToDateWhen { false }
 }
 task draftConfigLocal(dependsOn: draftConfig) {}
 draftConfigLocal.doFirst {
 	project.oAuthRedirectUrl = "http://localhost:8080/"
 }
 task releaseConfig() {
+	outputs.upToDateWhen { false }
 	project.oAuthRedirectUrl = "https://derzhika.ru/"
 }
 releaseConfig.doLast {
@@ -206,25 +187,32 @@ releaseConfig.doLast {
 	cleanProcessResources
 }
 
+processResources.outputs.upToDateWhen { false }
+war.outputs.upToDateWhen { false }
+
 task lDeployGwt(type: GradleBuild) {		
-	tasks = ['cleanDraftConfig', 'cleanDraftWar', 'cleanProcessResources', 'enableDraftCompileGwt', 'draftConfigLocal', 'copyToLocalAs']
+	tasks = ['enableDraftCompileGwt', 'draftConfigLocal', 'copyToLocalAs']
 } 
 task ldg(dependsOn: lDeployGwt){}
 task lDeployNoGwt(type: GradleBuild) {		
-	tasks = ['cleanDraftConfig', 'cleanDraftWar', 'cleanProcessResources', 'disableDraftCompileGwt', 'draftConfigLocal', 'copyToLocalAs']
+	tasks = ['disableDraftCompileGwt', 'draftConfigLocal', 'copyToLocalAs']
 } 
 task ldng(dependsOn: lDeployNoGwt){}
 
 task rDeployGwt(type: GradleBuild){
-	tasks = ['cleanReleaseConfig', 'cleanWar', 'cleanProcessResources', 'enableCompileGwt', 'releaseConfig', /*'deployWarR'*/ 'war']
+	tasks = ['cleanProcessResources', 'enableCompileGwt', 'releaseConfig', 'war']
 }
 task rdg(dependsOn: rDeployGwt){}
 
 task rDeployNoGwt(type: GradleBuild){
-	tasks = ['cleanReleaseConfig', 'cleanWar', 'cleanProcessResources', 'disableCompileGwt', 'releaseConfig', /*'deployWarR'*/ 'war']
+	tasks = ['cleanProcessResources', 'disableCompileGwt', 'releaseConfig', 'war']
 }
 task rdng(dependsOn: rDeployNoGwt){}
 
+task buildNoGwt (type: GradleBuild){
+	tasks = ['disableCompileGwt', 'releaseConfig', 'build']
+}
+task bng(dependsOn: buildNoGwt){}
 
 task disableDraftCompileGwt{}
 disableDraftCompileGwt.doFirst {
@@ -266,3 +254,65 @@ task syncSuperDevLibs(type: Sync) {
                          details.file.name.startsWith('asm') ||
                          details.file.name.startsWith('gwt-servlet')}*/
 }
+
+/*
+
+httpPort = 8081
+stopPort = 8082
+stopKey = "stopKey"
+
+test.doFirst {	
+	[jettyRun, jettyRunWar]*.daemon = true
+	tasks.jettyRun.execute()
+}
+
+test.doLast {
+	tasks.jettyStop.execute()
+}
+
+[jettyRun, jettyRunWar]*.jettyEnvXml = file('src/test/resources/jetty-env.xml')
+
+*/
+
+compileTestJava.doFirst {
+	classpath = classpath.filter{ File file ->
+        !file.name.contains("jsr311") && !file.name.contains("gwt-")
+    }
+	/*project.configurations.testCompile.allDependencies.each { dep ->
+          println "      ${dep.group}:${dep.name}:${dep.version}"
+        }*/
+}
+
+test.doFirst {
+	classpath = classpath.filter{ File file ->
+        !file.name.contains("gwt-dev") &&
+        !file.name.contains("restygwt")
+    }
+}
+
+gretty { 
+	httpPort = 8081
+  	integrationTestTask = 'test'
+  	servletContainer = 'jetty9'
+  	serverConfigFile = "/src/test/resources/jetty-env.xml"
+  	contextPath = ""
+  	/*classPath = classPath.filter{ File file ->
+        !file.name.contains("jsr311")
+    }*/
+    onStart {
+        configurations.runtime?.with {
+            exclude group: 'javax.ws.rs', module: 'jsr311-api'      
+            exclude group: 'com.google.gwt', module: 'gwt-dev'
+            exclude group: 'org.fusesource.restygwt', module: 'restygwt'
+        }
+    }
+}
+
+task copyTestResources(type: Copy) {
+    from "${projectDir}/src/test/resources"
+    into "${buildDir}/classes/test"
+}
+processTestResources.dependsOn copyTestResources
+
+
+

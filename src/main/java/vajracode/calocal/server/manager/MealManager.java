@@ -6,9 +6,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.stream.Collectors;
 
-import javax.ws.rs.ForbiddenException;
-import javax.ws.rs.NotFoundException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +14,8 @@ import vajracode.calocal.server.dao.MealDao;
 import vajracode.calocal.server.dao.UserDao;
 import vajracode.calocal.server.dto.MealDTO;
 import vajracode.calocal.server.dto.UserDTO;
+import vajracode.calocal.server.exceptions.ForbiddenException;
+import vajracode.calocal.server.exceptions.NotFoundException;
 import vajracode.calocal.server.security.AccessManager;
 import vajracode.calocal.server.utils.ParamUtils;
 import vajracode.calocal.shared.exceptions.FieldException;

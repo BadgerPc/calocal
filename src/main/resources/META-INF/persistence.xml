@@ -27,5 +27,9 @@
 			<property name="hibernate.connection.datasource" value="java:comp/env/DB_Calocal"/>
 					
 		</properties>
+		
+		<class>vajracode.calocal.server.dto.UserDTO</class>
+		<class>vajracode.calocal.server.dto.MealDTO</class>
+		
 	</persistence-unit>
 </persistence>

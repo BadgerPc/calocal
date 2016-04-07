@@ -5,9 +5,6 @@ import java.util.Date;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-import javax.ws.rs.ForbiddenException;
-import javax.ws.rs.NotFoundException;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import vajracode.calocal.server.dao.UserDao;
 import vajracode.calocal.server.dto.UserDTO;
 import vajracode.calocal.server.exceptions.ConflictException;
+import vajracode.calocal.server.exceptions.ForbiddenException;
+import vajracode.calocal.server.exceptions.NotFoundException;
 import vajracode.calocal.server.security.AccessManager;
 import vajracode.calocal.server.security.PasswordEncoder;
 import vajracode.calocal.shared.model.Role;
@@ -42,11 +41,14 @@ public class UserManager {
 	
 	@Transactional
 	public UserData register(String login, String pass) {		
-		UserDTO user = userDao.getUserByName(login);
-		if (user != null)
-			throw new ConflictException();		
-		user = createUser(login, pass, Role.USER);		
+		checkExistingName(login);		
+		UserDTO user = createUser(login, pass, Role.USER);		
 		return user.getUserData();
+	}
+
+	private void checkExistingName(String login) {		
+		if (userDao.getUserByName(login) != null)
+			throw new ConflictException("User with name " + login + " already exists");
 	}
 
 	private UserDTO createUser(String login, String pass, Role role) {
@@ -62,7 +64,8 @@ public class UserManager {
 	}
 
 	@Transactional
-	public UserData create(UserData data) {		
+	public UserData create(UserData data) {
+		checkExistingName(data.getName());
 		return createUser(data.getName(), data.getPassword(), data.getRole()).getUserData();
 	}
 
@@ -72,8 +75,12 @@ public class UserManager {
 		if (!accessManager.isAdmin()) {						
 			data.setRole(null);			
 		}
-		if (data.getName() != null)
+		if (data.getName() != null) {
+			UserDTO conc = userDao.getUserByName(data.getName());
+			if (conc != null && conc.getId() != data.getId())
+				throw new ConflictException("User with name " + data.getName() + " already exists");
 			user.setName(data.getName());
+		}
 		if (data.getPassword() != null) {
 			user.setPassword(passwordEncoder.encodePassword(data.getPassword()));
 		}

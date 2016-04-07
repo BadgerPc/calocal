@@ -8,7 +8,9 @@ import vajracode.calocal.shared.model.Role;
 import vajracode.calocal.shared.model.UserData;
 
 @Entity
-@Table(name = "user")
+@Table(name = "user",
+	uniqueConstraints = @UniqueConstraint(columnNames={"name"})
+)
 public class UserDTO extends DTO {
 
 	private String name, password;	
